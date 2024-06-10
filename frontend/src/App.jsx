@@ -10,15 +10,11 @@ import { FeedPage } from "./pages/Feed/FeedPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <SignupPage />,
   },
   {
     path: "/login",
     element: <LoginPage />,
-  },
-  {
-    path: "/signup",
-    element: <SignupPage />,
   },
   {
     path: "/posts",

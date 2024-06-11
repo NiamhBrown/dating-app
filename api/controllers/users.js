@@ -3,8 +3,21 @@ const User = require("../models/user");
 const create = (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  const username = req.body.username;
+  const forename = req.body.forename;
+  const lastName = req.body.lastName;
+  const proficiencyLevel = req.body.proficiencyLevel;
+  const age = req.body.age;
 
-  const user = new User({ email, password });
+  const user = new User({
+    email,
+    password,
+    username,
+    forename,
+    lastName,
+    proficiencyLevel,
+    age,
+  });
   user
     .save()
     .then((user) => {

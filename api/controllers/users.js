@@ -29,9 +29,15 @@ const create = (req, res) => {
       res.status(400).json({ message: "Something went wrong" });
     });
 };
+const getOneUser = async (req, res) => {
+  const user = await User.find({_id:req.user_id});
+  const token = generateToken(req.user_id);
+  res.status(200).json({ user: user, token: token });
+};
 
 const UsersController = {
   create: create,
+  getOneUser: getOneUser
 };
 
 module.exports = UsersController;

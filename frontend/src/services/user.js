@@ -18,3 +18,21 @@ export const getUsers = async (token) => {
   const data = await response.json();
   return data;
 };
+
+export const sendMatchRequest = async(token, userId, targetUserId) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({user_id: targetUserId, sender_id: userId}),
+  };
+  const response = await fetch(`${BACKEND_URL}/users/sendrequest`, requestOptions);
+
+  if(response.status !== 201){
+    throw new Error('Unable to send match request');
+  }
+  const data = await response.json();
+  return data;
+}

@@ -28,7 +28,7 @@ export const SignupPage = () => {
       navigate("/login");
     } catch (err) {
       console.error(err);
-      navigate("/signup");
+      navigate("/");
     }
   };
 

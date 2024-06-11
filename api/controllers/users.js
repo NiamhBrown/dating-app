@@ -17,8 +17,14 @@ const create = (req, res) => {
     });
 };
 
+const getAllUsers = async (req, res) => {
+  const users = await User.find();
+  res.status(200).json({ users: users });
+};
+
 const UsersController = {
   create: create,
+  getAllUsers: getAllUsers,
 };
 
 module.exports = UsersController;

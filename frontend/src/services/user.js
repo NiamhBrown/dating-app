@@ -1,7 +1,7 @@
 // docs: https://vitejs.dev/guide/env-and-mode.html
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export const getPosts = async (token) => {
+export const getUsers = async (token) => {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -9,10 +9,10 @@ export const getPosts = async (token) => {
     },
   };
 
-  const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
+  const response = await fetch(`${BACKEND_URL}/users`, requestOptions);
 
   if (response.status !== 200) {
-    throw new Error("Unable to fetch posts");
+    throw new Error("Unable to fetch users");
   }
 
   const data = await response.json();

@@ -61,7 +61,7 @@ export const signup = async (
 
   // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
   if (response.status === 201) {
-    return data;
+    //return data;
   } else {
     console.log(data)
     throw new Error(

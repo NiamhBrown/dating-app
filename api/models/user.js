@@ -1,114 +1,114 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   forename: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   profilePicture: {
     type: String,
-    default: null
+    default: null,
   },
   proficiencyLevel: {
     type: String,
-    enum: ['beginner','junior', 'intermediate', 'senior'],
-    required: true
+    enum: ["beginner", "junior", "intermediate", "senior"],
+    required: true,
   },
   age: {
     type: Number,
-    required: true
+    required: true,
   },
   gender: {
     type: String,
-    enum: ['male', 'female', 'non-binary', 'prefer not to say'],
-    default: 'prefer not to say'
+    enum: ["male", "female", "non-binary", "prefer not to say"],
+    default: "prefer not to say",
   },
   location: {
     type: String,
-    default: ''
+    default: "",
   },
   lookingFor: {
     proficiency: {
       type: String,
-      enum: ['junior', 'intermediate', 'senior'],
-      default: ''
+      enum: ["beginner", "junior", "intermediate", "senior", "unspecified"],
+      default: "unspecified",
     },
     techStack: {
       type: [String],
-      default: []
-    }
+      default: [],
+    },
   },
   experience: {
     type: String,
-    default: ''
+    default: "",
   },
   projects: {
     type: [String],
-    default: []
+    default: [],
   },
   languages: {
     type: [String],
-    default: []
+    default: [],
   },
   technologies: {
     type: [String],
-    default: []
+    default: [],
   },
   projectType: {
     type: String,
-    default: ''
+    default: "",
   },
   techStack: {
     type: [String],
-    default: []
+    default: [],
   },
   job: {
     type: String,
-    default: ''
+    default: "",
   },
   bio: {
     type: String,
-    default: ''
+    default: "",
   },
   url: {
     type: String,
-    default: ''
+    default: "",
   },
   matches: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User',
-    default: []
+    ref: "User",
+    default: [],
   },
   matchRequests: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User',
-    default: []
+    ref: "User",
+    default: [],
   },
   blackList: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User',
-    default: []
-  }
+    ref: "User",
+    default: [],
+  },
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

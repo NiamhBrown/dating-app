@@ -1,4 +1,5 @@
 
+
 import LogOutButton from "../../components/LogOutButton";
 import MyProfileButton from "../../components/MyProfileButton";
 
@@ -16,3 +17,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

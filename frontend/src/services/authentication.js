@@ -60,6 +60,10 @@ export const signup = async (
   // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
   if (response.status === 201) {
     return;
+  } else if (response.status === 409) {
+    const errorData = await response.json();
+    console.log("409 errorData here: ", errorData);
+    throw new Error(errorData.message);
   } else {
     throw new Error(
       `Received status ${response.status} when signing up. Expected 201`

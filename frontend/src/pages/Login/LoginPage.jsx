@@ -10,10 +10,12 @@ export const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+
       const data = await login(email, password);
       localStorage.setItem("token", data.token);
       localStorage.setItem("user_id", data.user_id);
-      navigate("/feed");
+      navigate("/home");
+
     } catch (err) {
       console.error(err);
       navigate("/login");

@@ -5,9 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 export const FeedPage = () => {
     const [users, setUsers] = useState([]);
-    const [user_pos, setUserPos] = useState(0);
+    const [position, setPosition] = useState(0);
     const navigate = useNavigate();
-    setUserPos(0);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -15,6 +14,7 @@ export const FeedPage = () => {
         getUsers(token)
             .then((data) => {
             setUsers(data.users);
+            setPosition(0);
             // localStorage.setItem("token", data.token);
             })
             .catch((err) => {
@@ -34,7 +34,13 @@ export const FeedPage = () => {
         <>
         <h2>Users</h2>
         <div className="feed" role="feed">
-            <User user={users[user_pos]} key={users[user_pos]._id} position={user_pos} setPos={setUserPos} />
+            {users.length != 0 &&
+            <User 
+                user={users[position]} 
+                key={users[position]._id}
+                position={position}
+                setPos={setPosition}
+            />}
         </div>
         </>
     );

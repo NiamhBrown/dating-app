@@ -2,7 +2,7 @@ import  LogOutButton from "../../components/LogOutButton";
 import  HomeButton  from "../../components/HomeButton";
 import { useEffect, useState } from "react";
 import { getOneUser } from "../../services/users";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 const ProfilePage = () =>{
@@ -11,7 +11,7 @@ const ProfilePage = () =>{
     const navigate = useNavigate()
     const [User, setUser] = useState({email:"loading"});
 
-    useEffect(() => {
+    useEffect(() => { 
             const fetchUserData = async () => {
                 console.log("fetchdata")
                 console.log("userid",userId)

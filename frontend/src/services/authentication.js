@@ -27,7 +27,7 @@ export const login = async (email, password) => {
     throw new Error(
       `Received status ${response.status} when logging in. Expected 201`
     );
-  }
+  };
 };
 
 export const signup = async (
@@ -67,5 +67,5 @@ export const signup = async (
     throw new Error(
       `Received status ${response.status} when signing up. Expected 201`
     );
-  }
+  };
 };

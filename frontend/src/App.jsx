@@ -4,6 +4,7 @@ import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
+import OtherProfilePage from "./pages/Profile/anotherUserProfile";
 
 
 
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
   path: "/profile",
   element: <ProfilePage/>
+  },
+  {
+    path: "/profile/:userId",
+    element: <OtherProfilePage/>
   }
 ]);
 

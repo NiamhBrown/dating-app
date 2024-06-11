@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { signup } from "../../services/authentication";
@@ -12,9 +12,53 @@ export const SignupPage = () => {
   const [proficiencyLevel, setProficiencyLevel] = useState("");
   const [age, setAge] = useState("");
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({
+    username: "",
+    password: [
+      "Password must be at least 8 characters.",
+      "Password must have at least one capital letter.",
+      "Password must contain a special character.",
+    ],
+  });
+  useEffect(() => {
+    const capitalLetterRegex = /[A-Z]/;
+    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+
+    const validatePassword = () => {
+      let updatedErrors = [
+        "Password must be at least 8 characters.",
+        "Password must have at least one capital letter.",
+        "Password must contain a special character.",
+      ];
+
+      if (password.length >= 8) {
+        updatedErrors = updatedErrors.filter(
+          (error) => error !== "Password must be at least 8 characters."
+        );
+      }
+      //test method of a regular expression checks if there's at least one match of the pattern in the argument given
+      if (capitalLetterRegex.test(password)) {
+        updatedErrors = updatedErrors.filter(
+          (error) => error !== "Password must have at least one capital letter."
+        );
+      }
+      if (specialCharacterRegex.test(password)) {
+        updatedErrors = updatedErrors.filter(
+          (error) => error !== "Password must contain a special character."
+        );
+      }
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: updatedErrors,
+      }));
+    };
+
+    validatePassword(); //call function explicitly to execute
+  }, [password]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       await signup(
         email,
@@ -62,11 +106,13 @@ export const SignupPage = () => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
+          placeholder="Email"
           id="email"
           type="text"
           value={email}
           onChange={handleEmailChange}
         />
+        <br />
         <label htmlFor="password">Password:</label>
         <input
           placeholder="Password"
@@ -75,6 +121,8 @@ export const SignupPage = () => {
           value={password}
           onChange={handlePasswordChange}
         />
+        <br />
+        <label htmlFor="username">Username:</label>
         <input
           placeholder="Username"
           id="username"
@@ -82,6 +130,8 @@ export const SignupPage = () => {
           value={username}
           onChange={handleUsernameChange}
         />
+        <br />
+        <label htmlFor="forename">Forename:</label>
         <input
           placeholder="Forename"
           id="forename"
@@ -89,6 +139,8 @@ export const SignupPage = () => {
           value={forename}
           onChange={handleForenameChange}
         />
+        <br />
+        <label htmlFor="lastName">Last Name:</label>
         <input
           placeholder="LastName"
           id="lastName"
@@ -96,13 +148,23 @@ export const SignupPage = () => {
           value={lastName}
           onChange={handleLastNameChange}
         />
-        <input
+        <br />
+        <label htmlFor="proficiencyLevel">Proficiency Level:</label>
+        <select
           placeholder="ProficiencyLevel"
           id="proficiencyLevel"
           type="proficiencyLevel"
           value={proficiencyLevel}
           onChange={handleProficiencyLevelChange}
-        />
+        >
+          <option value="beginner">Beginner</option>
+          <option value="junior">Junior</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="senior">Senior</option>
+        </select>
+
+        <br />
+        <label htmlFor="age">Age:</label>
         <input
           placeholder="Age"
           id="age"
@@ -110,6 +172,15 @@ export const SignupPage = () => {
           value={age}
           onChange={handleAgeChange}
         />
+        <br />
+
+        {errors.password.length > 0 && (
+          <ul>
+            {errors.password.map((error, index) => (
+              <li key={index}>{error}</li>
+            ))}
+          </ul>
+        )}
         <input role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
     </>

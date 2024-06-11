@@ -1,5 +1,6 @@
 import  LogOutButton from "../../components/LogOutButton";
 import  HomeButton  from "../../components/HomeButton";
+import PictureUpload from "../../components/pictureUpload";
 import { useEffect, useState } from "react";
 import { getOneUser } from "../../services/users";
 
@@ -35,6 +36,9 @@ const ProfilePage = () =>{
         <HomeButton/>
         <LogOutButton/>
         <p>please render</p>
+
+
+        <PictureUpload/>
         </>
     );
 };

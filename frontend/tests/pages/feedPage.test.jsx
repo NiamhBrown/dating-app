@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import { vi } from "vitest";
-
 import { FeedPage } from "../../src/pages/Feed/FeedPage";
 import { getPosts } from "../../src/services/posts";
 import { useNavigate } from "react-router-dom";

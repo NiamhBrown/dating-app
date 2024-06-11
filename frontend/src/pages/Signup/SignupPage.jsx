@@ -89,8 +89,9 @@ export const SignupPage = () => {
         }));
       }
       console.error(err);
-
       console.log("signup page error: ", err.message);
+      navigate("/");
+
     }
   };
 

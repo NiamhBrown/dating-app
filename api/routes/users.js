@@ -10,4 +10,7 @@ router.post("/acceptMatch", UsersController.addUsertoMatches);
 router.get("/", UsersController.getAllUsers);
 router.get("/:user_id", UsersController.getOneUser)
 
+router.post("/getOneUser", UsersController.getOneUser)
+
+
 module.exports = router;

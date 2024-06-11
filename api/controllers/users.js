@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { generateToken } = require("../lib/token");
 
 const create = (req, res) => {
   const email = req.body.email;
@@ -38,9 +39,25 @@ const create = (req, res) => {
     });
 };
 const getOneUser = async (req, res) => {
-  const user = await User.findById(req.params.user_id);
-  // const token = generateToken(req.params.user_id);
-  res.status(200).json({ user: user });
+
+  try {
+    const { userId } = req.body; 
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const user = await User.findById(userId); 
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const token = generateToken(user._id.toString());
+    res.status(200).json({ user, token });
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+
 };
 
 const getAllUsers = async (req, res) => {

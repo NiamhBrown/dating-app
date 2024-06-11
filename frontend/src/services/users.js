@@ -1,19 +1,26 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export const getOneUser = async (token) => {
+export const getOneUser = async (token, userId) => {
+    const payload = {
+    userId: userId,
+    };
+    
     const requestOptions = {
-    method: "GET",
+    method: "POST",
     headers: {
-    Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
     },
-};
+    body: JSON.stringify(payload),
+    };
+    
+    
+    const response = await fetch(`${BACKEND_URL}/users/getOneUser`, requestOptions);
 
-const response = await fetch(`${BACKEND_URL}/users/getOneUser`, requestOptions);
-
-if (response.status !== 200) {
+    if (response.status !== 200) {
     throw new Error("Unable to fetch users");
-}
+    }
 
-const data = await response.json();
-return data;
+    const data = await response.json();
+    return data;
 };

@@ -14,7 +14,8 @@ const createToken = async (req, res) => {
     res.status(401).json({ message: "Password incorrect" });
   } else {
     const token = generateToken(user.id);
-    res.status(201).json({ token: token, user_id: user.id,  message: "OK" });
+    res.status(201).json({ token: token, userId:user._id, message: "OK" });
+
   }
 };
 

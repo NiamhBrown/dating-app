@@ -11,9 +11,10 @@ export const LoginPage = () => {
     event.preventDefault();
     try {
 
-      const data = await login(email, password);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user_id", data.user_id);
+      const responseFromLogin = await login(email, password);
+      console.log("responselogin", responseFromLogin)
+      localStorage.setItem("token", responseFromLogin.token);
+      localStorage.setItem("userId", responseFromLogin.userId);
       navigate("/home");
 
     } catch (err) {

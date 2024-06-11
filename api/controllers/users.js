@@ -29,6 +29,11 @@ const create = (req, res) => {
       res.status(400).json({ message: "Something went wrong" });
     });
 };
+const getOneUser = async (req, res) => {
+  const user = await User.find({_id:req.user_id});
+  const token = generateToken(req.user_id);
+  res.status(200).json({ user: user, token: token });
+};
 
 const getAllUsers = async (req, res) => {
   const users = await User.find();
@@ -43,6 +48,7 @@ const addUsertoRequests = async (req, res) => {
 
 const UsersController = {
   create: create,
+  getOneUser: getOneUser,
   getAllUsers: getAllUsers,
   addUsertoRequests: addUsertoRequests
 };

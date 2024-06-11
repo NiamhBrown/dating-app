@@ -1,9 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import "./App.css";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
+import HomePage from "./pages/Home/HomePage";
+import ProfilePage from "./pages/Profile/ProfilePage";
+
+
+
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -18,6 +22,14 @@ const router = createBrowserRouter([
   {
     path: "/feed",
     element: <FeedPage />,
+  },
+  {
+    path: "/home",
+    element: <HomePage/>,
+  },
+  {
+  path: "/profile",
+  element: <ProfilePage/>,
   }
 ]);
 

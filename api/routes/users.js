@@ -5,8 +5,9 @@ const UsersController = require("../controllers/users");
 const router = express.Router();
 
 router.post("/", UsersController.create);
-router.post("/sendrequest", UsersController.addUsertoRequests);
+router.post("/sendRequest", UsersController.addUsertoRequests);
+router.post("/acceptMatch", UsersController.addUsertoMatches);
 router.get("/", UsersController.getAllUsers);
-router.get("/getOneUser", UsersController.getOneUser)
+router.get("/:user_id", UsersController.getOneUser)
 
 module.exports = router;

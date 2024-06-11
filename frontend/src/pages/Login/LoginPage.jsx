@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { login } from "../../services/authentication";
 
 export const LoginPage = () => {
@@ -13,7 +12,7 @@ export const LoginPage = () => {
     try {
       const token = await login(email, password);
       localStorage.setItem("token", token);
-      navigate("/posts");
+      navigate("/home");
     } catch (err) {
       console.error(err);
       navigate("/login");

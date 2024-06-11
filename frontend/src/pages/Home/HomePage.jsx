@@ -1,13 +1,18 @@
-import { LogoutButton } from "../../components/LogOutButton"
 
+import LogOutButton from "../../components/LogOutButton";
+import MyProfileButton from "../../components/MyProfileButton";
 
 
 const HomePage = () => {
+    const userId = localStorage.getItem("userId")
+    const token = localStorage.getItem("token")
+
     return (<>
         <title>Homepage</title>
-        <LogoutButton/>
+        <LogOutButton/>
+        <MyProfileButton/>
         </>
-    )
-}
+    );
+};
 
 export default HomePage;

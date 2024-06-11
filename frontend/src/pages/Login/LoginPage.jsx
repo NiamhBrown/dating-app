@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { login } from "../../services/authentication";
 
 export const LoginPage = () => {
@@ -11,9 +10,12 @@ export const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const token = await login(email, password);
-      localStorage.setItem("token", token);
+
+      const data = await login(email, password);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user_id", data.user_id);
       navigate("/home");
+
     } catch (err) {
       console.error(err);
       navigate("/login");

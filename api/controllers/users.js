@@ -26,7 +26,15 @@ const create = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(400).json({ message: "Something went wrong" });
+      if (err.code === 11000) {
+        if (err.message.includes("email")) {
+          res.status(409).json({ message: "Email already exists" });
+        } else {
+          res.status(409).json({ message: "Username already exists" });
+        }
+      } else {
+        res.status(400).json({ message: "Something went wrong" });
+      }
     });
 };
 

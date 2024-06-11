@@ -12,7 +12,9 @@ export const SignupPage = () => {
   const [proficiencyLevel, setProficiencyLevel] = useState("");
   const [age, setAge] = useState("");
   const navigate = useNavigate();
+
   const [errors, setErrors] = useState({
+    email: "",
     username: "",
     password: [
       "Password must be at least 8 characters.",
@@ -58,7 +60,11 @@ export const SignupPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      username: "",
+      email: "",
+    }));
     try {
       await signup(
         email,
@@ -72,8 +78,20 @@ export const SignupPage = () => {
       console.log("redirecting...:");
       navigate("/login");
     } catch (err) {
+      if (err.message === "Username already exists") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          username: err.message,
+        }));
+      } else if (err.message === "Email already exists") {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          email: err.message,
+        }));
+      }
       console.error(err);
-      navigate("/signup");
+
+      console.log("signup page error: ", err.message);
     }
   };
 
@@ -104,33 +122,6 @@ export const SignupPage = () => {
     <>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          placeholder="Email"
-          id="email"
-          type="text"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          placeholder="Password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <br />
-        <label htmlFor="username">Username:</label>
-        <input
-          placeholder="Username"
-          id="username"
-          type="username"
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <br />
         <label htmlFor="forename">Forename:</label>
         <input
           placeholder="Forename"
@@ -149,21 +140,6 @@ export const SignupPage = () => {
           onChange={handleLastNameChange}
         />
         <br />
-        <label htmlFor="proficiencyLevel">Proficiency Level:</label>
-        <select
-          placeholder="ProficiencyLevel"
-          id="proficiencyLevel"
-          type="proficiencyLevel"
-          value={proficiencyLevel}
-          onChange={handleProficiencyLevelChange}
-        >
-          <option value="beginner">Beginner</option>
-          <option value="junior">Junior</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="senior">Senior</option>
-        </select>
-
-        <br />
         <label htmlFor="age">Age:</label>
         <input
           placeholder="Age"
@@ -173,6 +149,51 @@ export const SignupPage = () => {
           onChange={handleAgeChange}
         />
         <br />
+        <label htmlFor="username">Username:</label>
+        <input
+          placeholder="Username"
+          id="username"
+          type="username"
+          value={username}
+          onChange={handleUsernameChange}
+        />
+        <br />
+        <label htmlFor="email">Email:</label>
+        <input
+          placeholder="Email"
+          id="email"
+          type="text"
+          value={email}
+          onChange={handleEmailChange}
+        />
+        <br />
+        <label htmlFor="password">Password:</label>
+        <input
+          placeholder="Password"
+          id="password"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+        <br />
+
+        <br />
+        <label htmlFor="proficiencyLevel">Proficiency Level:</label>
+        <select
+          placeholder="ProficiencyLevel"
+          id="proficiencyLevel"
+          type="proficiencyLevel"
+          value={proficiencyLevel}
+          onChange={handleProficiencyLevelChange}
+        >
+          <option value="unspecified">Please select....</option>
+          <option value="beginner">Beginner</option>
+          <option value="junior">Junior</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="senior">Senior</option>
+        </select>
+
+        <br />
 
         {errors.password.length > 0 && (
           <ul>
@@ -181,6 +202,9 @@ export const SignupPage = () => {
             ))}
           </ul>
         )}
+        {errors.username && <p id="usernameError">{errors.username}</p>}
+        {errors.email.length > 0 && <p>{errors.email}</p>}
+        <br />
         <input role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
     </>

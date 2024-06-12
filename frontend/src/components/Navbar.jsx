@@ -2,12 +2,16 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { sidebarClasses, menuClasses } from 'react-pro-sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import { React, useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
+// import TextField from "@mui/material/TextField";
 // import List from "./Components/List"
 // import "./App.css";
 import { SearchBar } from './searchbar/SearchBar';
 import { SearchResultsList } from "./searchbar/SearchResultsList";
-// import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import LogOutButton from './LogOutButton';
+import myProfileButton from './myProfileButton';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+
 
 
 
@@ -15,13 +19,9 @@ const Navbar = () => {
   const [results, setResults] = useState([]);
   const token = localStorage.getItem("token")
     return (
-        <Sidebar
-        rootStyles={{
-            [`.${sidebarClasses.container}`]: {
-              backgroundColor: 'purple',
-            },
-          }}
-        >
+      <div style={{display: 'flex', height: '100vh', flexDirection: 'row'}}>
+        <ChatBubbleOutlineIcon style={{color: '#b6c8d9', fontSize: '50px', margin: '10px'}}/>
+        <Sidebar className='sidebar'>
             <Menu 
             menuItemStyles={{
                 button: {
@@ -44,6 +44,7 @@ const Navbar = () => {
                     <MenuItem> Calendar </MenuItem> */}
             </Menu>
         </Sidebar>
+      </div>
         )};
 
 export default Navbar;

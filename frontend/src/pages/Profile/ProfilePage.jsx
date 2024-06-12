@@ -2,7 +2,7 @@ import LogOutButton from "../../components/LogOutButton";
 import HomeButton from "../../components/HomeButton";
 import PictureUpload from "../../components/pictureUpload";
 import { useEffect, useState } from "react";
-import { getOneUser } from "../../services/users";
+import { getOneUser } from "../../services/user";
 import { useNavigate, useParams } from "react-router-dom";
 import ProfilePicture from "../../components/ProfilePicture";
 

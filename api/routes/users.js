@@ -13,4 +13,6 @@ router.get("/:user_id", UsersController.getOneUser)
 router.post("/getOneUser", UsersController.getOneUser)
 
 
+router.post("/profilePicture", tokenChecker, upload.single("profilePicture"), UsersController.addProfilePicture);
+
 module.exports = router;

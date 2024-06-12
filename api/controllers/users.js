@@ -60,6 +60,17 @@ const getOneUser = async (req, res) => {
 
 };
 
+
+const addProfilePicture = async (req, res) => {
+  try {
+    const user = await User.findById({_id:req.user_id});
+    user.profilePicture = "/uploads/" + req.file.filename;
+    await user.save();
+    res.status(200).json({message: "Profile picture updated", profilePicture: user.profilePicture });
+  } catch (error) {
+    res.status(500).json({ message: "Error uploading profile picture" });
+  };
+
 const getAllUsers = async (req, res) => {
   const users = await User.find();
   res.status(200).json({ users: users });
@@ -83,6 +94,7 @@ const addUsertoMatches = async (req, res) => {
 const UsersController = {
   create: create,
   getOneUser: getOneUser,
+  addProfilePicture: addProfilePicture,
   getAllUsers: getAllUsers,
   addUsertoRequests: addUsertoRequests,
   addUsertoMatches: addUsertoMatches

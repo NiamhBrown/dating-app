@@ -1,5 +1,6 @@
 import  LogOutButton from "../../components/LogOutButton";
 import  HomeButton  from "../../components/HomeButton";
+import PictureUpload from "../../components/pictureUpload";
 import { useEffect, useState } from "react";
 import { getOneUser } from "../../services/users";
 import { useNavigate, useParams } from "react-router-dom";
@@ -41,10 +42,11 @@ const ProfilePage = () =>{
         <>
         <HomeButton/>
         <LogOutButton/>
-        <p>please render</p>
+        <PictureUpload/>
         <p>{User.email}</p>
         <p>{User.forename}</p>
         <p>{User.lastName}</p>
+
         </>
     );
 };

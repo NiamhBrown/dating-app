@@ -37,7 +37,7 @@ export const sendMatchRequest = async(token, sender, recipient) => {
   return data;
 };
 
-export const getOneUser = async (token, user_id) => { 
+export const getOneUser = async (token, userId) => { 
   const requestOptions = {
   method: "GET",
   headers: {
@@ -45,7 +45,7 @@ export const getOneUser = async (token, user_id) => {
   },
 };
 
-const response = await fetch(`${BACKEND_URL}/users/${user_id}`, requestOptions);
+const response = await fetch(`${BACKEND_URL}/users/${userId}`, requestOptions);
 
 if (response.status !== 200) {
   throw new Error("Unable to fetch users");
@@ -97,7 +97,7 @@ export const uploadProfilePicture = async (token, file) => {
     throw error;
   }
 };
-export const getMatches = async (token, user_id) => { 
+export const getMatches = async (token, userId) => { 
   const requestOptions = {
   method: "GET",
   headers: {
@@ -105,7 +105,7 @@ export const getMatches = async (token, user_id) => {
   },
 };
 
-const response = await fetch(`${BACKEND_URL}/users/matches/${user_id}`, requestOptions);
+const response = await fetch(`${BACKEND_URL}/users/matches/${userId}`, requestOptions);
 
 if (response.status !== 200) {
   throw new Error("Unable to fetch users");

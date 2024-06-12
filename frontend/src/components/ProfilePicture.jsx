@@ -7,7 +7,7 @@ const ProfilePicture = ({ userId }) => {
   };
   return (
     <>
-      <img src={profileImageUrl} onError={handleError} width="400px"></img>
+      <img  src={profileImageUrl} onError={handleError} width="400px"></img>
     </>
   );
 };

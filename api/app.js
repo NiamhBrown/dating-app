@@ -2,12 +2,9 @@ const express = require("express");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
-<<<<<<< HEAD
 const socketIo = require("socket.io");
 const { createServer } = require("http");
-=======
 const path = require('path');
->>>>>>> main
 
 const usersRouter = require("./routes/users");
 const authenticationRouter = require("./routes/authentication");
@@ -16,13 +13,13 @@ const chatRouter = require("./routes/chats");
 const Chat = require("./models/chat");
 
 const app = express();
-const server = createServer(app);
-const io = socketIo(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
-});
+// const server = createServer(app);
+// const io = socketIo(server, {
+//   cors: {
+//     origin: "*",
+//     methods: ["GET", "POST"],
+//   },
+// });
 
 // Allow requests from any client
 // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
@@ -57,12 +54,12 @@ app.use((err, _req, res, _next) => {
 });
 
 //socket.io connection
-io.on("connection", (socket) => {
-  console.log("New client connected");
+// io.on("connection", (socket) => {
+//   console.log("New client connected");
 
-  socket.on("join", ({ chatId }))
-  console.log(` User joined chat ${chatId}`);
-})
+//   socket.on("join", ({ chatId }))
+//   console.log(` User joined chat ${chatId}`);
+// })
 
-socket.on("sendMessage", )
+// socket.on("sendMessage", ) 
 module.exports = app;

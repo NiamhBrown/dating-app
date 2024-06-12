@@ -9,8 +9,8 @@ router.post("/", UsersController.create);
 router.post("/sendRequest", UsersController.addUsertoRequests);
 router.post("/acceptMatch", UsersController.addUsertoMatches);
 router.get("/", UsersController.getAllUsers);
-router.get("/:user_id", UsersController.getOneUser)
-router.get("/matches/:user_id", UsersController.getMatches)
+router.get("/:userId", UsersController.getOneUser)
+router.get("/matches/:userId", UsersController.getMatches)
 
 //router.post("/getOneUser", UsersController.getOneUser)
 

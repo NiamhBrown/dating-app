@@ -13,14 +13,14 @@ export const FeedPage = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const user_id = localStorage.getItem("userId");
+        const userId = localStorage.getItem("userId");
         if (token) {
         getUsers(token)
             .then((data) => {
-            setUsers(data.users.filter((x) => x._id != user_id));
-            setFilteredUsers(data.users.filter((x) => x._id != user_id));
+            setUsers(data.users.filter((x) => x._id != userId));
+            setFilteredUsers(data.users.filter((x) => x._id != userId));
             setPosition(0);
-            const current_user = data.users.filter((x) => x._id == user_id);
+            const current_user = data.users.filter((x) => x._id == userId);
             setRequests(current_user[0].matchRequests);
             // localStorage.setItem("token", data.token);
             })
@@ -91,3 +91,5 @@ export const FeedPage = () => {
         </>
     );
 };
+
+export default FeedPage;

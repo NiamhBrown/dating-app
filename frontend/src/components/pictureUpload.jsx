@@ -2,7 +2,8 @@ import { useState } from "react";
 import { uploadProfilePicture } from "../services/users";
 
 
-const PictureUpload = ({ token }) => {
+const PictureUpload = () => {
+    const token = localStorage.getItem("token")
     console.log("THIS IS TOKEN!!:", token)
     const [profilePicture, setProfilePicture] = useState(null)
     const [isFormVisible, setIsFormVisible] = useState(false);

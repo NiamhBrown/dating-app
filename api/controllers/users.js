@@ -69,7 +69,7 @@ const addProfilePicture = async (req, res) => {
     res.status(200).json({message: "Profile picture updated", profilePicture: user.profilePicture });
   } catch (error) {
     res.status(500).json({ message: "Error uploading profile picture" });
-  };
+  }};
 
 const getAllUsers = async (req, res) => {
   const users = await User.find();

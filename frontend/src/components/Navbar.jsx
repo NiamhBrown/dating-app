@@ -21,7 +21,6 @@ const Navbar = () => {
     return (
       <div style={{display: 'flex', height: '100vh', flexDirection: 'row'}}>
         <ChatBubbleOutlineIcon style={{color: '#b6c8d9', fontSize: '50px', margin: '10px'}}/>
-        <Sidebar className='sidebar'>
         <Sidebar
         rootStyles={{
             [`.${sidebarClasses.container}`]: {

@@ -1,13 +1,9 @@
-import PictureUpload from "../../components/pictureUpload";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../../services/authentication";
 
-
-
-
-
-
-export const EditProfilePage  = () => {
+//THIS PAGE IS IN PROGRESS!!
+const EditProfilepPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -125,8 +121,7 @@ export const EditProfilePage  = () => {
 
   return (
     <>
-      <h2>Signup</h2>
-      <PictureUpload />
+      <h2>Edit Profile</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="forename">Forename:</label>
         <input
@@ -217,4 +212,4 @@ export const EditProfilePage  = () => {
   );
 };
 
-export default EditProfilePage;
+export default EditProfilepPage;

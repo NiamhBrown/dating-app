@@ -72,3 +72,28 @@ export const acceptMatch = async (token, sender, recipient) => {
   const data = await response.json();
   return data;
 };
+
+export const updateUserProfile = async (updateData, token) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/users/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+      },
+      body: JSON.stringify(updateData)
+    });
+
+    if (!response.ok) {
+      // Handle non-2xx responses
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update user profile');
+    }
+
+    const updatedUser = await response.json();
+    return updatedUser;
+  } catch (error) {
+    console.error('Error updating user profile:', error);
+    throw error;
+  }
+};

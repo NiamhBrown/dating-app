@@ -18,7 +18,7 @@ const PictureUpload = () => {
       console.log("Profile picture uploaded:", data);
       setIsFormVisible(false);
     } catch (err) {
-      console("Error uploading profile picture:", err);
+      console.error("Error uploading profile picture:", err);
     }
     window.location.reload();
   };

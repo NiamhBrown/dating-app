@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const chatController = require("./chats")
 
 const create = (req, res) => {
   const email = req.body.email;
@@ -52,6 +53,7 @@ const addUsertoMatches = async (req, res) => {
   const sender = req.body.sender;
   await User.findByIdAndUpdate(recipient, { $push: { matches: sender }});
   await User.findByIdAndUpdate(sender, { $push: { matches: recipient }, $pull: { matchRequests: recipient }});
+  chatController.create(sender, recipient);
   res.status(201).json({ message: "OK" });
 }
 

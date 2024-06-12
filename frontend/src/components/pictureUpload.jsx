@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { uploadProfilePicture } from "../services/users";
+import { uploadProfilePicture } from "../services/user";
 
 
 const PictureUpload = () => {
     const token = localStorage.getItem("token")
-    console.log("THIS IS TOKEN!!:", token)
     const [profilePicture, setProfilePicture] = useState(null)
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -14,11 +13,12 @@ const PictureUpload = () => {
 
     const handleUpload = async () => {
         try {
+            console.log("token",token)
             const data = await uploadProfilePicture(token, profilePicture);
             console.log("Profile picture uploaded:", data);
             setIsFormVisible(false);
         } catch (err) {
-            console("Error uploading profile picture:", err);
+            console.log("Error uploading profile picture:", err);
         }
         window.location.reload();
     };

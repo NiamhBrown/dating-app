@@ -1,8 +1,8 @@
 import  LogOutButton from "../../components/LogOutButton";
 import  HomeButton  from "../../components/HomeButton";
 import { useEffect, useState } from "react";
-import { getOneUser } from "../../services/users";
 import { useNavigate, useParams } from "react-router-dom";
+import { getOneUser } from "../../services/user";
 
 const OtherProfilePage = () =>{
     const userId = useParams().userId;    

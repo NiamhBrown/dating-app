@@ -37,7 +37,7 @@ export const sendMatchRequest = async(token, sender, recipient) => {
   return data;
 };
 
-export const getOneUser = async (token, user_id) => {
+export const getOneUser = async (token, user_id) => { 
   const requestOptions = {
   method: "GET",
   headers: {

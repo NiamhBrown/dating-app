@@ -1,6 +1,7 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+// DO NOT USE - USE user.js
 
-export const getOneUser = async (token, userId) => {
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+export const getOneUser = async (token, userId) => { // DO NOT USE
     const payload = {
     userId: userId,
     };

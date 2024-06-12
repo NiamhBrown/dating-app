@@ -11,7 +11,7 @@ export const FeedPage = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const user_id = localStorage.getItem("user_id");
+        const user_id = localStorage.getItem("userId");
         if (token) {
         getUsers(token)
             .then((data) => {

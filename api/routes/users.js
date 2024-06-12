@@ -10,8 +10,9 @@ router.post("/sendRequest", UsersController.addUsertoRequests);
 router.post("/acceptMatch", UsersController.addUsertoMatches);
 router.get("/", UsersController.getAllUsers);
 router.get("/:user_id", UsersController.getOneUser)
+router.get("/matches/:user_id", UsersController.getMatches)
 
-router.post("/getOneUser", UsersController.getOneUser)
+//router.post("/getOneUser", UsersController.getOneUser)
 
 
 router.post("/profilePicture", tokenChecker, upload.single("profilePicture"), UsersController.addProfilePicture);

@@ -39,31 +39,17 @@ const create = (req, res) => {
     });
 };
 const getOneUser = async (req, res) => {
-
-  try {
-    const { userId } = req.body; 
-    if (!userId) {
-      return res.status(400).json({ message: "User ID is required" });
-    }
-
-    const user = await User.findById(userId); 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const token = generateToken(user._id.toString());
-    res.status(200).json({ user, token });
-  } catch (err) {
-    console.error("Error fetching user:", err);
-    res.status(500).json({ message: "Something went wrong" });
-  }
-
+  const user = await User.findById(req.params.user_id);
+  const token = generateToken(req.params.user_id);
+  res.status(200).json({ user: user , token: token});
 };
 
 
 const addProfilePicture = async (req, res) => {
   try {
+    console.log("userId",user_id)
     const user = await User.findById({_id:req.user_id});
+    console.log("user",user)
     user.profilePicture = "/uploads/" + req.file.filename;
     await user.save();
     res.status(200).json({message: "Profile picture updated", profilePicture: user.profilePicture });
@@ -74,6 +60,18 @@ const addProfilePicture = async (req, res) => {
 const getAllUsers = async (req, res) => {
   const users = await User.find();
   res.status(200).json({ users: users });
+};
+
+const getMatches = async (req, res) => {
+  const users = await User.find();
+  const currentUser = await User.findById({_id:req.params.user_id})
+  const matches = users.filter((user) =>{
+    return (
+      user &&
+      currentUser.matches.includes(user._id))})
+  
+      res.status(200).json({ users: matches });
+
 };
 
 const addUsertoRequests = async (req, res) => {
@@ -97,7 +95,8 @@ const UsersController = {
   addProfilePicture: addProfilePicture,
   getAllUsers: getAllUsers,
   addUsertoRequests: addUsertoRequests,
-  addUsertoMatches: addUsertoMatches
+  addUsertoMatches: addUsertoMatches,
+  getMatches : getMatches
 };
 
 module.exports = UsersController;

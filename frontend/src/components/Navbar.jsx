@@ -18,7 +18,7 @@ const Navbar = () => {
         <Sidebar
         rootStyles={{
             [`.${sidebarClasses.container}`]: {
-              backgroundColor: 'purple',
+              // backgroundColor: 'purple',
             },
           }}
         >

@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-//import "../../../../css/SearchResults.css";
+import "./SearchResult.css";
 
-export const SearchResult = ({ SURNAME, FORENAME, userid }) => {
+export const SearchResult = ({ result }) => {
     const navigate = useNavigate ();
 
     const handleClick = () => {
-        navigate(`/profile/${userid}`);
+        navigate(`/profile/${result._id}`); // change to link to chat
         window.location.reload();
     };
     
@@ -14,7 +14,7 @@ export const SearchResult = ({ SURNAME, FORENAME, userid }) => {
             className="search-result"
             onClick={handleClick}
         >
-        {FORENAME +' ' + SURNAME}
+        {result.forename +' ' + result.lastName}
         </div>
     );
 };

@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { generateToken } = require("../lib/token");
 
 const create = (req, res) => {
   const email = req.body.email;
@@ -26,14 +27,39 @@ const create = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(400).json({ message: "Something went wrong" });
+      if (err.code === 11000) {
+        if (err.message.includes("email")) {
+          res.status(409).json({ message: "Email already exists" });
+        } else {
+          res.status(409).json({ message: "Username already exists" });
+        }
+      } else {
+        res.status(400).json({ message: "Something went wrong" });
+      }
     });
 };
 const getOneUser = async (req, res) => {
-  const user = await User.find({_id:req.user_id});
-  const token = generateToken(req.user_id);
-  res.status(200).json({ user: user, token: token });
+
+  try {
+    const { userId } = req.body; 
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const user = await User.findById(userId); 
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const token = generateToken(user._id.toString());
+    res.status(200).json({ user, token });
+  } catch (err) {
+    console.error("Error fetching user:", err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+
 };
+
 
 const addProfilePicture = async (req, res) => {
   try {
@@ -44,12 +70,34 @@ const addProfilePicture = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error uploading profile picture" });
   };
+
+const getAllUsers = async (req, res) => {
+  const users = await User.find();
+  res.status(200).json({ users: users });
+};
+
+const addUsertoRequests = async (req, res) => {
+  const recipient = req.body.recipient;
+  const sender = req.body.sender;
+  await User.findByIdAndUpdate(recipient, { $push: { matchRequests: sender }});
+  res.status(201).json({ message: "OK" });
+}
+
+const addUsertoMatches = async (req, res) => {
+  const recipient = req.body.recipient;
+  const sender = req.body.sender;
+  await User.findByIdAndUpdate(recipient, { $push: { matches: sender }});
+  await User.findByIdAndUpdate(sender, { $push: { matches: recipient }, $pull: { matchRequests: recipient }});
+  res.status(201).json({ message: "OK" });
 }
 
 const UsersController = {
   create: create,
   getOneUser: getOneUser,
-  addProfilePicture: addProfilePicture
+  addProfilePicture: addProfilePicture,
+  getAllUsers: getAllUsers,
+  addUsertoRequests: addUsertoRequests,
+  addUsertoMatches: addUsertoMatches
 };
 
 module.exports = UsersController;

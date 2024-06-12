@@ -29,7 +29,8 @@ const userSchema = new mongoose.Schema({
   },
   proficiencyLevel: {
     type: String,
-    enum: ["beginner", "junior", "intermediate", "senior"],
+    enum: ["unspecified", "beginner", "junior", "intermediate", "senior"],
+    default: "unspecified",
     required: true,
   },
   age: {

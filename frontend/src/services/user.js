@@ -37,7 +37,7 @@ export const sendMatchRequest = async(token, sender, recipient) => {
   return data;
 };
 
-export const getOneUser = async (token, user_id) => {
+export const getOneUser = async (token, user_id) => { 
   const requestOptions = {
   method: "GET",
   headers: {
@@ -71,4 +71,46 @@ export const acceptMatch = async (token, sender, recipient) => {
   }
   const data = await response.json();
   return data;
+};
+export const uploadProfilePicture = async (token, file) => {
+  const formData = new FormData();
+  formData.append("profilePicture", file);
+  const requestOptions = {
+      method: "POST",
+      headers: {
+          Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+  };
+  try {
+    const response = await fetch(`${BACKEND_URL}/users/profilePicture`, requestOptions);
+
+    if (!response.ok) {
+        const errorDetails = await response.text();
+        throw new Error(`Unable to add profile picture: ${errorDetails}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    // Handle and possibly re-throw the error to the caller
+    console.error("Error uploading profile picture:", error);
+    throw error;
+  }
+};
+export const getMatches = async (token, user_id) => { 
+  const requestOptions = {
+  method: "GET",
+  headers: {
+  Authorization: `Bearer ${token}`,
+  },
+};
+
+const response = await fetch(`${BACKEND_URL}/users/matches/${user_id}`, requestOptions);
+
+if (response.status !== 200) {
+  throw new Error("Unable to fetch users");
+}
+
+const data = await response.json();
+return data;
 };

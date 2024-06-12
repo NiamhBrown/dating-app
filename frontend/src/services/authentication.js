@@ -16,6 +16,7 @@ export const login = async (email, password) => {
   };
 
   const response = await fetch(`${BACKEND_URL}/tokens`, requestOptions);
+  console.log("response",response)
 
   // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
   if (response.status === 201) {
@@ -25,7 +26,7 @@ export const login = async (email, password) => {
     throw new Error(
       `Received status ${response.status} when logging in. Expected 201`
     );
-  }
+  };
 };
 
 export const signup = async (
@@ -44,7 +45,7 @@ export const signup = async (
     forename: forename,
     lastName: lastName,
     proficiencyLevel: proficiencyLevel,
-    age: age,
+    age: age
   };
 
   const requestOptions = {
@@ -60,9 +61,15 @@ export const signup = async (
   // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
   if (response.status === 201) {
     return;
+  } else if (response.status === 409) {
+    const errorData = await response.json();
+    console.log("409 errorData here: ", errorData);
+    throw new Error(errorData.message);
+
   } else {
+    console.log(data)
     throw new Error(
       `Received status ${response.status} when signing up. Expected 201`
     );
-  }
+  };
 };

@@ -2,8 +2,12 @@ const express = require("express");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
+<<<<<<< HEAD
 const socketIo = require("socket.io");
 const { createServer } = require("http");
+=======
+const path = require('path');
+>>>>>>> main
 
 const usersRouter = require("./routes/users");
 const authenticationRouter = require("./routes/authentication");
@@ -27,6 +31,10 @@ app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`
 app.use(bodyParser.json());
+
+// Serve static files from the "uploads" directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // API Routes
 app.use("/users", usersRouter);

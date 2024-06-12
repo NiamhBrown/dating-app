@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -29,7 +30,8 @@ const userSchema = new mongoose.Schema({
   },
   proficiencyLevel: {
     type: String,
-    enum: ["beginner", "junior", "intermediate", "senior"],
+    enum: ["unspecified", "beginner", "junior", "intermediate", "senior"],
+    default: "unspecified",
     required: true,
   },
   age: {
@@ -108,6 +110,23 @@ const userSchema = new mongoose.Schema({
     default: [],
   },
 });
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
 
 const User = mongoose.model("User", userSchema);
 

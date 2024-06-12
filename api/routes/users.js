@@ -1,6 +1,7 @@
 const express = require("express");
-
 const UsersController = require("../controllers/users");
+const upload = require("../middleware/multer");
+const tokenChecker = require("../middleware/tokenChecker");
 
 const router = express.Router();
 
@@ -9,5 +10,11 @@ router.post("/sendRequest", UsersController.addUsertoRequests);
 router.post("/acceptMatch", UsersController.addUsertoMatches);
 router.get("/", UsersController.getAllUsers);
 router.get("/:user_id", UsersController.getOneUser)
+router.get("/matches/:user_id", UsersController.getMatches)
+
+//router.post("/getOneUser", UsersController.getOneUser)
+
+
+router.post("/profilePicture", tokenChecker, upload.single("profilePicture"), UsersController.addProfilePicture);
 
 module.exports = router;

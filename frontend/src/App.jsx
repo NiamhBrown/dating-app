@@ -7,6 +7,8 @@ import { FeedPage } from "./pages/Feed/FeedPage";
 import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import OtherProfilePage from "./pages/Profile/anotherUserProfile";
+import EditProfilePage from "./pages/Profile/editProfilePage"; //update to cap E 
+
 
 
 
@@ -38,6 +40,11 @@ const router = createBrowserRouter([
   {
     path: "/profile/:userId",
     element: <OtherProfilePage/>
+
+  },
+  {
+    path: "/profile/edit",
+    element: <EditProfilePage/>
 
   }
 ]);

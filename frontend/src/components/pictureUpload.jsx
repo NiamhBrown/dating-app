@@ -28,7 +28,7 @@ const PictureUpload = () => {
         className="primary-button"
         onClick={() => setIsFormVisible(!isFormVisible)}
       >
-        {isFormVisible ? "Cancel" : "Upload Picture"}
+        {isFormVisible ? "Cancel" : "Update Picture"}
       </button>
       {isFormVisible && (
         <div>

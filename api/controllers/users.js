@@ -38,6 +38,7 @@ const create = (req, res) => {
       }
     });
 };
+
 const getOneUser = async (req, res) => {
 
   try {
@@ -91,13 +92,35 @@ const addUsertoMatches = async (req, res) => {
   res.status(201).json({ message: "OK" });
 }
 
+
+// Controller to update user profile
+const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.user_id; // Assuming user ID is available in the request object (e.g., from authentication middleware)
+    const updateData = req.body;
+
+    // Find user by ID and update
+    const user = await User.findByIdAndUpdate(userId, updateData, { new: true });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+};
+
+
 const UsersController = {
   create: create,
   getOneUser: getOneUser,
   addProfilePicture: addProfilePicture,
   getAllUsers: getAllUsers,
   addUsertoRequests: addUsertoRequests,
-  addUsertoMatches: addUsertoMatches
+  addUsertoMatches: addUsertoMatches,
+  updateUserProfile: updateUserProfile,
 };
 
 module.exports = UsersController;

@@ -1,18 +1,17 @@
 import LogOutButton from "../../components/LogOutButton";
 import HomeButton from "../../components/HomeButton";
-import PictureUpload from "../../components/pictureUpload";
 import { useEffect, useState } from "react";
 import { getOneUser } from "../../services/users";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProfilePicture from "../../components/ProfilePicture";
+import EditProfileButton from "../../components/EditProfileButton";
 
 const ProfilePage = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [User, setUser] = useState({ email: "loading" });
-  const serverUrl = "http://localhost:3000";
-  const profileImageUrl = `${serverUrl}/uploads/${userId}`;
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,9 +36,9 @@ const ProfilePage = () => {
       <HomeButton />
       <LogOutButton />
       <hr />
+      <EditProfileButton />
       <ProfilePicture userId={userId} />
-      {/* <img src={profileImageUrl}></img> */}
-      <PictureUpload />
+
       <p>{User.email}</p>
       <p>{User.forename}</p>
       <p>{User.lastName}</p>

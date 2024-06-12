@@ -16,4 +16,6 @@ router.post("/getOneUser", UsersController.getOneUser)
 
 router.post("/profilePicture", tokenChecker, upload.single("profilePicture"), UsersController.addProfilePicture);
 
+router.put('/profile', tokenChecker, UsersController.updateUserProfile);
+
 module.exports = router;

@@ -19,7 +19,7 @@ const PictureUpload = () => {
     } catch (err) {
       console("Error uploading profile picture:", err);
     }
-    // window.location.reload();
+    window.location.reload();
   };
 
   return (

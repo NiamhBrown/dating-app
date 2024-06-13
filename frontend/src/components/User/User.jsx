@@ -5,16 +5,16 @@ const User = (props) => {
     const incriment = props.methods[0];
     const decriment = props.methods[1];
     const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
+    const userId = localStorage.getItem("userId");
 
     const sendRequest = () => {
 
         // add error handling
 
         if (props.requests.includes(props.user._id)) {
-            acceptMatch(token, user_id, props.user._id);
+            acceptMatch(token, userId, props.user._id);
         } else {
-            sendMatchRequest(token, user_id, props.user._id);
+            sendMatchRequest(token, userId, props.user._id);
         }
         incriment();
     };

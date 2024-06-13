@@ -39,16 +39,16 @@ const create = (req, res) => {
     });
 };
 const getOneUser = async (req, res) => {
-  const user = await User.findById(req.params.user_id);
-  const token = generateToken(req.params.user_id);
+  const user = await User.findById(req.params.userId);
+  const token = generateToken(req.params.userId);
   res.status(200).json({ user: user , token: token});
 };
 
 
 const addProfilePicture = async (req, res) => {
   try {
-    console.log("userId",user_id)
-    const user = await User.findById({_id:req.user_id});
+    console.log("userId",userId)
+    const user = await User.findById({_id:req.userId});
     console.log("user",user)
     user.profilePicture = "/uploads/" + req.file.filename;
     await user.save();
@@ -64,7 +64,7 @@ const getAllUsers = async (req, res) => {
 
 const getMatches = async (req, res) => {
   const users = await User.find();
-  const currentUser = await User.findById({_id:req.params.user_id})
+  const currentUser = await User.findById({_id:req.params.userId})
   const matches = users.filter((user) =>{
     return (
       user &&

@@ -1,4 +1,8 @@
-const EditProfileButton = ({
+// Button.js
+
+// import "./Button.css"; // Ensure you create this CSS file for button styles
+
+const Button = ({
   children,
   onClick,
   className = "",
@@ -17,4 +21,4 @@ const EditProfileButton = ({
   );
 };
 
-export default EditProfileButton;
+export default Button;

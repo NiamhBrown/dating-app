@@ -2,11 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
-
+// import { Container, Header, List } from "semantic-ui-react";
 import { FeedPage } from "./pages/Feed/FeedPage";
 import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import OtherProfilePage from "./pages/Profile/anotherUserProfile";
+
 
 
 
@@ -38,8 +39,7 @@ const router = createBrowserRouter([
   {
     path: "/profile/:userId",
     element: <OtherProfilePage/>
-
-  }
+  },
 ]);
 
 const App = () => {

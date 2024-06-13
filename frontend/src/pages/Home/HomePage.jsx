@@ -1,9 +1,10 @@
-
+import './HomePage.css';
 import { useNavigate } from "react-router-dom";
 import LogOutButton from "../../components/LogOutButton";
 import MyProfileButton from "../../components/MyProfileButton";
 import Navbar from "../../components/Navbar";
 import Burger from "../../components/Burger";
+import { Container } from "rsuite";
 
 
 
@@ -15,13 +16,12 @@ const HomePage = () => {
         navigate("/login")
     }
 
-    return (<>
-        <title>Homepage</title>
-        <Burger />
-        <Navbar />
-        <LogOutButton/>
-        <MyProfileButton/>
-        </>
+    return (
+        <Container className="container">
+            <Navbar className="navbarhome"/>
+            <div className='maincontent'/>
+            <Burger className="burgerhome"/>
+        </Container>
     );
 };
 

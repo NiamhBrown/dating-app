@@ -1,34 +1,57 @@
 import * as React from 'react';
-import LogOutButton from './LogOutButton';
-import myProfileButton from './myProfileButton';
+import { useState } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import Person2Icon from '@mui/icons-material/Person2';
 import "rsuite/dist/rsuite.min.css"; 
 import { Dropdown } from "rsuite";
 
-    const Burger = () => { 
+const Burger = () => { 
+    const location = useLocation();
+    const currentPath = location.pathname;
+    const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
 
-        const navigate = useNavigate()
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        navigate('/login');
+    };
 
-        const handleLogout=()=>{
-            localStorage.removeItem('token')
-            localStorage.removeItem('userId')
-            navigate('/login')
-        };
+    const handleMyProfileButton = () => {
+        navigate('/profile');
+    };
 
-        const handleMyProfileButton = () => {
-            navigate('/profile');
-        };
+    const handleHome = () => {
+        navigate('/home');
+    };
 
-  return (
-        <div style={{ marginTop: 20, width: 340 }}> 
-          <Dropdown variant="contained" startIcon={<MenuOutlinedIcon/>} trigger="click"> 
-            <Dropdown.Item onClick={handleMyProfileButton}>Profile</Dropdown.Item> 
-            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-          </Dropdown> 
+    const handleToggle = () => {
+        setOpen(!open);
+    };
+
+    return (
+        <div style={{ position: 'absolute', top: '15px', right: '45px' }}> 
+            <MenuOutlinedIcon onClick={handleToggle} style={{ cursor: 'pointer' }} />
+            {open && (
+                <Dropdown 
+                    open={true}
+                    onSelect={() => setOpen(false)}
+                    style={{ position: 'absolute', top: '30px', right: '0px' }}
+                >
+                    {currentPath !== "/profile" && (
+                        <Dropdown.Item onClick={handleMyProfileButton}>Profile</Dropdown.Item>
+                    )}
+                    {currentPath !== "/home" && (
+                        <Dropdown.Item onClick={handleHome}>Home</Dropdown.Item>
+                    )}
+                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown>
+            )}
         </div>
-  ); 
-} ;
+    ); 
+};
 
 export default Burger;
+
+

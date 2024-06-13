@@ -2,15 +2,12 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { sidebarClasses, menuClasses } from 'react-pro-sidebar';
 import { Link, useNavigate } from 'react-router-dom';
 import { React, useState, useEffect } from "react";
-// import TextField from "@mui/material/TextField";
-// import List from "./Components/List"
-// import "./App.css";
 import { SearchBar } from './searchbar/SearchBar';
 import { SearchResultsList } from "./searchbar/SearchResultsList";
 import LogOutButton from './LogOutButton';
 import myProfileButton from './myProfileButton';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+
 
 
 
@@ -19,15 +16,9 @@ const Navbar = () => {
   const [results, setResults] = useState([]);
   const token = localStorage.getItem("token")
     return (
-      <div style={{display: 'flex', height: '100vh', flexDirection: 'row'}}>
-        <ChatBubbleOutlineIcon style={{color: '#b6c8d9', fontSize: '50px', margin: '10px'}}/>
-        <Sidebar
-        rootStyles={{
-            [`.${sidebarClasses.container}`]: {
-              // backgroundColor: 'purple',
-            },
-          }}
-        >
+      <div>
+        {/* This was inside div above: style={{display: 'flex', height: '100vh', flexDirection: 'row'}} */}
+        <Sidebar style={{display: 'flex', height: '100vh', flexDirection: 'column', justifyContent: 'flex-start', width: '300px'}}>
             <Menu 
             menuItemStyles={{
                 button: {
@@ -40,7 +31,7 @@ const Navbar = () => {
                 },
               }}
             >
-                <SubMenu label="Navbar">
+                <SubMenu label={<ChatBubbleOutlineIcon style={{color: '#b6c8d9', fontSize: '40px', margin: '10px'}}/>}>
                     <div>
                     <SearchBar setResults={setResults} />
                     {results && results.length > 0 && <SearchResultsList results={results} token={token}/>}

@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.maincontent {
+    flex: 1;
+    position: relative;
+}
+
+/* .burgerhome {
+  align-items: flex-end;
+  justify-content: right;
+} */
+/* 
+.navbarhome {
+    display: flex;
+    width: 500px;
+    align-items: flex-start;
+    justify-content: left;
+    height: 100vh;
+} */

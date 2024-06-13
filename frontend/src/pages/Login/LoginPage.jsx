@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/authentication";
+import './Login.css';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -33,8 +34,8 @@ export const LoginPage = () => {
 
   return (
     <>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className="logintitle">Login</h2>
+      <form className="formcontainer" onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
           id="email"

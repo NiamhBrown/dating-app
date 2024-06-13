@@ -21,11 +21,8 @@ const io = Server(server, {
 });
 
 app.use(cors());
-
 app.use(bodyParser.json());
-
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
 app.use("/users", usersRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/chat", chatRouter);
@@ -47,14 +44,16 @@ app.use((err, _req, res, _next) => {
 io.on("connection", (socket) => {
   console.log("New client connected");
 
+  // Joining a chat room
   socket.on("join", ({ chatId }) => {
     socket.join(chatId);
     console.log(`User joined chat: ${chatId}`);
   });
 
+  // Handling message sending
   socket.on("sendMessage", async ({ chatId, senderId, message }) => {
     const newMessage = await ChatsController.sendMessage(chatId, senderId, message);
-    io.to(chatId).emit("receiveMessage", newMessage);
+    io.to(chatId).emit("receiveMessage", newMessage);  // Ensure event name matches frontend
   });
 
   socket.on("disconnect", () => {

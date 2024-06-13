@@ -7,12 +7,7 @@ import { FeedPage } from "./pages/Feed/FeedPage";
 import HomePage from "./pages/Home/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import OtherProfilePage from "./pages/Profile/anotherUserProfile";
-
-
-
-
-
-
+import EditProfilePage from "./pages/Profile/EditProfilePage";
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
   {
@@ -25,15 +20,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <HomePage/>,
+    element: <HomePage />,
   },
   {
-  path: "/profile",
-  element: <ProfilePage/>
+    path: "/profile",
+    element: <ProfilePage />,
   },
   {
     path: "/profile/:userId",
-    element: <OtherProfilePage/>
+    element: <OtherProfilePage />,
+  },
+  {
+    path: "/profile/edit",
+    element: <EditProfilePage />,
   },
 ]);
 

@@ -1,10 +1,11 @@
-import './profile.css';
+import "./profile.css";
 import PictureUpload from "../../components/pictureUpload";
 import { useEffect, useState } from "react";
 import { getOneUser } from "../../services/user";
 import { useNavigate, useParams } from "react-router-dom";
 import ProfilePicture from "../../components/ProfilePicture";
 import Burger from "../../components/Burger";
+import EditProfileButton from "../../components/EditProfileButton";
 
 const ProfilePage = () => {
   const userId = localStorage.getItem("userId");
@@ -35,16 +36,17 @@ const ProfilePage = () => {
   return (
     <>
       {/* <hr /> */}
-      <div className='burgercontainer'>
-      <Burger />
+      <div className="burgercontainer">
+        <Burger />
       </div>
-      <div className='profilecontainer'>
-      <ProfilePicture userId={userId} />
-      {/* <img src={profileImageUrl}></img> */}
-      <PictureUpload />
-      <p>{User.email}</p>
-      <p>{User.forename}</p>
-      <p>{User.lastName}</p>
+      <div className="profilecontainer">
+        <ProfilePicture userId={userId} />
+        {/* <img src={profileImageUrl}></img> */}
+        <PictureUpload />
+        <p>{User.email}</p>
+        <p>{User.forename}</p>
+        <p>{User.lastName}</p>
+        <EditProfileButton />
       </div>
     </>
   );

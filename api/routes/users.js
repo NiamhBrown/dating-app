@@ -9,12 +9,17 @@ router.post("/", UsersController.create);
 router.post("/sendRequest", UsersController.addUsertoRequests);
 router.post("/acceptMatch", UsersController.addUsertoMatches);
 router.get("/", UsersController.getAllUsers);
-router.get("/:user_id", UsersController.getOneUser)
-router.get("/matches/:user_id", UsersController.getMatches)
+router.get("/:user_id", UsersController.getOneUser);
+router.get("/matches/:user_id", UsersController.getMatches);
 
 //router.post("/getOneUser", UsersController.getOneUser)
 
+router.post(
+  "/profilePicture",
+  tokenChecker,
+  upload.single("profilePicture"),
+  UsersController.addProfilePicture
+);
 
-router.post("/profilePicture", tokenChecker, upload.single("profilePicture"), UsersController.addProfilePicture);
-
+router.put("/profile", tokenChecker, UsersController.updateUserProfile);
 module.exports = router;

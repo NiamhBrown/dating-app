@@ -51,7 +51,7 @@ export const FeedPage = () => {
     return (
         <>
         <h2>Users</h2>
-        <div className="feed" role="feed">
+        <div>
             {users.length != 0 &&
             <User 
                 user={users[position]} 

@@ -58,22 +58,22 @@ const userSchema = new mongoose.Schema({
       default: [],
     },
   },
-  experience: {
-    type: String,
-    default: "",
-  },
+  // experience: {
+  //   type: String,
+  //   default: "",
+  // },
   projects: {
     type: [String],
     default: [],
   },
-  languages: {
-    type: [String],
-    default: [],
-  },
-  technologies: {
-    type: [String],
-    default: [],
-  },
+  // languages: {
+  //   type: [String],
+  //   default: [],
+  // },
+  // technologies: {
+  //   type: [String],
+  //   default: [],
+  // },
   projectType: {
     type: String,
     default: "",

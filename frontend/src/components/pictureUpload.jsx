@@ -3,7 +3,7 @@ import { uploadProfilePicture } from "../services/users";
 
 const PictureUpload = () => {
   const token = localStorage.getItem("token");
-  console.log("THIS IS TOKEN!!:", token);
+//   console.log("THIS IS TOKEN!!:", token);
   const [profilePicture, setProfilePicture] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 

@@ -7,7 +7,6 @@ export const SearchResultsList = ({ results }) => {
             {results.map((result, id) => {
                 return (
                     <div key={id}>
-                        {/* <SearchResult FORENAME={result.forename} SURNAME={result.lastName} userid = {result._id} /> */}
                         <SearchResult result= {result} />
                     </div>
                 );

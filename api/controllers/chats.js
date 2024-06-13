@@ -1,3 +1,4 @@
+const { Socket } = require("socket.io");
 const Chat = require("../models/chat");
 
 const create = async (sender, recipient) => {

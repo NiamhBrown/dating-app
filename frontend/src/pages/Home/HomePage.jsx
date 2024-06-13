@@ -4,6 +4,7 @@ import LogOutButton from "../../components/LogOutButton";
 import MyProfileButton from "../../components/MyProfileButton";
 import Navbar from "../../components/Navbar";
 import FeedPage from "../Feed/FeedPage";
+import { UserChat } from "../Profile/UserChat";
 
 
 
@@ -17,10 +18,11 @@ const HomePage = () => {
 
     return (<>
         <title>Homepage</title>
-        <Navbar />
+        {/* <Navbar /> */}
         <LogOutButton/>
         <MyProfileButton/>
         <FeedPage />
+        <UserChat />
         </>
     );
 };

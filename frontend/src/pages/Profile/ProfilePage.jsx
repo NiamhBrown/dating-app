@@ -2,10 +2,9 @@ import "./profile.css";
 import PictureUpload from "../../components/pictureUpload";
 import { useEffect, useState } from "react";
 import { getOneUser } from "../../services/user";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProfilePicture from "../../components/ProfilePicture";
 import Burger from "../../components/Burger";
-import EditProfileButton from "../../components/EditProfileButton";
 import Modal from "../../components/EditUser/Modal";
 import { updateUserProfile } from "../../services/user";
 import EditProfileForm from "../../components/EditUser/EditProfileForm";
@@ -50,7 +49,7 @@ const ProfilePage = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [navigate]);
 
   const handleSave = async (updatedData) => {
     try {
@@ -126,10 +125,7 @@ const ProfilePage = () => {
           <button onClick={() => setShowModal(true)}>Edit profile</button>
           <Modal show={showModal} onClose={() => setShowModal(false)}>
             <h2>Edit Profile</h2>
-            <p>
-              This is a modal! You can put any content here, such as forms or
-              text.
-            </p>
+
             <EditProfileForm
               user={User}
               onSave={handleSave}

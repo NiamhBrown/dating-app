@@ -1,215 +1,115 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signup } from "../../services/authentication";
+import { useState, useEffect } from 'react';
+import { updateUserProfile } from '../../services/user';
+import { getOneUser } from '../../services/users';
 
-//THIS PAGE IS IN PROGRESS!!
-const EditProfilepPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [forename, setForename] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [proficiencyLevel, setProficiencyLevel] = useState("");
-  const [age, setAge] = useState("");
-  const navigate = useNavigate();
 
-  const [errors, setErrors] = useState({
-    email: "",
-    username: "",
-    password: [
-      "Password must be at least 8 characters.",
-      "Password must have at least one capital letter.",
-      "Password must contain a special character.",
-    ],
-  });
-  useEffect(() => {
-    const capitalLetterRegex = /[A-Z]/;
-    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
+const EditProfilePage = () => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
-    const validatePassword = () => {
-      let updatedErrors = [
-        "Password must be at least 8 characters.",
-        "Password must have at least one capital letter.",
-        "Password must contain a special character.",
-      ];
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        forename: '',
+        lastName: '',
+        profilePicture: '',
+        proficiencyLevel: 'unspecified',
+        age: '',
+        gender: 'prefer not to say',
+        location: '',
+        lookingFor: {
+          proficiency: 'unspecified',
+          techStack: [],
+        },
+        experience: '',
+        projects: [],
+        languages: [],
+        technologies: [],
+        projectType: '',
+        techStack: [],
+        job: '',
+        bio: '',
+        url: '',
+    });
 
-      if (password.length >= 8) {
-        updatedErrors = updatedErrors.filter(
-          (error) => error !== "Password must be at least 8 characters."
-        );
-      }
-      //test method of a regular expression checks if there's at least one match of the pattern in the argument given
-      if (capitalLetterRegex.test(password)) {
-        updatedErrors = updatedErrors.filter(
-          (error) => error !== "Password must have at least one capital letter."
-        );
-      }
-      if (specialCharacterRegex.test(password)) {
-        updatedErrors = updatedErrors.filter(
-          (error) => error !== "Password must contain a special character."
-        );
-      }
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        password: updatedErrors,
-      }));
+    useEffect(() => {
+        const fetchUserData = async () => {
+        console.log("fetchdata");
+        console.log("userid", userId);
+        try {
+            const data = await getOneUser(token, userId);
+            console.log("data.user", data.user);
+            setFormData(data);
+            setLoading(false);
+            localStorage.setItem("token", data.token);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
+        };
+    
+        fetchUserData();
+    }, [token]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+        console.log("THIS IS FORM DATA:", formData)
     };
 
-    validatePassword(); //call function explicitly to execute
-  }, [password]);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      username: "",
-      email: "",
-    }));
-    try {
-      await signup(
-        email,
-        password,
-        username,
-        forename,
-        lastName,
-        proficiencyLevel,
-        age
-      );
-      console.log("redirecting...:");
-      navigate("/login");
-    } catch (err) {
-      if (err.message === "Username already exists") {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          username: err.message,
-        }));
-      } else if (err.message === "Email already exists") {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          email: err.message,
-        }));
-      }
-      console.error(err);
-      console.log("signup page error: ", err.message);
-      navigate("/");
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+        const updatedUser = await updateUserProfile(formData, token);
+        console.log('User profile updated successfully:', updatedUser);
+        setSuccess("User profile updated successfully.")
+        
+        } catch (error) {
+        setError(error.message);
+        console.error('Error updating profile:', error);
+        }
+    };
+    
+    if (loading) {
+        return <p>Loading...</p>;
     }
-  };
+    
+    if (error) {
+        return <p style={{ color: 'red' }}>{error}</p>;
+    }
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-  const handleForenameChange = (event) => {
-    setForename(event.target.value);
-  };
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-  };
-  const handleProficiencyLevelChange = (event) => {
-    setProficiencyLevel(event.target.value);
-  };
-  const handleAgeChange = (event) => {
-    setAge(event.target.value);
-  };
 
-  return (
-    <>
-      <h2>Edit Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="forename">Forename:</label>
-        <input
-          placeholder="Forename"
-          id="forename"
-          type="forename"
-          value={forename}
-          onChange={handleForenameChange}
-        />
-        <br />
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          placeholder="LastName"
-          id="lastName"
-          type="lastName"
-          value={lastName}
-          onChange={handleLastNameChange}
-        />
-        <br />
-        <label htmlFor="age">Age:</label>
-        <input
-          placeholder="Age"
-          id="age"
-          type="age"
-          value={age}
-          onChange={handleAgeChange}
-        />
-        <br />
-        <label htmlFor="username">Username:</label>
-        <input
-          placeholder="Username"
-          id="username"
-          type="username"
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <br />
-        <label htmlFor="email">Email:</label>
-        <input
-          placeholder="Email"
-          id="email"
-          type="text"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <br />
-        <label htmlFor="password">Password:</label>
-        <input
-          placeholder="Password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <br />
+    return <>
+    <h2>Edit profile page</h2>
 
-        <br />
-        <label htmlFor="proficiencyLevel">Proficiency Level:</label>
-        <select
-          placeholder="ProficiencyLevel"
-          id="proficiencyLevel"
-          type="proficiencyLevel"
-          value={proficiencyLevel}
-          onChange={handleProficiencyLevelChange}
-        >
-          <option value="unspecified">Please select....</option>
-          <option value="beginner">Beginner</option>
-          <option value="junior">Junior</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="senior">Senior</option>
-        </select>
+    <form onSubmit={handleSubmit}>
+    <input
+        type="text"
+        name="username"
+        value={formData.username}
+        onChange={handleChange}
+        placeholder={formData.user.username}
+    />
+    <br/>
+    <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder={formData.user.email}
+    />
+    <br/>
 
-        <br />
+<button type="submit">Update Profile</button>
+{error && <p style={{ color: 'red' }}>{error}</p>}
+{success && <p style={{ color: 'green' }}>{success}</p>}
 
-        {errors.password.length > 0 && (
-          <ul>
-            {errors.password.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))}
-          </ul>
-        )}
-        {errors.username && <p id="usernameError">{errors.username}</p>}
-        {errors.email.length > 0 && <p>{errors.email}</p>}
-        <br />
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
-      </form>
+    </form>
     </>
-  );
-};
+}
 
-export default EditProfilepPage;
+export default EditProfilePage

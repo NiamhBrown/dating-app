@@ -117,7 +117,7 @@ export const getMatches = async (token, userId) => {
   };
 
   const response = await fetch(
-    `${BACKEND_URL}/users/matches/${user_id}`,
+    `${BACKEND_URL}/users/matches/${userId}`,
     requestOptions
   );
 

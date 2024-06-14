@@ -99,7 +99,7 @@ const addUsertoMatches = async (req, res) => {
 // Controller to update user profile
 const updateUserProfile = async (req, res) => {
   try {
-    const userId = req.user_id; // Assuming user ID is available in the request object (e.g., from authentication middleware)
+    const userId = req.userId; // Assuming user ID is available in the request object (e.g., from authentication middleware)
     const updateData = req.body;
 
     // Find user by ID and update

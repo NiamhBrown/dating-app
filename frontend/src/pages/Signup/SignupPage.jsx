@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../../services/authentication";
 import "./signup.css";
-import background from "../../../public/backgroundimages/login.jpg";
 import { set } from "rsuite/esm/internals/utils/date";
 
 export const SignupPage = () => {
@@ -13,12 +12,7 @@ export const SignupPage = () => {
   const [lastName, setLastName] = useState("");
   const [proficiencyLevel, setProficiencyLevel] = useState("");
   const [age, setAge] = useState("");
-  const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
-
-  const navigateToLogin = () => {
-    navigate("/login");
-  };
 
   const [errors, setErrors] = useState({
     email: "",
@@ -45,7 +39,6 @@ export const SignupPage = () => {
           (error) => error !== "Password must be at least 8 characters."
         );
       }
-      //test method of a regular expression checks if there's at least one match of the pattern in the argument given
       if (capitalLetterRegex.test(password)) {
         updatedErrors = updatedErrors.filter(
           (error) => error !== "Password must have at least one capital letter."
@@ -62,7 +55,7 @@ export const SignupPage = () => {
       }));
     };
 
-    validatePassword(); //call function explicitly to execute
+    validatePassword();
   }, [password]);
 
   const handleSubmit = async (event) => {
@@ -128,10 +121,10 @@ export const SignupPage = () => {
 
   return (
     <>
-      <div style={{backgroundImage: `url(${background})`}}>
+      <div>
       <h2 className="signuptitlecontainer">Signup</h2>
       <form className="signupformcontainer" onSubmit={handleSubmit}>
-        <p>Already have an account? Sign in <Link onClick={navigateToLogin}>here.</Link></p>
+        <p>Already have an account? Sign in <Link to="/login">here.</Link></p>
         <br />
         <label htmlFor="forename">Forename:</label>
         <input

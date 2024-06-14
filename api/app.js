@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/users", usersRouter);
 app.use("/tokens", authenticationRouter);
-app.use("/chat", chatRouter);
+app.use("/chats", chatRouter);
 
 app.use((_req, res) => {
   res.status(404).json({ err: "Error 404: Not Found" });

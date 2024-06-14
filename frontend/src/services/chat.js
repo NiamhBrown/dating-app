@@ -9,7 +9,7 @@ export const getHistory = async (token, sender, recipient) => {
     },
     body: JSON.stringify({sender: sender, recipient: recipient}),
   };
-  const response = await fetch(`${BACKEND_URL}/chat/history`, requestOptions);
+  const response = await fetch(`${BACKEND_URL}/chats/history`, requestOptions);
 
   if (response.status !== 200) {
     throw new Error('Unable to get history');
@@ -19,14 +19,14 @@ export const getHistory = async (token, sender, recipient) => {
   }
 };
 
-export const sendMessage = async (token, sender, recipient, message) => {
+export const sendMessageToDB = async (token, chatId, message) => {
     const requestOptions = {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({sender: sender, recipient: recipient, message: message}),
+        body: JSON.stringify({chatId: chatId, message: message}),
       };
       const response = await fetch(`${BACKEND_URL}/chats/send`, requestOptions);
     

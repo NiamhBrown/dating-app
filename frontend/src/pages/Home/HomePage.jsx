@@ -14,7 +14,6 @@ import { useState } from 'react';
 const HomePage = () => {
     const navigate = useNavigate()
     const [chatting, setChatting] = useState(false);
-    const userId = localStorage.getItem("userId");
     const [chatterId, setChatterId] = useState("");
     const token = localStorage.getItem("token");
     if (!token){

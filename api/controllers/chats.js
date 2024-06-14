@@ -14,14 +14,13 @@ const returnHistory = async (req, res) => {
   res.status(200).json({ chatId: currentChat._id, history: currentChat.messagesArray });
 };
 
-const sendMessage = async (chatId, senderId, message) => {
-  const newMessage = { senderId, message, timestamp: new Date() }; // Add timestamp
+const sendMessage = async (req, res) => {
+  console.log(req.body);
   await Chat.findByIdAndUpdate(
-    chatId,
-    { $push: { messagesArray: newMessage } },
-    { new: true }
+    req.body.chatId,
+    { $push: { messagesArray: req.body.message } }
   );
-  return newMessage;
+  res.status(201).json({ message: "OK" });
 };
 
 const ChatsController = {

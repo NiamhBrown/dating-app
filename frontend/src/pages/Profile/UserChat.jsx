@@ -8,14 +8,17 @@
 
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import { getHistory } from '../../services/chat';
+import { getHistory, sendMessageToDB } from '../../services/chat';
+import { getOneUser } from '../../services/user';
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
 
 export const UserChat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+  const [name, setName] = useState('');
   const [CID, setCID] = useState();
+  const userId = localStorage.getItem("userId");
   let chatRoomId = null
   const token = localStorage.getItem('token');
   const sender = localStorage.getItem('userId');
@@ -28,6 +31,11 @@ export const UserChat = (props) => {
         setMessages(data.history);
         chatRoomId = data.chatId
         socket.emit('join room', chatRoomId);
+      })
+
+    getOneUser(token, userId)
+      .then((data) => {
+        setName(data.user.forename)
       })
 
     socket.on('message', (msg) => {
@@ -50,8 +58,15 @@ export const UserChat = (props) => {
   const sendMessage = () => {
     if (message.trim()) {
       console.log(CID)
-      socket.emit('message', message, CID);
+      let today = new Date().toLocaleString()
+      let message_obj = {
+        author: name,
+        message: message,
+        timestamp: today
+      }
+      socket.emit('message', message_obj, CID);
       setMessage('');
+      sendMessageToDB(token, CID, message_obj);
     }
   };
 
@@ -64,7 +79,10 @@ export const UserChat = (props) => {
       <div>
         <div style={{ border: '1px solid #ccc', padding: '10px', height: '300px', overflowY: 'scroll' }}>
           {messages.map((msg, index) => (
-            <div key={index}>{msg}</div>
+            <div key={index}>
+              <strong>{msg.author}:</strong> {msg.message}
+              <small>   ({msg.timestamp})</small>
+            </div>
           ))}
         </div>
       </div>

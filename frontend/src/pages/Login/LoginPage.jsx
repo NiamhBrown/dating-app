@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../services/authentication";
+import './Login.css';
+// import loginimage from "../../backgroundimages/login.jpg";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleNavigateToSignUp = () => {
+    navigate("/signup");
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,8 +37,10 @@ export const LoginPage = () => {
 
   return (
     <>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <div >
+      {/* style={{ backgroundImage: `url(${background2})`}} */}
+      <h2 className="logintitle">Login</h2>
+      <form className="formcontainer" onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
           id="email"
@@ -48,7 +56,10 @@ export const LoginPage = () => {
           onChange={handlePasswordChange}
         />
         <input role="submit-button" id="submit" type="submit" value="Submit" />
+        <br />
+        <p>Don't have an account? Sign up <Link onClick={handleNavigateToSignUp}>here.</Link></p>
       </form>
+      </div>
     </>
   );
 };

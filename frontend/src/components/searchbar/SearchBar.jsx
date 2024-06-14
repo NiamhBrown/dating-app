@@ -1,52 +1,49 @@
 import { FaSearch } from "react-icons/fa";
-import { useState} from "react";
+import { useEffect, useState } from "react";
 import { getMatches } from "../../services/user";
-//import "../../../../css/SearchBar.css";
+import "./SearchBar.css";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
 
 export const SearchBar = ({ setResults }) => {
     const [input, setInput] = useState("");
-    
-    
-    const fetchData = (value) => {
-        let userId = localStorage.getItem("userId")
+    const [allMatches, setAllMatches] = useState([]);
 
-        fetch(`${BACKEND_URL}/users/matches/${userId}`) 
-        .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-        .then((json) => {
-            console.log(json)
-                const results = json.users.filter((user) => {
-                    console.log(user)
-                return (
-                    value &&
-                    user &&
-                    (user.forename.toLowerCase().includes(value)||
-                    user.lastName.toLowerCase().includes(value))
-                );
-            });
-            setResults(results);
+    const fetchInitialData = async () => {
+        let userId = localStorage.getItem("userId");
+        let token = localStorage.getItem("token");
 
-            console.log(results)
-        });
-};
-    const handleChange = (value) => {
-        setInput(value);
-        fetchData(value);
-
+        try {
+            const results = await getMatches(token, userId);
+            setAllMatches(results.users);
+            setResults(results.users);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
+    const handleChange = (value) => {
+        setInput(value);
+        if (value === "") {
+            setResults(allMatches);
+        } else {
+            const filteredResults = allMatches.filter((user) =>
+                user.forename.toLowerCase().includes(value.toLowerCase()) ||
+                user.lastName.toLowerCase().includes(value.toLowerCase())
+            );
+            setResults(filteredResults);
+        }
+    };
+
+    useEffect(() => {
+        fetchInitialData();
+    }, []);
+
     return (
-        <div className="input-wrapper">
-            <FaSearch id="search-icon" />
+        <div className="searchbar-input-wrapper">
+            <FaSearch id="searchbar-search-icon" />
             <input
-                id="searchinput" autoComplete="off" type="text" placeholder="Search for new friends.." 
-                value={input}  onChange={(e) => handleChange(e.target.value)}/>
+                className="searchbar-input" autoComplete="off" type="text" placeholder="Search matches..."
+                value={input} onChange={(e) => handleChange(e.target.value)} />
         </div>
     )
 }

@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  height: 100vh;
+}
+.container {
+  width: 300px;
+}
+.feedpage-wrapper {
+display: flex;
+justify-content: flex-start;
+align-items: center;
+flex-grow: 1;
+flex-wrap: nowrap;
+}

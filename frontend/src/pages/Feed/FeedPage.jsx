@@ -63,7 +63,7 @@ export const FeedPage = () => {
     return (
         <>
         <h2>Users</h2>
-        <div className="feed" role="feed">
+        <div>
             <label htmlFor="proficiencyLevel">Proficiency Level:  </label>
             <select
             placeholder="ProficiencyLevel"

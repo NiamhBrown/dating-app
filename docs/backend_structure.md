@@ -86,7 +86,7 @@ etc.), `req.params`, `req.query`. The full list can be found
 [here](https://expressjs.com/en/api.html#req).
 
 We can also add data to the `req` object with _middleware_, such as the
-`tokenChecker` adding the `req.user_id` property, which can then be used by
+`tokenChecker` adding the `req.userId` property, which can then be used by
 controller functions.
 
 The `res` object is how we respond to requests. This can be with

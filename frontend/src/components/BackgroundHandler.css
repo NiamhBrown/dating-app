@@ -13,10 +13,10 @@ min-height: 100vh;
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
-transition: background-image 0.5s ease-in-out, opacity 0.5s ease-in-out;
-animation: 1s linear 1s running slidein;
+transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
+animation: 1s linear 1s running slideIn;
 }
 
 .background-container.fade-out {
-animation: linear 0.5s slideout;
+animation: linear 1s running slideOut;
 }

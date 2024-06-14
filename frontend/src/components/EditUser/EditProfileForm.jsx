@@ -3,6 +3,7 @@ import { useState } from "react";
 import Select from "react-select";
 
 const EditProfileForm = ({ user, onSave, onClose }) => {
+  console.log(user);
   const [formData, setFormData] = useState({
     email: user.email || "",
     forename: user.forename || "",
@@ -19,6 +20,11 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     job: user.job || "",
     bio: user.bio || "",
     url: user.url || "",
+    lookingFor: user.lookingFor || {
+      proficiencyLevel: [],
+      techStack: [],
+      projectType: [],
+    },
   });
 
   const handleChange = (e) => {
@@ -28,25 +34,51 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       [name]: value,
     }));
   };
+
   const handleSelectChange = (selectedOptions, { name }) => {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: selectedOptions
-        ? selectedOptions.map((option) => option.value)
-        : [],
-    }));
+    setFormData((prev) => {
+      if (name.startsWith("lookingFor.")) {
+        // Extract the specific key for 'lookingFor' nested structure
+        const key = name.split(".")[1];
+        return {
+          ...prev,
+          lookingFor: {
+            ...prev.lookingFor,
+            [key]: selectedOptions
+              ? selectedOptions.map((option) => option.value)
+              : [],
+          },
+        };
+      }
+      return {
+        ...prev,
+        [name]: selectedOptions
+          ? selectedOptions.map((option) => option.value)
+          : [],
+      };
+    });
   };
 
-  const handleArrayChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value.split(",").map((item) => item.trim()),
-    }));
-  };
+  // const handleSelectChange = (selectedOptions, { name }) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: selectedOptions
+  //       ? selectedOptions.map((option) => option.value)
+  //       : [],
+  //   }));
+  // };
+
+  // const handleArrayChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value.split(",").map((item) => item.trim()),
+  //   }));
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     onSave(formData);
   };
 
@@ -56,6 +88,19 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     { value: "Web app", label: "Web app" },
     { value: "Game", label: "Game" },
     // Add more options as needed
+  ];
+
+  const techStackOptions = [
+    { value: "JavaScript", label: "JavaScript" },
+    { value: "Python", label: "Python" },
+    { value: "Ruby", label: "Ruby" },
+    { value: "SQL", label: "SQL" },
+  ];
+  const proficiencyLevelOptions = [
+    { value: "beginner", label: "beginner" },
+    { value: "junior", label: "junior" },
+    { value: "intermediate", label: "intermediate" },
+    { value: "senior", label: "senior" },
   ];
 
   return (
@@ -140,68 +185,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           onChange={handleChange}
         />
       </label>
-      <br />
-      <label>
-        Experience:
-        <textarea
-          name="experience"
-          value={formData.experience}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <label>
-        Projects:
-        <Select
-          name="projects"
-          isMulti
-          value={formData.projects.map((proj) => ({
-            value: proj,
-            label: proj,
-          }))}
-          options={projectOptions}
-          onChange={handleSelectChange}
-          className="react-select-container"
-          classNamePrefix="react-select"
-        />
-        {/* <input
-          type="text"
-          name="projects"
-          value={formData.projects.join(", ")}
-          onChange={handleArrayChange} */}
-        {/* /> */}
-      </label>
-      <br />
-      <label>
-        Languages (comma-separated):
-        <input
-          type="text"
-          name="languages"
-          value={formData.languages.join(", ")}
-          onChange={handleArrayChange}
-        />
-      </label>
-      <br />
-      <label>
-        Technologies (comma-separated):
-        <input
-          type="text"
-          name="technologies"
-          value={formData.technologies.join(", ")}
-          onChange={handleArrayChange}
-        />
-      </label>
 
-      <br />
-      <label>
-        Tech Stack (comma-separated):
-        <input
-          type="text"
-          name="techStack"
-          value={formData.techStack.join(", ")}
-          onChange={handleArrayChange}
-        />
-      </label>
       <br />
       <label>
         Job:
@@ -225,6 +209,88 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           name="url"
           value={formData.url}
           onChange={handleChange}
+        />
+      </label>
+      <br />
+      <label>
+        Projects:
+        <Select
+          name="projects"
+          isMulti
+          value={formData.projects.map((proj) => ({
+            value: proj,
+            label: proj,
+          }))}
+          options={projectOptions}
+          onChange={handleSelectChange}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
+      </label>
+
+      <br />
+      <label>
+        Tech Stack:
+        <Select
+          name="techStack"
+          isMulti
+          value={formData.techStack.map((stack) => ({
+            value: stack,
+            label: stack,
+          }))}
+          options={techStackOptions}
+          onChange={handleSelectChange}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
+      </label>
+      <hr />
+      <h4>Looking For:</h4>
+      <label>
+        Proficiency Level:
+        <Select
+          name="lookingFor.proficiencyLevel"
+          isMulti
+          value={formData.lookingFor.proficiencyLevel.map((level) => ({
+            value: level,
+            label: level,
+          }))}
+          options={proficiencyLevelOptions}
+          onChange={handleSelectChange}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
+      </label>
+      <br />
+      <label>
+        Tech Stack:
+        <Select
+          name="lookingFor.techStack"
+          isMulti
+          value={formData.lookingFor.techStack.map((stack) => ({
+            value: stack,
+            label: stack,
+          }))}
+          options={techStackOptions}
+          onChange={handleSelectChange}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
+      </label>
+      <br />
+      <label>
+        Project Type:
+        <Select
+          name="lookingFor.projectType"
+          isMulti
+          value={formData.lookingFor.projectType.map((proj) => ({
+            value: proj,
+            label: proj,
+          }))}
+          options={projectOptions}
+          onChange={handleSelectChange}
+          className="react-select-container"
+          classNamePrefix="react-select"
         />
       </label>
       <br />

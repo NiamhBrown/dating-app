@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../../services/authentication";
-import "./signup.css";
-import { set } from "rsuite/esm/internals/utils/date";
+import "./signup.css";        // General CSS
+import "./button.scss";       // SASS file for button styling
+import ScrollingText from "./ScrollingText";
 
 export const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ export const SignupPage = () => {
       "Password must contain a special character.",
     ],
   });
+
   useEffect(() => {
     const capitalLetterRegex = /[A-Z]/;
     const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
@@ -75,130 +77,95 @@ export const SignupPage = () => {
         proficiencyLevel,
         age
       );
-      console.log("redirecting...:");
       navigate("/login");
     } catch (err) {
-      if (err.message === "Username already exists") {
+      if (err.message === "Username already exists.") {
         setErrors((prevErrors) => ({
           ...prevErrors,
           username: err.message,
         }));
-      } else if (err.message === "Email already exists") {
+      } else if (err.message === "Email already exists.") {
         setErrors((prevErrors) => ({
           ...prevErrors,
           email: err.message,
         }));
       }
-      console.error(err);
-      console.log("signup page error: ", err.message);
-      navigate("/");
-
     }
   };
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
-  const handleForenameChange = (event) => {
-    setForename(event.target.value);
-  };
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value);
-  };
-  const handleProficiencyLevelChange = (event) => {
-    setProficiencyLevel(event.target.value);
-  };
-  const handleAgeChange = (event) => {
-    setAge(event.target.value);
-  };
-
   return (
-    <>
-      <div>
-      <h2 className="signuptitlecontainer">Signup</h2>
+    <div>
+      <ScrollingText />
       <form className="signupformcontainer" onSubmit={handleSubmit}>
-        <p>Already have an account? Sign in <Link to="/login">here.</Link></p>
-        <br />
+        <p>Already have an account? Sign in <Link to="/login">here!</Link></p>
+       <div className="br"/>
         <label htmlFor="forename">Forename:</label>
         <input
           placeholder="Forename"
           id="forename"
-          type="forename"
+          type="text"
           value={forename}
-          onChange={handleForenameChange}
+          onChange={(e) => setForename(e.target.value)}
         />
-        <br />
+        <br/>
         <label htmlFor="lastName">Last Name:</label>
         <input
           placeholder="LastName"
           id="lastName"
-          type="lastName"
+          type="text"
           value={lastName}
-          onChange={handleLastNameChange}
+          onChange={(e) => setLastName(e.target.value)}
         />
-        <br />
+        <br/>
         <label htmlFor="age">Age:</label>
         <input
           placeholder="Age"
           id="age"
-          type="age"
+          type="number"
           value={age}
-          onChange={handleAgeChange}
+          onChange={(e) => setAge(e.target.value)}
         />
-        <br />
+        <br/>
         <label htmlFor="username">Username:</label>
         <input
           placeholder="Username"
           id="username"
-          type="username"
+          type="text"
           value={username}
-          onChange={handleUsernameChange}
+          onChange={(e) => setUsername(e.target.value)}
         />
-        <br />
+        <br/>
         <label htmlFor="email">Email:</label>
         <input
           placeholder="Email"
           id="email"
-          type="text"
+          type="email"
           value={email}
-          onChange={handleEmailChange}
+          onChange={(e) => setEmail(e.target.value)}
         />
-        <br />
+        <br/>
         <label htmlFor="password">Password:</label>
         <input
           placeholder="Password"
           id="password"
           type="password"
           value={password}
-          onChange={handlePasswordChange}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <br />
-
-        <br />
+        <br/>
         <label htmlFor="proficiencyLevel">Proficiency Level:</label>
         <select
-          placeholder="ProficiencyLevel"
           id="proficiencyLevel"
-          type="proficiencyLevel"
           value={proficiencyLevel}
-          onChange={handleProficiencyLevelChange}
+          onChange={(e) => setProficiencyLevel(e.target.value)}
         >
-          <option value="unspecified">Please select....</option>
+          <option value="unspecified">Please select...</option>
           <option value="beginner">Beginner</option>
           <option value="junior">Junior</option>
           <option value="intermediate">Intermediate</option>
           <option value="senior">Senior</option>
         </select>
-
-        <br />
-
+        <br/>
         {errors.password.length > 0 && (
           <ul>
             {errors.password.map((error, index) => (
@@ -207,11 +174,9 @@ export const SignupPage = () => {
           </ul>
         )}
         {errors.username && <p id="usernameError">{errors.username}</p>}
-        {errors.email.length > 0 && <p>{errors.email}</p>}
-        <br />
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
+        {errors.email && <p>{errors.email}</p>}
+        <button className="btn draw-border" role="submit-button" id="submit" type="submit" value="Submit">Submit</button>
       </form>
-      </div>
-    </>
+    </div>
   );
 };

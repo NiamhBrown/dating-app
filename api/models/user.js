@@ -48,35 +48,25 @@ const userSchema = new mongoose.Schema({
     default: "",
   },
   lookingFor: {
-    proficiency: {
-      type: String,
-      enum: ["beginner", "junior", "intermediate", "senior", "unspecified"],
-      default: "unspecified",
+    proficiencyLevel: {
+      // type: String,
+      // enum: ["beginner", "junior", "intermediate", "senior", "unspecified"],
+      // default: "unspecified",
+      type: [String],
+      default: [],
     },
     techStack: {
       type: [String],
       default: [],
     },
-  },
-  experience: {
-    type: String,
-    default: "",
+    projectType: {
+      type: [String],
+      default: [],
+    },
   },
   projects: {
     type: [String],
     default: [],
-  },
-  languages: {
-    type: [String],
-    default: [],
-  },
-  technologies: {
-    type: [String],
-    default: [],
-  },
-  projectType: {
-    type: String,
-    default: "",
   },
   techStack: {
     type: [String],

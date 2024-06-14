@@ -30,6 +30,11 @@ const ProfilePage = () => {
     job: "",
     bio: "",
     url: "",
+    lookingFor: {
+      proficiencyLevel: [],
+      techStack: [],
+      projectType: [],
+    },
   });
   const [showModal, setShowModal] = useState(false);
 
@@ -61,7 +66,6 @@ const ProfilePage = () => {
 
   return (
     <>
-<<<<<<< Updated upstream
       <div className="burgercontainer">
         <Burger />
       </div>
@@ -92,18 +96,11 @@ const ProfilePage = () => {
         <p>
           <strong>Location:</strong> {User.location}
         </p>
-        <p>
-          <strong>Experience:</strong> {User.experience}
-        </p>
+
         <p>
           <strong>Projects:</strong> {User.projects.join(", ")}
         </p>
-        <p>
-          <strong>Languages:</strong> {User.languages.join(", ")}
-        </p>
-        <p>
-          <strong>Technologies:</strong> {User.technologies.join(", ")}
-        </p>
+
         <p>
           <strong>Tech Stack:</strong> {User.techStack.join(", ")}
         </p>
@@ -115,6 +112,11 @@ const ProfilePage = () => {
         </p>
         <p>
           <strong>URL:</strong> {User.url}
+        </p>
+
+        <p>
+          <strong>Looking For:</strong> {User.lookingFor.proficiencyLevel},
+          {User.lookingFor.projectType}, {User.lookingFor.techStack}
         </p>
 
         <div>
@@ -129,6 +131,7 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
+<<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
       <div className='burgercontainer'>
@@ -145,6 +148,12 @@ const ProfilePage = () => {
 =======
       </div>
 >>>>>>> Stashed changes
+=======
+        <div className="burgercontainer">
+          <Burger />
+        </div>
+      </div>
+>>>>>>> 6bb3726a2184c6e7fe4889b519d7eb0f6e67defc
     </>
   );
 };

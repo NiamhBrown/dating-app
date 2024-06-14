@@ -1,6 +1,5 @@
 /* profile.css */
 .profilecontainer {
-<<<<<<< Updated upstream
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,27 +7,28 @@
   margin-top: 50px;
 }
 
-/* .profilePicture {
+.profilePicture {
   width: 250px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
   display: block;
   margin: 0 auto 20px auto;
-} */
-=======
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 10px;
   }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   
 >>>>>>> Stashed changes
 =======
   
 >>>>>>> Stashed changes
+=======
+>>>>>>> 6bb3726a2184c6e7fe4889b519d7eb0f6e67defc

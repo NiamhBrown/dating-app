@@ -11,6 +11,7 @@ const ScrollingText = () => {
         <li className="content__container__list__item">world !</li>
         <li className="content__container__list__item">users !</li>
         <li className="content__container__list__item">everybody !</li>
+        <li className="content__container__list__item">developers !</li>
       </ul>
     </div>
   </div>

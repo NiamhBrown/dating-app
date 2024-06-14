@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../services/authentication";
 import './Login.css';
+import ConsoleText from "./ConsoleText";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +25,8 @@ export const LoginPage = () => {
   return (
     <>
       <div className="loginpage">
-        <h2 role="title" id="logintitle" className="logintitle">Login</h2>
+        {/* <h2 role="title" id="logintitle" className="logintitle">Login</h2> */}
+        <ConsoleText words={['Console.login', 'touchUsername', 'touchPassword']} colors={['dimgrey']} />
         <form className="formcontainer" onSubmit={handleSubmit}>
           <label htmlFor="email">Email:</label>
           <input id="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />

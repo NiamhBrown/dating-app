@@ -30,6 +30,11 @@ const ProfilePage = () => {
     job: "",
     bio: "",
     url: "",
+    lookingFor: {
+      proficiencyLevel: [],
+      techStack: [],
+      projectType: [],
+    },
   });
   const [showModal, setShowModal] = useState(false);
 
@@ -91,18 +96,11 @@ const ProfilePage = () => {
         <p>
           <strong>Location:</strong> {User.location}
         </p>
-        <p>
-          <strong>Experience:</strong> {User.experience}
-        </p>
+
         <p>
           <strong>Projects:</strong> {User.projects.join(", ")}
         </p>
-        <p>
-          <strong>Languages:</strong> {User.languages.join(", ")}
-        </p>
-        <p>
-          <strong>Technologies:</strong> {User.technologies.join(", ")}
-        </p>
+
         <p>
           <strong>Tech Stack:</strong> {User.techStack.join(", ")}
         </p>
@@ -114,6 +112,11 @@ const ProfilePage = () => {
         </p>
         <p>
           <strong>URL:</strong> {User.url}
+        </p>
+
+        <p>
+          <strong>Looking For:</strong> {User.lookingFor.proficiencyLevel},
+          {User.lookingFor.projectType}, {User.lookingFor.techStack}
         </p>
 
         <div>
@@ -128,16 +131,10 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
-      <div className='burgercontainer'>
-        <Burger />
+        <div className="burgercontainer">
+          <Burger />
+        </div>
       </div>
-      <div className='profilecontainer'>
-        <ProfilePicture userId={userId} />
-        <PictureUpload />
-        <p>{User.email}</p>
-        <p>{User.forename}</p>
-        <p>{User.lastName}</p>
-      </div></div>
     </>
   );
 };

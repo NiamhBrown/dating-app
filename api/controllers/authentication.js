@@ -1,7 +1,5 @@
 const User = require("../models/user");
-const { generateToken } = require("../lib/token");
-
-const createToken = async (req, res) => {
+const { generateToken } = require("../lib/token");const createToken = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   try {
@@ -13,22 +11,11 @@ const createToken = async (req, res) => {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).send("Invalid email or password");
-    }
-
-    // else if (user.password !== password) {
-    //   console.log("Auth Error: Passwords do not match");
-    //   res.status(401).json({ message: "Password incorrect" });
-    // }
-
-    const token = generateToken(user.id);
+    }    const token = generateToken(user.id);
     res.status(201).json({ token: token, userId: user._id, message: "OK" });
   } catch (err) {
     res.status(500).send(err.message);
   }
-};
-
-const AuthenticationController = {
+};const AuthenticationController = {
   createToken: createToken,
-};
-
-module.exports = AuthenticationController;
+};module.exports = AuthenticationController;

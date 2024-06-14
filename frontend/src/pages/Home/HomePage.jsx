@@ -18,11 +18,11 @@ const HomePage = () => {
 
     return (<>
         <title>Homepage</title>
-        {/* <Navbar /> */}
+        <Navbar />
         <LogOutButton/>
         <MyProfileButton/>
         <FeedPage />
-        <UserChat />
+        {/* <UserChat /> */}
         </>
     );
 };

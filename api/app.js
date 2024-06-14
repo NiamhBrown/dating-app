@@ -9,7 +9,6 @@ const usersRouter = require("./routes/users");
 const authenticationRouter = require("./routes/authentication");
 const tokenChecker = require("./middleware/tokenChecker");
 const chatRouter = require("./routes/chats");
-const ChatsController = require("./controllers/chats");
 
 const app = express();
 const server = createServer(app);
@@ -44,17 +43,9 @@ app.use((err, _req, res, _next) => {
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  // Joining a chat room
-  socket.on("join", ({ chatId }) => {
-    socket.join(chatId);
-    console.log(`User joined chat: ${chatId}`);
-  });
-
-  // Handling message sending
-  socket.on("sendMessage", async ({ chatId, senderId, message }) => {
-    const newMessage = await ChatsController.sendMessage(chatId, senderId, message);
-    io.to(chatId).emit("receiveMessage", newMessage);  // Ensure event name matches frontend
-  });
+  socket.on('message', (message) => {
+    io.emit('message', message);
+});
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");

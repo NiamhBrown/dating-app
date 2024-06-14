@@ -1,66 +1,53 @@
-import { useEffect, useState } from "react";
-import io from "socket.io-client";
+
+// TODO: Add this as a componant of navbar
+// take userId of logged in user & user they are speaking to
+// props: (senderId, recipientId)
+// add these + time stamp to message object
+// save these messages in a chat document in Mongo
+// load chat history in useEffect
+
+import { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
 
-export const UserChat = ({ chatId, userId }) => {
-  const [message, setMessage] = useState("");
+export const UserChat = () => {
   const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    // Connect to the server
-    socket.on("connect", () => {
-      console.log("connected to server");
-    });
-
-    // Join the chat room
-    socket.emit("join", { chatId });
-    console.log(`Joining chat: ${chatId}`);
-
-    // Listen for new messages
-    socket.on("receiveMessage", (newMessage) => {
-      console.log("Message received:", newMessage);
+    socket.on('message', (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    // Cleanup on component unmount
+    // Clean up the effect
     return () => {
-      socket.off("connect");
-      socket.off("receiveMessage");
+      socket.off('message');
     };
-  }, [chatId]);
+  }, []);
 
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value);
-  };
-
-  const sendMessage = (event) => {
-    event.preventDefault();
-    console.log(message);
+  const sendMessage = () => {
     if (message.trim()) {
-      const newMessage = { chatId, senderId: userId, message };
-      socket.emit("sendMessage", newMessage);  // Ensure event name matches backend
-      setMessage("");
+      socket.emit('message', message);
+      setMessage('');
     }
   };
 
   return (
     <div>
-      {messages.map((msg, index) => (
-        <div key={index}>
-          <strong>{msg.senderId === userId ? "You" : "Them"}:</strong> {msg.message}
+      <div>
+        <div style={{ border: '1px solid #ccc', padding: '10px', height: '300px', overflowY: 'scroll' }}>
+          {messages.map((msg, index) => (
+            <div key={index}>{msg}</div>
+          ))}
         </div>
-      ))}
-      <form onSubmit={sendMessage}>
-        <label htmlFor="message">Write message:</label>
-        <input
-          id="message"
-          type="text"
-          value={message}
-          onChange={handleMessageChange}
-        />
-        <input role="submit-button" id="submit" type="submit" value="Submit" />
-      </form>
+      </div>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <button onClick={sendMessage}>Send</button>
     </div>
   );
 };

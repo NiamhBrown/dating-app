@@ -1,4 +1,10 @@
 import { sendMatchRequest, acceptMatch } from "../../services/user";
+import StarOutlineOutlinedIcon from '@mui/icons-material/StarOutlineOutlined';
+import IconButton from '@mui/material/IconButton'; 
+import DoDisturbOutlinedIcon from '@mui/icons-material/DoDisturbOutlined';
+import TurnLeftOutlinedIcon from '@mui/icons-material/TurnLeftOutlined';
+import ProfilePicture from "../ProfilePicture";
+import "./user.css"
 
 const User = (props) => {
 
@@ -21,13 +27,24 @@ const User = (props) => {
 
     return (
         <>
-            <article key={props.user._id}>
-                {props.user.username} <br />
-                {props.user.forename + " " + props.user.lastName + ", " + props.user.age}<br />
-                {"Skill level: " + props.user.proficiencyLevel} <br />
-                <button onClick={incriment}>Show Next</button>
-                <button onClick={sendRequest}>Add User</button>
-                <button onClick={decriment}>Go back</button>
+            <article className = "usercard"key={props.user._id}>
+            <ProfilePicture userId={props.user._id} className="profilePicture" />
+                <h3 className="name_and_age">{props.user.forename} {props.user.lastName}, { props.user.age}</h3>
+                {/* {props.user.username} <br />
+                {props.user.forename + " " + props.user.lastName + ", " + props.user.age}<br /> */}
+                <h4 className="skill_level">Skill Level: {props.user.proficiencyLevel}</h4>
+                {/* {"Skill level: " + props.user.proficiencyLevel} <br /> */}
+                <div className="iconButton_container">
+                <IconButton className="iconButton" onClick={incriment}>
+                    < DoDisturbOutlinedIcon style={{ fontSize: 50 }}/>
+                </IconButton>
+                <IconButton className="iconButton"onClick={sendRequest}>
+                    <StarOutlineOutlinedIcon style={{ fontSize: 60 }}/>
+                </IconButton>
+                <IconButton className="iconButton"onClick={decriment}>
+                    < TurnLeftOutlinedIcon style={{ fontSize: 60 }}/>
+                </IconButton>
+                </div>
             </article>
         </>
     );

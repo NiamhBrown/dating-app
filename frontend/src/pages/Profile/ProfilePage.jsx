@@ -61,14 +61,11 @@ const ProfilePage = () => {
 
   return (
     <>
-<<<<<<< Updated upstream
-      {/* <hr /> */}
       <div className="burgercontainer">
         <Burger />
       </div>
       <div className="profilecontainer">
         <ProfilePicture userId={userId} className="profilePicture" />
-        {/* <img src={profileImageUrl}></img> */}
         <PictureUpload />
         <p>
           <strong>Username:</strong> {User.username}
@@ -131,7 +128,6 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
-=======
       <div className='burgercontainer'>
         <Burger />
       </div>
@@ -141,8 +137,7 @@ const ProfilePage = () => {
         <p>{User.email}</p>
         <p>{User.forename}</p>
         <p>{User.lastName}</p>
->>>>>>> Stashed changes
-      </div>
+      </div></div>
     </>
   );
 };

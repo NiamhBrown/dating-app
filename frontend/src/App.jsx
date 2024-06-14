@@ -4,6 +4,7 @@ import BackgroundHandler from './components/BackgroundHandler'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { LoginPage } from "./pages/Login/LoginPage";
+import HomePage from "./pages/Home/HomePage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 // import { Container, Header, List } from "semantic-ui-react";
 // import { FeedPage } from "./pages/Feed/FeedPage";

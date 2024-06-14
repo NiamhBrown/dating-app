@@ -50,7 +50,7 @@ export const FeedPage = () => {
 
     return (
         <>
-        <h2>Users</h2>
+        {/* <h2>Users</h2> */}
         <div>
             {users.length != 0 &&
             <User 

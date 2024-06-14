@@ -5,8 +5,9 @@ export const SearchResult = ({ result }) => {
     const navigate = useNavigate ();
 
     const handleClick = () => {
-        navigate(`/profile/${result._id}`); // change to link to chat
-        window.location.reload();
+        navigate() // add chat url
+        // navigate(`/profile/${result._id}`);
+        // window.location.reload();
     };
     
     return (

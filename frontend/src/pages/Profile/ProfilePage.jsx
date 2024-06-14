@@ -131,22 +131,8 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
-
-      <div className='burgercontainer'>
-        <Burger />
-      </div>
-      <div className='profilecontainer'>
-        <ProfilePicture userId={userId} />
-        <PictureUpload />
-        <p>{User.email}</p>
-        <p>{User.forename}</p>
-        <p>{User.lastName}</p>
-      </div>
-
-        <div className="burgercontainer">
-          <Burger />
         </div>
-      </div>
+
 
     </>
   );

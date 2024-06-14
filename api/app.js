@@ -43,9 +43,15 @@ app.use((err, _req, res, _next) => {
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  socket.on('message', (message) => {
-    io.emit('message', message);
+  socket.on('message', (message, chatId) => {
+    io.to(chatId).emit('message', message);
 });
+
+  socket.on('join room', (chatId) => {
+    console.log("Joined room")
+    socket.join(chatId);
+    io.to(chatId).emit('dm room joined');
+  })
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");

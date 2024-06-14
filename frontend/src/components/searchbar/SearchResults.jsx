@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "./SearchResult.css";
 
-export const SearchResult = ({ result }) => {
+export const SearchResult = (props) => {
     const navigate = useNavigate ();
-
+    const result = props.result
     const handleClick = () => {
-        navigate() // add chat url
+        props.setChatting(true);
+        props.setChatterId(result._id);
+        //navigate() // add chat url
         // navigate(`/profile/${result._id}`);
         // window.location.reload();
     };

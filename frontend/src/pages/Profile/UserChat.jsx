@@ -8,17 +8,38 @@
 
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
+import { getHistory } from '../../services/chat';
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
 
-export const UserChat = () => {
+export const UserChat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+  const [CID, setCID] = useState();
+  let chatRoomId = null
+  const token = localStorage.getItem('token');
+  const sender = localStorage.getItem('userId');
+  const recipient = props.chatterId;
 
   useEffect(() => {
-    socket.on('message', (newMessage) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    getHistory(token, sender, recipient)
+      .then((data) => {
+        console.log(data.chatId);
+        setMessages(data.history);
+        chatRoomId = data.chatId
+        socket.emit('join room', chatRoomId);
+      })
+
+    socket.on('message', (msg) => {
+      console.log("Message posted");
+      console.log(msg)
+      setMessages((prevMessages) => [...prevMessages, msg]);
     });
+
+    socket.on('dm room joined', () => {
+      console.log("Room ID: ", chatRoomId)
+      setCID(chatRoomId);
+    })
 
     // Clean up the effect
     return () => {
@@ -28,9 +49,14 @@ export const UserChat = () => {
 
   const sendMessage = () => {
     if (message.trim()) {
-      socket.emit('message', message);
+      console.log(CID)
+      socket.emit('message', message, CID);
       setMessage('');
     }
+  };
+
+  const closeChat = () => {
+    props.setChatting(false);
   };
 
   return (
@@ -48,6 +74,7 @@ export const UserChat = () => {
         onChange={(e) => setMessage(e.target.value)}
       />
       <button onClick={sendMessage}>Send</button>
+      <button onClick={closeChat}>Close Chat</button>
     </div>
   );
 };

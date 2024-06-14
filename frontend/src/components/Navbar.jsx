@@ -9,10 +9,7 @@ import myProfileButton from './myProfileButton';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 
-
-
-
-const Navbar = () => {
+const Navbar = (props) => {
   const [results, setResults] = useState([]);
   const token = localStorage.getItem("token")
     return (
@@ -34,7 +31,7 @@ const Navbar = () => {
                 <SubMenu label={<ChatBubbleOutlineIcon style={{color: '#b6c8d9', fontSize: '40px', margin: '10px'}}/>}>
                     <div>
                     <SearchBar setResults={setResults} />
-                    {results && results.length > 0 && <SearchResultsList results={results} token={token}/>}
+                    {results && results.length > 0 && <SearchResultsList setChatting={props.setChatting} setChatterId={props.setChatterId} results={results} token={token}/>}
                     </div>
                 </SubMenu>
                     {/* <MenuItem> Documentation </MenuItem>

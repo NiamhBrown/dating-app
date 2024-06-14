@@ -14,4 +14,15 @@
     padding: 20px;
     border-radius: 10px;
   }
-  
+
+.navlogin {
+  top: 100%;
+}
+
+.devlinklogo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 150px;
+  width: 150px;
+}

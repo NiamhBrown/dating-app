@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 export const FeedPage = () => {
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [requests, setRequests] = useState([]);
     const [position, setPosition] = useState(0);
+    const [proficiencyFilter, setPF] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -16,6 +18,7 @@ export const FeedPage = () => {
         getUsers(token)
             .then((data) => {
             setUsers(data.users.filter((x) => x._id != userId));
+            setFilteredUsers(data.users.filter((x) => x._id != userId));
             setPosition(0);
             const current_user = data.users.filter((x) => x._id == userId);
             setRequests(current_user[0].matchRequests);
@@ -46,16 +49,41 @@ export const FeedPage = () => {
     if (!token) {
         navigate("/login");
         return;
+    };
+
+    const handlePF = (event) => {
+        if (event.target.value == "unspecified") {
+            setFilteredUsers(users);
+        } else {
+            setFilteredUsers(users.filter((x) => x.proficiencyLevel == event.target.value));
+            setPF(event.target.value);
+        }
     }
 
     return (
         <>
         <h2>Users</h2>
         <div>
-            {users.length != 0 &&
+            <label htmlFor="proficiencyLevel">Proficiency Level:  </label>
+            <select
+            placeholder="ProficiencyLevel"
+            id="proficiencyLevel"
+            type="proficiencyLevel"
+            value={proficiencyFilter}
+            onChange={handlePF}
+            >
+            <option value="unspecified">Please select....</option>
+            <option value="beginner">Beginner</option>
+            <option value="junior">Junior</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="senior">Senior</option>
+            </select>
+
+
+            {filteredUsers.length != 0 &&
             <User 
-                user={users[position]} 
-                key={users[position]._id}
+                user={filteredUsers[position]} 
+                key={filteredUsers[position]._id}
                 methods={[incriment, decriment]}
                 requests={requests}
             />}

@@ -19,20 +19,24 @@ const BackgroundHandler = ({ children }) => {
         case '/home':
           setBackgroundImage('url(/backgroundimages/home.jpg)');
           break;
-        case `/profile/${localStorage.getItem("userId")}`:
+        case '/profile':
           setBackgroundImage('url(/backgroundimages/profile.jpg)');
           break;
         default:
-          setBackgroundImage('url(/backgroundimages/signup.jpg)');
+          if (location.pathname.startsWith('/profile/')) {
+            setBackgroundImage('url(/backgroundimages/profile.jpg)');
+          } else {
+            setBackgroundImage('url(/backgroundimages/signup.jpg)');
+          }
           break;
       }
       setFade(false);
-    }, -500);
-
+    }, 0);
+  
     setFade(true);
-
+  
     return () => clearTimeout(timeoutId);
-  }, [location.pathname]);
+  }, [location.pathname, location.key]);
 
   return (
     <div className={`background-container ${fade ? 'fade-out' : ''}`} style={{ backgroundImage }}>

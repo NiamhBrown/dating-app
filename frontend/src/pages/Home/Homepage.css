@@ -1,22 +1,14 @@
-.container {
+.layout {
   display: flex;
   height: 100vh;
 }
-
-.maincontent {
-    flex: 1;
-    position: relative;
+.container {
+  width: 300px;
 }
-
-/* .burgerhome {
-  align-items: flex-end;
-  justify-content: right;
-} */
-/* 
-.navbarhome {
-    display: flex;
-    width: 500px;
-    align-items: flex-start;
-    justify-content: left;
-    height: 100vh;
-} */
+.feedpage-wrapper {
+display: flex;
+justify-content: flex-start;
+align-items: center;
+flex-grow: 1;
+flex-wrap: nowrap;
+}

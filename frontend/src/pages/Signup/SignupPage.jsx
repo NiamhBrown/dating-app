@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../../services/authentication";
 import "./signup.css";
+import background from "../../../public/backgroundimages/login.jpg";
+import { set } from "rsuite/esm/internals/utils/date";
 
 export const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +13,12 @@ export const SignupPage = () => {
   const [lastName, setLastName] = useState("");
   const [proficiencyLevel, setProficiencyLevel] = useState("");
   const [age, setAge] = useState("");
+  const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
+
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
 
   const [errors, setErrors] = useState({
     email: "",
@@ -121,8 +128,11 @@ export const SignupPage = () => {
 
   return (
     <>
+      <div style={{backgroundImage: `url(${background})`}}>
       <h2 className="signuptitlecontainer">Signup</h2>
       <form className="signupformcontainer" onSubmit={handleSubmit}>
+        <p>Already have an account? Sign in <Link onClick={navigateToLogin}>here.</Link></p>
+        <br />
         <label htmlFor="forename">Forename:</label>
         <input
           placeholder="Forename"
@@ -208,6 +218,7 @@ export const SignupPage = () => {
         <br />
         <input role="submit-button" id="submit" type="submit" value="Submit" />
       </form>
+      </div>
     </>
   );
 };

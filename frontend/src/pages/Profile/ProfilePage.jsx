@@ -61,6 +61,7 @@ const ProfilePage = () => {
 
   return (
     <>
+<<<<<<< Updated upstream
       <div className="burgercontainer">
         <Burger />
       </div>
@@ -128,6 +129,8 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
+=======
+>>>>>>> Stashed changes
       <div className='burgercontainer'>
         <Burger />
       </div>
@@ -137,7 +140,11 @@ const ProfilePage = () => {
         <p>{User.email}</p>
         <p>{User.forename}</p>
         <p>{User.lastName}</p>
+<<<<<<< Updated upstream
       </div></div>
+=======
+      </div>
+>>>>>>> Stashed changes
     </>
   );
 };

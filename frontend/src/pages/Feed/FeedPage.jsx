@@ -62,7 +62,7 @@ export const FeedPage = () => {
 
     return (
         <>
-        <h2>Users</h2>
+        {/* <h2>Users</h2> */}
         <div>
             <label htmlFor="proficiencyLevel">Proficiency Level:  </label>
             <select

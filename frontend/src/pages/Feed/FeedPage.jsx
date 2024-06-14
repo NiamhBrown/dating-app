@@ -41,6 +41,7 @@ export const FeedPage = () => {
     }, [navigate]);
 
     const incriment = () => {
+        console.log("this is users!!:", users)
         if (position < users.length - 1) {
             setPosition(position + 1);
         } else {

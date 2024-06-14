@@ -7,6 +7,7 @@ export const FeedPage = () => {
     const [users, setUsers] = useState([]);
     const [requests, setRequests] = useState([]);
     const [position, setPosition] = useState(0);
+    // const [filteredUsers, setFilteredUsers] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,11 +16,22 @@ export const FeedPage = () => {
         if (token) {
         getUsers(token)
             .then((data) => {
-            setUsers(data.users.filter((x) => x._id != userId));
-            setPosition(0);
             const current_user = data.users.filter((x) => x._id == userId);
+            const other_users = data.users.filter((x) => x._id != userId)
+            console.log("CURRENT USER:",current_user)
+            console.log("OTHER USER:",other_users)
+            if (current_user[0].lookingFor.proficiencyLevel == "") {
+                console.log("OTHER USER:",other_users)
+                setUsers(other_users)
+            }
+            else if (current_user[0].lookingFor.proficiencyLevel) {
+
+            setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user[0].lookingFor.proficiencyLevel))
+
+            }
+            setPosition(0);
             setRequests(current_user[0].matchRequests);
-            // localStorage.setItem("token", data.token);
+
             })
             .catch((err) => {
             console.error(err);

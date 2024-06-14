@@ -1,3 +1,7 @@
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/Home/HomePage';
+import BackgroundHandler from './components/BackgroundHandler'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { LoginPage } from "./pages/Login/LoginPage";
@@ -39,7 +43,17 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <>
-      <RouterProvider router={router} />
+    <Router>
+      <BackgroundHandler>
+        <Routes>
+          <Route path="/" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:userId" element={<OtherProfilePage />} />
+        </Routes>
+      </BackgroundHandler>
+    </Router>
     </>
   );
 };

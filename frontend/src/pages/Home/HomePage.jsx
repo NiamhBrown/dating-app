@@ -19,13 +19,18 @@ const HomePage = () => {
 
     return (
         <>
-        <Container className="container">
-            <Navbar className="navbarhome"/>
-            <div className='maincontent'>
-                <FeedPage />
+        <div className="layout">
+            <Container className="container">
+                <Navbar className="navbarhome" />
+                <div className='maincontent' />
+                <Burger className="burgerhome" />
+            </Container>
+            <div className="feedpage-wrapper">
+                <div className='feedpagecontainer'>
+                    <FeedPage />
+                </div>
             </div>
-            <Burger className="burgerhome"/>
-        </Container>
+        </div>
         </>
     );
 };

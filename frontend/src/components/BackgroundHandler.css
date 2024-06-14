@@ -1,0 +1,22 @@
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+from { opacity: 1; }
+to { opacity: 0; }
+}
+
+.background-container {
+min-height: 100vh;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+transition: background-image 0.5s ease-in-out, opacity 0.5s ease-in-out;
+animation: 1s linear 1s running slidein;
+}
+
+.background-container.fade-out {
+animation: linear 0.5s slideout;
+}

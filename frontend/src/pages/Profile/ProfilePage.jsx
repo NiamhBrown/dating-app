@@ -118,7 +118,7 @@ const ProfilePage = () => {
           <strong>Bio:</strong> {User.bio}
         </p>
         <p>
-          <strong>URL:</strong>{" "}
+          <strong>URL:</strong> {User.url}
         </p>
 
         <div>

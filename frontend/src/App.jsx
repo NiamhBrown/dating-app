@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/Home/HomePage';
 import BackgroundHandler from './components/BackgroundHandler'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";

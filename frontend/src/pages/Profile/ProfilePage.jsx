@@ -35,11 +35,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      console.log("fetchdata");
-      console.log("userid", userId);
       try {
         const data = await getOneUser(token, userId);
-        console.log("data.user", data.user);
         setUser(data.user);
         localStorage.setItem("token", data.token);
       } catch (err) {
@@ -64,13 +61,11 @@ const ProfilePage = () => {
 
   return (
     <>
-      {/* <hr /> */}
       <div className="burgercontainer">
         <Burger />
       </div>
       <div className="profilecontainer">
         <ProfilePicture userId={userId} className="profilePicture" />
-        {/* <img src={profileImageUrl}></img> */}
         <PictureUpload />
         <p>
           <strong>Username:</strong> {User.username}
@@ -133,7 +128,16 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
+      <div className='burgercontainer'>
+        <Burger />
       </div>
+      <div className='profilecontainer'>
+        <ProfilePicture userId={userId} />
+        <PictureUpload />
+        <p>{User.email}</p>
+        <p>{User.forename}</p>
+        <p>{User.lastName}</p>
+      </div></div>
     </>
   );
 };

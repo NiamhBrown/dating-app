@@ -1,7 +1,5 @@
 import './HomePage.css';
 import { useNavigate } from "react-router-dom";
-import LogOutButton from "../../components/LogOutButton";
-import MyProfileButton from "../../components/MyProfileButton";
 import Navbar from "../../components/Navbar";
 import { UserChat } from "../Profile/UserChat";
 import Burger from "../../components/Burger";

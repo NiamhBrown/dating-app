@@ -108,6 +108,19 @@ const unmatchUser = async (req, res) => {
   res.status(201).json({ message: "OK" });
 };
 
+const blockUser = async (req, res) => {
+  console.log("IN BLOCK USER !!")
+  const otherUser = req.body.otherUser;
+  const user = req.body.user;
+  await User.findByIdAndUpdate(otherUser, { $pull: { matches: user } });
+  await User.findByIdAndUpdate(user, {
+    $pull: { matches: otherUser },
+    $push: { blackList: otherUser },
+
+  });
+  res.status(201).json({ message: "OK" });
+};
+
 // Controller to update user profile
 const updateUserProfile = async (req, res) => {
   try {
@@ -139,6 +152,7 @@ const UsersController = {
   unmatchUser: unmatchUser,
   getMatches: getMatches,
   updateUserProfile: updateUserProfile,
+  blockUser: blockUser
 };
 
 module.exports = UsersController;

@@ -1,13 +1,14 @@
 import { removeMatch } from "../services/user";
 const token = localStorage.getItem("token")
 
+
 const UnmatchButton = ({user, otherUser}) => {
 
     const unmatchUser = () => {
         removeMatch(token, user, otherUser).then((data) => {
             console.log(data);
-            // console.log("unmatch successful");
         });
+        window.location.reload()
     }
 
     return <>

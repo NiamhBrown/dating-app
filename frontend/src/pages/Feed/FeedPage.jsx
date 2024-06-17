@@ -15,21 +15,26 @@ export const FeedPage = () => {
         if (token) {
         getUsers(token)
             .then((data) => {
-            const current_user = data.users.filter((x) => x._id == userId);
-            const other_users = data.users.filter((x) => x._id != userId)
+                const filterConditions = (user) => {
+                    return (user._id != userId && !current_user.blackList.includes(user._id) && !current_user.matches.includes(user._id)
+                    && !user.matchRequests.includes(current_user._id))
+                }
+            const current_user = data.users.filter((user) => user._id == userId)[0];
+            const other_users = data.users.filter((user) => filterConditions(user))
+            
             console.log("CURRENT USER:",current_user)
             console.log("OTHER USER:",other_users)
-            if (current_user[0].lookingFor.proficiencyLevel == "") {
+            if (current_user.lookingFor.proficiencyLevel == "") {
                 console.log("OTHER USER:",other_users)
                 setUsers(other_users)
             }
-            else if (current_user[0].lookingFor.proficiencyLevel) {
+            else if (current_user.lookingFor.proficiencyLevel) {
 
-            setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user[0].lookingFor.proficiencyLevel))
+            setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user.lookingFor.proficiencyLevel))
 
             }
             setPosition(0);
-            setRequests(current_user[0].matchRequests);
+            setRequests(current_user.matchRequests);
 
             })
             .catch((err) => {
@@ -69,6 +74,9 @@ export const FeedPage = () => {
                 methods={[incriment, decriment]}
                 requests={requests}
             />}
+
+            {users.length == 0 && 
+            <p>No new users</p>}
         </div>
         </>
     );

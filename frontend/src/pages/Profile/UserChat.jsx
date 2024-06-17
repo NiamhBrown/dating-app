@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { getHistory, sendMessageToDB } from '../../services/chat';
 import { getOneUser } from '../../services/user';
+import UnmatchButton from '../../components/UnmatchButton';
+import BlockButton from '../../components/BlockButton';
 import CryptoJS from 'crypto-js';
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
@@ -10,7 +12,7 @@ export const UserChat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
-  const [CID, setCID] = useState();
+  const [CID, setCID] = useState(); //CID=chat room id
   const userId = localStorage.getItem("userId");
   const [encryptionKey, setEncryptionKey] = useState('');
   const token = localStorage.getItem('token');
@@ -106,7 +108,10 @@ export const UserChat = (props) => {
 
   return (
     <div>
-      <div>
+<div>
+  <UnmatchButton user={sender} otherUser={recipient}/>
+  <BlockButton user={sender} otherUser={recipient}/>
+</div>
         <div style={{ border: '1px solid #ccc', padding: '10px', height: '300px', overflowY: 'scroll' }}>
           {messages.map((msg, index) => (
             <div key={index}>
@@ -115,7 +120,6 @@ export const UserChat = (props) => {
             </div>
           ))}
         </div>
-      </div>
       <input
         type="text"
         value={message}

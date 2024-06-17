@@ -5,6 +5,10 @@ const chatSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
+    encryptionKey: {
+        type: String,
+        required: true
+    },
     messagesArray: {
         type: Array
     }

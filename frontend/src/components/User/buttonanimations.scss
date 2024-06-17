@@ -1,0 +1,93 @@
+.usercard {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    font-weight: bold;
+}
+
+.iconButtonContainer {
+    margin-left: 44vw;
+   margin-top: 42vh;
+}
+
+.iconButton:link,
+.iconButton:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    display: inline-block;
+    border-radius: 100px;
+    transition: all .2s;
+    position: absolute;
+}
+
+.iconButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.iconButton:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2.5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.iconButtonGold {
+    background-color: #fff;
+    color: gold;
+}
+
+.iconButtonDodgerBlue {
+    background-color: #fff;
+    color: dodgerblue;
+}
+
+.iconButtonda3e3e {
+    background-color: #fff;
+    color: #da3e3e;
+}
+
+.iconButton::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all .4s;
+}
+
+.iconButtonDodgerBlue::after {
+    background-color: dodgerblue;
+}
+
+.iconButtonGold::after {
+    background-color: gold;
+}
+
+.iconButtonda3e3e::after {
+    background-color: #da3e3e;
+}
+
+.iconButton:hover::after {
+    transform: scaleX(1.1) scaleY(1.2);
+    opacity: 0;
+}
+
+.iconButtonAnimated {
+    animation: moveInBottom 5s ease-out;
+    animation-fill-mode: backwards;
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

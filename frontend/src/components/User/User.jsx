@@ -4,7 +4,9 @@ import IconButton from '@mui/material/IconButton';
 import DoDisturbOutlinedIcon from '@mui/icons-material/DoDisturbOutlined';
 import TurnLeftOutlinedIcon from '@mui/icons-material/TurnLeftOutlined';
 import ProfilePicture from "../ProfilePicture";
-import "./user.css"
+import "./user.css";
+import "./buttonanimations.scss";
+
 
 const User = (props) => {
 
@@ -35,14 +37,14 @@ const User = (props) => {
                 <h4 className="skill_level">Skill Level: {props.user.proficiencyLevel}</h4>
                 {/* {"Skill level: " + props.user.proficiencyLevel} <br /> */}
                 <div className="iconButton_container">
-                <IconButton className="iconButton" onClick={incriment}>
-                    < DoDisturbOutlinedIcon style={{ fontSize: 50 }}/>
+                <IconButton className="iconButton iconButtonAnimate iconButtonda3e3e" onClick={incriment}>
+                    < DoDisturbOutlinedIcon style={{ fontSize: 50, color: "#da3e3e" }}/>
                 </IconButton>
-                <IconButton className="iconButton"onClick={sendRequest}>
-                    <StarOutlineOutlinedIcon style={{ fontSize: 60 }}/>
+                <IconButton className="iconButton iconButtonAnimate iconButtonDodgerBlue"onClick={decriment}>
+                    < TurnLeftOutlinedIcon style={{ fontSize: 64, color: "dodgerblue" }}/>
                 </IconButton>
-                <IconButton className="iconButton"onClick={decriment}>
-                    < TurnLeftOutlinedIcon style={{ fontSize: 60 }}/>
+                <IconButton className="iconButton iconButtonAnimate iconButtonGold"onClick={sendRequest}>
+                    <StarOutlineOutlinedIcon style={{ fontSize: 60, color: "gold" }}/>
                 </IconButton>
                 </div>
             </article>

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { login } from "../../services/authentication";
 import './Login.css';
 import ConsoleText from "./ConsoleText";
+import "./loginbutton.scss";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -30,11 +31,15 @@ export const LoginPage = () => {
         <form className="formcontainer" onSubmit={handleSubmit}>
           <label htmlFor="email">Email:</label>
           <input id="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <br />
           <label htmlFor="password">Password:</label>
           <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <input role="submit-button" id="submit" type="submit" value="Submit" />
           <br />
-          <p>Don't have an account? Sign up <Link to="/">here.</Link></p>
+          <button className="loginbtn draw-border" role="submit-button" id="submit" type="submit" value="Submit">Submit</button>
+          <br />
+          <br />
+          <br />
+          <p className="navtosignup">Don't have an account? Sign up <Link to="/">here.</Link></p>
         </form>
       </div>
     </>

@@ -135,6 +135,14 @@ export const SignupPage = () => {
        value={username}
        onChange={(e) => setUsername(e.target.value)}
        />
+               <br/>
+        <TextField id="Email"
+       label="Email"
+       variant="outlined"
+       color="primary"
+       value={email}
+       onChange={(e) => setEmail(e.target.value)}
+       />
         <br/>
         <TextField id="Password"
        label="Password"

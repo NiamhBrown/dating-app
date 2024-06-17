@@ -127,6 +127,7 @@ export const UserChat = (props) => {
             overflowY: "scroll",
           }}
         >
+          </div>
 <div>
   <UnmatchButton user={sender} otherUser={recipient}/>
   <BlockButton user={sender} otherUser={recipient}/>

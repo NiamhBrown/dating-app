@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/", UsersController.create);
 router.post("/sendRequest", UsersController.addUsertoRequests);
 router.post("/acceptMatch", UsersController.addUsertoMatches);
+router.post("/unmatch", UsersController.unmatchUser);
 router.get("/", UsersController.getAllUsers);
 router.get("/:userId", UsersController.getOneUser)
 router.get("/matches/:userId", UsersController.getMatches)

@@ -53,9 +53,8 @@ export default function MultipleSelect() {
       <FormControl sx={{ m: 1, width: 300 }}>
         <InputLabel id="demo-multiple-name-label">Proficiency Level</InputLabel>
         <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
+          labelId="proficiency-level"
+          id="proficiency-level"
           value={personName}
           onChange={handleChange}
           input={<OutlinedInput label="Proficiency Level" />}

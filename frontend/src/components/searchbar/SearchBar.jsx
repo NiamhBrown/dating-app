@@ -27,8 +27,7 @@ export const SearchBar = ({ setResults }) => {
             setResults(allMatches);
         } else {
             const filteredResults = allMatches.filter((user) =>
-                user.forename.toLowerCase().includes(value.toLowerCase()) ||
-                user.lastName.toLowerCase().includes(value.toLowerCase())
+                (user.forename +" "+ user.lastName).toLowerCase().includes(value.toLowerCase())
             );
             setResults(filteredResults);
         }

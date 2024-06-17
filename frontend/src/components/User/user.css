@@ -1,7 +1,10 @@
 .usercard{
     background-color: #fff;
-    border-radius: 10px;
-    padding: 20px
+    border-radius: 30px;
+    padding: 20px;
+    height: 500px;
+    width: 400px;
+    overflow: hidden;
 }
 
 .iconButton{

@@ -39,6 +39,7 @@ const create = (req, res) => {
       }
     });
 };
+
 const getOneUser = async (req, res) => {
   const user = await User.findById(req.params.userId);
   const token = generateToken(req.params.userId);

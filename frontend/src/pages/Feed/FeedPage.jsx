@@ -7,6 +7,7 @@ export const FeedPage = () => {
     const [users, setUsers] = useState([]);
     const [requests, setRequests] = useState([]);
     const [position, setPosition] = useState(0);
+    const [refresh, setRefresh] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,12 +16,16 @@ export const FeedPage = () => {
         if (token) {
         getUsers(token)
             .then((data) => {
+                const current_user = data.users.filter((user) => user._id == userId)[0];
+
                 const filterConditions = (user) => {
-                    return (user._id != userId && !current_user.blackList.includes(user._id) && !current_user.matches.includes(user._id)
+                    //!current_user.blackList.includes(user._id)
+                    return (user._id != userId && !user.blackList.includes(userId) && !current_user.matches.includes(user._id)
                     && !user.matchRequests.includes(current_user._id))
                 }
-            const current_user = data.users.filter((user) => user._id == userId)[0];
-            const other_users = data.users.filter((user) => filterConditions(user))
+
+                const other_users = data.users.filter((user) => filterConditions(user))
+
             
             console.log("CURRENT USER:",current_user)
             console.log("OTHER USER:",other_users)
@@ -42,7 +47,7 @@ export const FeedPage = () => {
             navigate("/login");
             });
         }
-    }, [navigate]);
+    }, [refresh, navigate]);
 
     const incriment = () => {
         if (position < users.length - 1) {
@@ -58,11 +63,17 @@ export const FeedPage = () => {
         }
     };
 
+    const handleMatchOrBlock = () => {
+        // Logic for matching or blocking a user
+        // After matching or blocking a user, trigger a re-fetch
+        setRefresh(!refresh);
+    };
+
     const token = localStorage.getItem("token");
     if (!token) {
-        navigate("/login");
-        return;
-    };
+        navigate("/login")
+        return
+    }
 
     return (
         <>
@@ -71,7 +82,7 @@ export const FeedPage = () => {
             <User 
                 user={users[position]} 
                 key={users[position]._id}
-                methods={[incriment, decriment]}
+                methods={[incriment, decriment, handleMatchOrBlock]}
                 requests={requests}
             />}
 

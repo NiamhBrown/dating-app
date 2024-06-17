@@ -49,9 +49,6 @@ const userSchema = new mongoose.Schema({
   },
   lookingFor: {
     proficiencyLevel: {
-      // type: String,
-      // enum: ["beginner", "junior", "intermediate", "senior", "unspecified"],
-      // default: "unspecified",
       type: [String],
       default: [],
     },

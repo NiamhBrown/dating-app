@@ -40,7 +40,7 @@ export const sendMatchRequest = async (token, sender, recipient) => {
   return data;
 };
 
-export const getOneUser = async (token, userId ) => { 
+export const getOneUser = async (token, userId) => {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -48,7 +48,10 @@ export const getOneUser = async (token, userId ) => {
     },
   };
 
-const response = await fetch(`${BACKEND_URL}/users/${userId}`, requestOptions);
+  const response = await fetch(
+    `${BACKEND_URL}/users/${userId}`,
+    requestOptions
+  );
 
   if (response.status !== 200) {
     throw new Error("Unable to fetch users");
@@ -106,7 +109,7 @@ export const uploadProfilePicture = async (token, file) => {
     throw error;
   }
 };
-export const getMatches = async (token, userId) => { 
+export const getMatches = async (token, userId) => {
   const requestOptions = {
     method: "GET",
     headers: {

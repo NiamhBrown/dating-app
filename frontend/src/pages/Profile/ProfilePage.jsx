@@ -70,7 +70,11 @@ const ProfilePage = () => {
         <Burger />
       </div>
       <div className="profilecontainer">
-        <ProfilePicture userId={userId} className="profilePicture" />
+        <ProfilePicture
+          userId={userId}
+          className="profilePicture"
+          size="400px"
+        />
         <PictureUpload />
         <p>
           <strong>Username:</strong> {User.username}
@@ -131,13 +135,6 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
-      </div>
-      <div className='profilecontainer'>
-        <ProfilePicture userId={userId} />
-        <PictureUpload />
-        <p>{User.email}</p>
-        <p>{User.forename}</p>
-        <p>{User.lastName}</p>
       </div>
     </>
   );

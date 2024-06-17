@@ -5,11 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 export const FeedPage = () => {
     const [users, setUsers] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]);
     const [requests, setRequests] = useState([]);
     const [position, setPosition] = useState(0);
-    // const [filteredUsers, setFilteredUsers] = useState([]);
-    const [proficiencyFilter, setPF] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,24 +15,26 @@ export const FeedPage = () => {
         if (token) {
         getUsers(token)
             .then((data) => {
-            setUsers(data.users.filter((x) => x._id != userId));
-            setFilteredUsers(data.users.filter((x) => x._id != userId));
-            setPosition(0);
-            const current_user = data.users.filter((x) => x._id == userId);
-            const other_users = data.users.filter((x) => x._id != userId)
+                const filterConditions = (user) => {
+                    return (user._id != userId && !current_user.blackList.includes(user._id) && !current_user.matches.includes(user._id)
+                    && !user.matchRequests.includes(current_user._id))
+                }
+            const current_user = data.users.filter((user) => user._id == userId)[0];
+            const other_users = data.users.filter((user) => filterConditions(user))
+            
             console.log("CURRENT USER:",current_user)
             console.log("OTHER USER:",other_users)
-            if (current_user[0].lookingFor.proficiencyLevel == "") {
+            if (current_user.lookingFor.proficiencyLevel == "") {
                 console.log("OTHER USER:",other_users)
                 setUsers(other_users)
             }
-            else if (current_user[0].lookingFor.proficiencyLevel) {
+            else if (current_user.lookingFor.proficiencyLevel) {
 
-            setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user[0].lookingFor.proficiencyLevel))
+            setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user.lookingFor.proficiencyLevel))
 
             }
             setPosition(0);
-            setRequests(current_user[0].matchRequests);
+            setRequests(current_user.matchRequests);
 
             })
             .catch((err) => {
@@ -65,42 +64,19 @@ export const FeedPage = () => {
         return;
     };
 
-    const handlePF = (event) => {
-        if (event.target.value == "unspecified") {
-            setFilteredUsers(users);
-        } else {
-            setFilteredUsers(users.filter((x) => x.proficiencyLevel == event.target.value));
-            setPF(event.target.value);
-        }
-    }
-
     return (
         <>
-        {/* <h2>Users</h2> */}
         <div>
-            <label htmlFor="proficiencyLevel">Proficiency Level:  </label>
-            <select
-            placeholder="ProficiencyLevel"
-            id="proficiencyLevel"
-            type="proficiencyLevel"
-            value={proficiencyFilter}
-            onChange={handlePF}
-            >
-            <option value="unspecified">Please select....</option>
-            <option value="beginner">Beginner</option>
-            <option value="junior">Junior</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="senior">Senior</option>
-            </select>
-
-
-            {filteredUsers.length != 0 &&
+            {users.length != 0 &&
             <User 
-                user={filteredUsers[position]} 
-                key={filteredUsers[position]._id}
+                user={users[position]} 
+                key={users[position]._id}
                 methods={[incriment, decriment]}
                 requests={requests}
             />}
+
+            {users.length == 0 && 
+            <p>No new users</p>}
         </div>
         </>
     );

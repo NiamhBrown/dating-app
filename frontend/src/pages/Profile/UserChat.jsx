@@ -1,17 +1,10 @@
-
-// TODO: Add this as a componant of navbar
-// take userId of logged in user & user they are speaking to
-// props: (senderId, recipientId)
-// add these + time stamp to message object
-// save these messages in a chat document in Mongo
-// load chat history in useEffect
-
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { getHistory, sendMessageToDB } from '../../services/chat';
 import { getOneUser } from '../../services/user';
 import UnmatchButton from '../../components/UnmatchButton';
 import BlockButton from '../../components/BlockButton';
+import CryptoJS from 'crypto-js';
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
 
@@ -21,54 +14,91 @@ export const UserChat = (props) => {
   const [name, setName] = useState('');
   const [CID, setCID] = useState(); //CID=chat room id
   const userId = localStorage.getItem("userId");
-  let chatRoomId = null
+  const [encryptionKey, setEncryptionKey] = useState('');
   const token = localStorage.getItem('token');
   const sender = localStorage.getItem('userId');
   const recipient = props.chatterId;
 
   useEffect(() => {
-    getHistory(token, sender, recipient)
-      .then((data) => {
+    const fetchData = async () => {
+    //   const data = await getHistory(token, sender, recipient);
+    //   setEncryptionKey(data.encryptionKey);
+      // const decryptedHistory = data.history.map(msg => {
+      //   const bytes = CryptoJS.AES.decrypt(msg.message, data.encryptionKey);
+      //   const originalMessage = bytes.toString(CryptoJS.enc.Utf8);
+      //   return { ...msg, message: originalMessage };
+      // });
+      // console.log(data.chatId);
+      // setMessages(decryptedHistory);
+      // setCID(data.chatId);
+      // socket.emit('join room', data.chatId);
+    // };
+
+    try {
+      const data = await getHistory(token, sender, recipient);
+      if(data.encryptionKey){
+        setEncryptionKey(data.encryptionKey);
+        const decryptedHistory = data.history.map(msg => {
+          const bytes = CryptoJS.AES.decrypt(msg.message, data.encryptionKey);
+          const originalMessage = bytes.toString(CryptoJS.enc.Utf8);
+          return { ...msg, message: originalMessage };
+        });
         console.log(data.chatId);
-        setMessages(data.history);
-        chatRoomId = data.chatId
-        socket.emit('join room', chatRoomId);
-      })
+        setMessages(decryptedHistory);
+        setCID(data.chatId);
+        socket.emit('join room', data.chatId);
+      } else {
+        console.error('encryption key not found in response')
+      } 
+    } catch (error){
+      console.error('error fetching chat history', error);
+    }
+  };
+
+    fetchData();
 
     getOneUser(token, userId)
       .then((data) => {
-        setName(data.user.forename)
-      })
+        setName(data.user.forename);
+      });
 
     socket.on('message', (msg) => {
+      if (!encryptionKey) {
+        console.error('Encryption key is not set');
+        return;
+      }
       console.log("Message posted");
-      console.log(msg)
-      setMessages((prevMessages) => [...prevMessages, msg]);
+      console.log(msg);
+      const bytes = CryptoJS.AES.decrypt(msg.message, encryptionKey);
+      const originalMessage = bytes.toString(CryptoJS.enc.Utf8);
+      setMessages((prevMessages) => [...prevMessages, { ...msg, message: originalMessage }]);
     });
 
     socket.on('dm room joined', () => {
-      console.log("Room ID: ", chatRoomId)
-      setCID(chatRoomId);
-    })
+      console.log("Room ID: ", CID);
+    });
 
-    // Clean up the effect
     return () => {
       socket.off('message');
+      socket.off('dm room joined');
     };
-  }, []);
+  }, [token, sender, recipient, userId, encryptionKey]);
 
   const sendMessage = () => {
-    if (message.trim()) {
-      console.log(CID)
-      let today = new Date().toLocaleString()
+    if (message.trim() && encryptionKey) {
+      console.log(CID);
+      let today = new Date().toLocaleString();
+      let encryptedMessage = CryptoJS.AES.encrypt(message, encryptionKey).toString();
       let message_obj = {
         author: name,
-        message: message,
+        message: encryptedMessage,
         timestamp: today
-      }
+      };
       socket.emit('message', message_obj, CID);
       setMessage('');
       sendMessageToDB(token, CID, message_obj);
+    } else {
+      console.error('Message is empty or encryption key is not set');
     }
   };
 
@@ -86,7 +116,7 @@ export const UserChat = (props) => {
           {messages.map((msg, index) => (
             <div key={index}>
               <strong>{msg.author}:</strong> {msg.message}
-              <small>   ({msg.timestamp})</small>
+              <small> ({msg.timestamp})</small>
             </div>
           ))}
         </div>

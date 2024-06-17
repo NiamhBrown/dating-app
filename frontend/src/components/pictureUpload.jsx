@@ -2,15 +2,13 @@ import { useState } from "react";
 import { uploadProfilePicture } from "../services/user";
 
 const PictureUpload = () => {
-
-    const token = localStorage.getItem("token")
-    const [profilePicture, setProfilePicture] = useState(null)
-    const [isFormVisible, setIsFormVisible] = useState(false);
+  const token = localStorage.getItem("token");
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleFileChange = (event) => {
     setProfilePicture(event.target.files[0]);
   };
-
 
   const handleUpload = async () => {
     try {
@@ -22,7 +20,6 @@ const PictureUpload = () => {
     }
     window.location.reload();
   };
-
 
   return (
     <div>

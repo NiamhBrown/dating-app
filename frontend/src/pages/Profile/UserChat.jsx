@@ -5,6 +5,8 @@ import { getOneUser } from '../../services/user';
 import UnmatchButton from '../../components/UnmatchButton';
 import BlockButton from '../../components/BlockButton';
 import CryptoJS from 'crypto-js';
+import ProfilePicture from "../../components/ProfilePicture";
+import { useNavigate } from "react-router-dom";
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
 
@@ -18,22 +20,11 @@ export const UserChat = (props) => {
   const token = localStorage.getItem('token');
   const sender = localStorage.getItem('userId');
   const recipient = props.chatterId;
+  const [recipientData, setRecipientData] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-    //   const data = await getHistory(token, sender, recipient);
-    //   setEncryptionKey(data.encryptionKey);
-      // const decryptedHistory = data.history.map(msg => {
-      //   const bytes = CryptoJS.AES.decrypt(msg.message, data.encryptionKey);
-      //   const originalMessage = bytes.toString(CryptoJS.enc.Utf8);
-      //   return { ...msg, message: originalMessage };
-      // });
-      // console.log(data.chatId);
-      // setMessages(decryptedHistory);
-      // setCID(data.chatId);
-      // socket.emit('join room', data.chatId);
-    // };
-
     try {
       const data = await getHistory(token, sender, recipient);
       if(data.encryptionKey){
@@ -56,7 +47,14 @@ export const UserChat = (props) => {
   };
 
     fetchData();
-
+    
+    getOneUser(token, recipient).then((data) => {
+      console.log("recipient data!!", data);
+      console.log("forname!!", data.user.forename);
+      setRecipientData(data.user);
+      // console.log("recipietName !!", recipientName);
+    });
+    
     getOneUser(token, userId)
       .then((data) => {
         setName(data.user.forename);
@@ -106,13 +104,33 @@ export const UserChat = (props) => {
     props.setChatting(false);
   };
 
+  const handleProfile = () => {
+    navigate(`/profile/${recipient}`);
+  };
   return (
     <div>
+      <div onClick={handleProfile}>
+        {" "}
+        <ProfilePicture
+          userId={recipient}
+          className="profilePicture"
+          size="75px"
+        />
+      </div>
+      <div onClick={handleProfile}>{recipientData.forename}</div>
+      <div>
+        <div
+          style={{
+            border: "1px solid #ccc",
+            padding: "10px",
+            height: "300px",
+            overflowY: "scroll",
+          }}
+        >
 <div>
   <UnmatchButton user={sender} otherUser={recipient}/>
   <BlockButton user={sender} otherUser={recipient}/>
 </div>
-        <div style={{ border: '1px solid #ccc', padding: '10px', height: '300px', overflowY: 'scroll' }}>
           {messages.map((msg, index) => (
             <div key={index}>
               <strong>{msg.author}:</strong> {msg.message}

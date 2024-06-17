@@ -2,14 +2,48 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../../services/authentication";
 import "./signup.css";        // General CSS
-import "./signupbutton.scss";       // SASS file for button styling
+import "./signupbutton.scss"; // SASS file for button styling
 import ScrollingText from "./ScrollingText";
-import MenuItem from '@mui/material/TextField';
 import TextField from '@mui/material/TextField';
-import Select from "./test";
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'unspecified',
+  'beginner',
+  'junior',
+  'intermediate',
+  'senior',
+];
+
+function getStyles(name, selectedName, theme) {
+  return {
+    fontWeight:
+      selectedName === name
+        ? theme.typography.fontWeightMedium
+        : theme.typography.fontWeightRegular,
+  };
+}
 
 export const SignupPage = () => {
+  const theme = useTheme();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -17,8 +51,6 @@ export const SignupPage = () => {
   const [lastName, setLastName] = useState("");
   const [proficiencyLevel, setProficiencyLevel] = useState("");
   const [age, setAge] = useState("");
-  const navigate = useNavigate();
-
   const [errors, setErrors] = useState({
     email: "",
     username: "",
@@ -102,57 +134,78 @@ export const SignupPage = () => {
       <ScrollingText />
       <form className="signupformcontainer" onSubmit={handleSubmit}>
         <p>Already have an account? Sign in <Link to="/login">here!</Link></p>
-       <div className="br"/>
-       <TextField id="foreName"
-       label="Forename"
-       variant="outlined"
-       color="primary"
-       value={forename}
-       onChange={(e) => setForename(e.target.value)}
-       />
+        <div className="br"/>
+        <TextField id="foreName"
+          label="Forename"
+          variant="outlined"
+          color="primary"
+          value={forename}
+          onChange={(e) => setForename(e.target.value)}
+        />
         <br/>
         <TextField id="lastName"
-       label="Last Name"
-       variant="outlined"
-       color="primary"
-       value={lastName}
-       onChange={(e) => setLastName(e.target.value)}
-       />
+          label="Last Name"
+          variant="outlined"
+          color="primary"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
         <br/>
         <TextField id="Age"
-       label="Age"
-       variant="outlined"
-       type="number"
-       color="primary"
-       value={age}
-       onChange={(e) => setAge(e.target.value)}
-       />
+          label="Age"
+          variant="outlined"
+          type="number"
+          color="primary"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
         <br/>
         <TextField id="Username"
-       label="Username"
-       variant="outlined"
-       color="primary"
-       value={username}
-       onChange={(e) => setUsername(e.target.value)}
-       />
-               <br/>
+          label="Username"
+          variant="outlined"
+          color="primary"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <br/>
         <TextField id="Email"
-       label="Email"
-       variant="outlined"
-       color="primary"
-       value={email}
-       onChange={(e) => setEmail(e.target.value)}
-       />
+          label="Email"
+          variant="outlined"
+          color="primary"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <br/>
         <TextField id="Password"
-       label="Password"
-       variant="outlined"
-       color="primary"
-       value={password}
-       onChange={(e) => setPassword(e.target.value)}
-       />
+          label="Password"
+          variant="outlined"
+          color="primary"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <br/>
-        <Select/>
+        <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="proficiency-level-label">Proficiency Level</InputLabel>
+          <Select
+            labelId="proficiency-level-label"
+            id="proficiency-level"
+            value={proficiencyLevel}
+            onChange={(e) => setProficiencyLevel(e.target.value)}
+            input={<OutlinedInput label="Proficiency Level" />}
+            MenuProps={MenuProps}
+          >
+            {names.map((name) => (
+              <MenuItem
+                key={name}
+                value={name}
+                style={getStyles(name, proficiencyLevel, theme)}
+              >
+                {name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <br/>
         {errors.password.length > 0 && (
           <ul>

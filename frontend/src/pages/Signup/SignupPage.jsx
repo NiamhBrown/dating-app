@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../../services/authentication";
 import "./signup.css";        // General CSS
-import "./button.scss";       // SASS file for button styling
+import "./signupbutton.scss";       // SASS file for button styling
 import ScrollingText from "./ScrollingText";
+import MenuItem from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
+import Select from "./test";
+
 
 export const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -99,72 +103,56 @@ export const SignupPage = () => {
       <form className="signupformcontainer" onSubmit={handleSubmit}>
         <p>Already have an account? Sign in <Link to="/login">here!</Link></p>
        <div className="br"/>
-        <label htmlFor="forename">Forename:</label>
-        <input
-          placeholder="Forename"
-          id="forename"
-          type="text"
-          value={forename}
-          onChange={(e) => setForename(e.target.value)}
-        />
+       <TextField id="foreName"
+       label="Forename"
+       variant="outlined"
+       color="primary"
+       value={forename}
+       onChange={(e) => setForename(e.target.value)}
+       />
         <br/>
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          placeholder="LastName"
-          id="lastName"
-          type="text"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
+        <TextField id="lastName"
+       label="Last Name"
+       variant="outlined"
+       color="primary"
+       value={lastName}
+       onChange={(e) => setLastName(e.target.value)}
+       />
         <br/>
-        <label htmlFor="age">Age:</label>
-        <input
-          placeholder="Age"
-          id="age"
-          type="number"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
+        <TextField id="Age"
+       label="Age"
+       variant="outlined"
+       type="number"
+       color="primary"
+       value={age}
+       onChange={(e) => setAge(e.target.value)}
+       />
         <br/>
-        <label htmlFor="username">Username:</label>
-        <input
-          placeholder="Username"
-          id="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <TextField id="Username"
+       label="Username"
+       variant="outlined"
+       color="primary"
+       value={username}
+       onChange={(e) => setUsername(e.target.value)}
+       />
+               <br/>
+        <TextField id="Email"
+       label="Email"
+       variant="outlined"
+       color="primary"
+       value={email}
+       onChange={(e) => setEmail(e.target.value)}
+       />
         <br/>
-        <label htmlFor="email">Email:</label>
-        <input
-          placeholder="Email"
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <TextField id="Password"
+       label="Password"
+       variant="outlined"
+       color="primary"
+       value={password}
+       onChange={(e) => setPassword(e.target.value)}
+       />
         <br/>
-        <label htmlFor="password">Password:</label>
-        <input
-          placeholder="Password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <br/>
-        <label htmlFor="proficiencyLevel">Proficiency Level:</label>
-        <select
-          id="proficiencyLevel"
-          value={proficiencyLevel}
-          onChange={(e) => setProficiencyLevel(e.target.value)}
-        >
-          <option value="unspecified">Please select...</option>
-          <option value="beginner">Beginner</option>
-          <option value="junior">Junior</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="senior">Senior</option>
-        </select>
+        <Select/>
         <br/>
         {errors.password.length > 0 && (
           <ul>
@@ -175,7 +163,7 @@ export const SignupPage = () => {
         )}
         {errors.username && <p id="usernameError">{errors.username}</p>}
         {errors.email && <p>{errors.email}</p>}
-        <button className="btn draw-border" role="submit-button" id="submit" type="submit" value="Submit">Submit</button>
+        <button className="signupbtn draw-border" role="submit-button" id="submit" type="submit" value="Submit">Submit</button>
       </form>
     </div>
   );

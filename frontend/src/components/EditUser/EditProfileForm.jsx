@@ -2,15 +2,16 @@ import Button from "./Button"; // Import the Button component
 import { useState } from "react";
 import Select from "react-select";
 
+
 const EditProfileForm = ({ user, onSave, onClose }) => {
   console.log(user);
   const [formData, setFormData] = useState({
     email: user.email || "",
     forename: user.forename || "",
     lastName: user.lastName || "",
-    proficiencyLevel: user.proficiencyLevel || "unspecified",
+    proficiencyLevel: user.proficiencyLevel || "Unspecified",
     age: user.age || "",
-    gender: user.gender || "prefer not to say",
+    gender: user.gender || "Prefer not to say",
     location: user.location || "",
     experience: user.experience || "",
     projects: user.projects || [],

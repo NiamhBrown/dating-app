@@ -11,11 +11,13 @@ const createToken = async (req, res) => {
       return res.status(401).json({ message: "User not found" });
 
     }
+
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).send("Invalid email or password");
-    }
 
+    }    
+  
     const token = generateToken(user.id);
     res.status(201).json({ token: token, userId: user._id, message: "OK" });
   } catch (err) {

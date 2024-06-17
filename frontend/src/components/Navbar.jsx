@@ -5,7 +5,9 @@ import { SearchResultsList } from "./searchbar/SearchResultsList";
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
+
 import './Navbar.css'; 
+
 const Navbar = (props) => {
   const [results, setResults] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
@@ -14,6 +16,7 @@ const Navbar = (props) => {
   const handleToggleSidebar = () => {
     setCollapsed(!collapsed);
   };
+
 
   return (
     <div style={{ display: 'flex', height: '100vh', flexDirection: 'row' }}>
@@ -38,6 +41,7 @@ const Navbar = (props) => {
               {results && results.length > 0 && <SearchResultsList setChatting={props.setChatting} setChatterId={props.setChatterId} results={results} token={token}/>}
             </div>
           </SubMenu>
+
         </Menu>
       </Sidebar>
       <div 

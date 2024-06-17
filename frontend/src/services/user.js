@@ -40,7 +40,7 @@ export const sendMatchRequest = async (token, sender, recipient) => {
   return data;
 };
 
-export const getOneUser = async (token, userId ) => { 
+export const getOneUser = async (token, userId) => {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -48,7 +48,10 @@ export const getOneUser = async (token, userId ) => {
     },
   };
 
-const response = await fetch(`${BACKEND_URL}/users/${userId}`, requestOptions);
+  const response = await fetch(
+    `${BACKEND_URL}/users/${userId}`,
+    requestOptions
+  );
 
   if (response.status !== 200) {
     throw new Error("Unable to fetch users");
@@ -78,6 +81,49 @@ export const acceptMatch = async (token, sender, recipient) => {
   const data = await response.json();
   return data;
 };
+
+export const removeMatch = async (token, user, otherUser) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user: user, otherUser: otherUser}),
+  };
+  const response = await fetch(
+    `${BACKEND_URL}/users/unmatch`,
+    requestOptions
+  );
+
+  if (response.status !== 201) {
+    throw new Error("Unable to unmatch user");
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const blockUserService= async (token, user, otherUser) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user: user, otherUser: otherUser}),
+  };
+  const response = await fetch(
+    `${BACKEND_URL}/users/block`,
+    requestOptions
+  );
+
+  if (response.status !== 201) {
+    throw new Error("Unable to block user");
+  }
+  const data = await response.json();
+  return data;
+};
+
 export const uploadProfilePicture = async (token, file) => {
   const formData = new FormData();
   formData.append("profilePicture", file);
@@ -106,7 +152,7 @@ export const uploadProfilePicture = async (token, file) => {
     throw error;
   }
 };
-export const getMatches = async (token, userId) => { 
+export const getMatches = async (token, userId) => {
   const requestOptions = {
     method: "GET",
     headers: {

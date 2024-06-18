@@ -10,6 +10,7 @@ import "./buttonanimations.scss";
 const User = (props) => {
   const incriment = props.methods[0];
   const decriment = props.methods[1];
+  const handleMatchOrBlock = props.methods[2];
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
 
@@ -40,13 +41,19 @@ const User = (props) => {
                 <h4 className="skill_level">Skill Level: {props.user.proficiencyLevel}</h4>
                 {/* {"Skill level: " + props.user.proficiencyLevel} <br /> */}
                 <div className="iconButton_container">
-                <IconButton className="iconButton iconButtonAnimate iconButtonda3e3e" onClick={incriment}>
+                <IconButton className="iconButton iconButtonAnimate iconButtonda3e3e" onClick={() => {
+            incriment();
+            handleMatchOrBlock();
+          }}>
                     < DoDisturbOutlinedIcon style={{ fontSize: 50, color: "#da3e3e" }}/>
                 </IconButton>
                 <IconButton className="iconButton iconButtonAnimate iconButtonDodgerBlue"onClick={decriment}>
                     < TurnLeftOutlinedIcon style={{ fontSize: 64, color: "dodgerblue" }}/>
                 </IconButton>
-                <IconButton className="iconButton iconButtonAnimate iconButtonGold"onClick={sendRequest}>
+                <IconButton className="iconButton iconButtonAnimate iconButtonGold" onClick={() => {
+            sendRequest();
+            handleMatchOrBlock();
+          }}>
                     <StarOutlineOutlinedIcon style={{ fontSize: 60, color: "gold" }}/>
                 </IconButton>
                 </div>

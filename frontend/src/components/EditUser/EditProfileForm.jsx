@@ -2,6 +2,7 @@ import Button from "./Button"; // Import the Button component
 import { useState } from "react";
 import Select from "react-select";
 import "./editProfileForm.css";
+import Scroller from "../Scroller";
 
 
 const EditProfileForm = ({ user, onSave, onClose }) => {
@@ -124,6 +125,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   return (
   <div className="scrollable-container">
     <form onSubmit={handleSubmit} className="edit-profile-form">
+      <Scroller>
       <label>
         Email:
         <input
@@ -360,6 +362,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           Cancel
         </Button>
       </div>
+      </Scroller>
     </form>
     </div>  
   );

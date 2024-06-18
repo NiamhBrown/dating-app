@@ -5,8 +5,9 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import Person2Icon from '@mui/icons-material/Person2';
 import "rsuite/dist/rsuite.min.css"; 
 import { Dropdown } from "rsuite";
+import { set } from 'rsuite/esm/internals/utils/date';
 
-const Burger = () => { 
+const Burger = ({setMyProfile}) => { 
     const location = useLocation();
     const currentPath = location.pathname;
     const navigate = useNavigate();
@@ -19,7 +20,8 @@ const Burger = () => {
     };
 
     const handleMyProfileButton = () => {
-        navigate('/profile');
+        setMyProfile(true)
+        //navigate('/profile');
     };
 
     const handleHome = () => {

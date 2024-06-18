@@ -8,11 +8,16 @@ import Burger from "../../components/Burger";
 import Modal from "../../components/EditUser/Modal";
 import { updateUserProfile } from "../../services/user";
 import EditProfileForm from "../../components/EditUser/EditProfileForm";
+import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import IconButton from "@mui/material/IconButton";
+import defaultProfilePic from "./../../assets/defaultProfilePic.png"
 
-const ProfilePage = () => {
+const ProfilePage = ({setMyProfile}) => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const serverUrl = `http://localhost:3000/uploads/${userId}`;
+  const [pictureUpdate, setPictureUpdate] = useState(false)
   const [User, setUser] = useState({
     email: "",
     forename: "",
@@ -43,6 +48,7 @@ const ProfilePage = () => {
       try {
         const data = await getOneUser(token, userId);
         setUser(data.user);
+        console.log(data.user.profilePicture)
         localStorage.setItem("token", data.token);
       } catch (err) {
         console.error(err);
@@ -51,7 +57,7 @@ const ProfilePage = () => {
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, [User.profilePicture]);
 
   const handleSave = async (updatedData) => {
     try {
@@ -63,19 +69,29 @@ const ProfilePage = () => {
       console.error("Error updating user profile:", error);
     }
   };
+  const handleUpload = () =>{
+    setUser()
+  };
+  
+  
+  const handleBack = () => {
+    setMyProfile(false)
+  };
 
   return (
     <>
-      <div className="burgercontainer">
-        <Burger />
-      </div>
+
+            <IconButton onClick={handleBack}>
+                {" "}
+                <ArrowBackIosOutlinedIcon />{" "}
+              </IconButton>
+      
       <div className="profilecontainer">
-        <ProfilePicture
-          userId={userId}
-          className="profilePicture"
-          size="400px"
-        />
-        <PictureUpload />
+
+        {!User.profilePicture && <img src={defaultProfilePic} width="250px"/>}
+        {User.profilePicture && <img className="userProfilepicture" 
+        src={`http://localhost:3000${User.profilePicture}?${new Date().getTime()}`} 
+        width="300px" />}
 
         <div>
           <button onClick={() => setShowModal(true)}>Edit profile</button>
@@ -89,6 +105,7 @@ const ProfilePage = () => {
             />
           </Modal>
         </div>
+
 
 
         <p>

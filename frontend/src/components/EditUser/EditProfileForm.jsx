@@ -1,6 +1,8 @@
-import Button from "./Button"; // Import the Button component
+import Button from "./Button"; 
 import { useState } from "react";
 import Select from "react-select";
+import PictureUpload from "../pictureUpload";
+import ProfilePicture from "../ProfilePicture";
 import "./editProfileForm.css";
 
 
@@ -69,6 +71,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       ...prev,
       projects: prev.projects.filter((_, i) => i !== index),
     }));
+    console.log("formdata",formData)
   };
 
   const handleSelectChange = (selectedOptions, { name }) => {
@@ -94,6 +97,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       }
     });
   };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -122,7 +126,12 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   ];
 
   return (
+    
+    <PictureUpload />
+
   <div className="scrollable-container">
+    <PictureUpload /> // may have to move
+
     <form onSubmit={handleSubmit} className="edit-profile-form">
       <label>
         Email:
@@ -361,7 +370,9 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
         </Button>
       </div>
     </form>
+
     </div>  
+
   );
 };
 

@@ -45,23 +45,44 @@ const getOneUser = async (req, res) => {
   const token = generateToken(req.params.userId);
   res.status(200).json({ user: user, token: token });
 };
-
 const addProfilePicture = async (req, res) => {
   try {
-    console.log("userId", userId);
-    const user = await User.findById({ _id: req.userId });
+    console.log("userId", req.userId); 
+    console.log("file", req.file); 
+    if (!req.userId) {
+      return res.status(400).json({ message: "User ID is missing" });
+    }
+    if (!req.file || !req.file.filename) {
+      return res.status(400).json({ message: "File is missing" });
+    }
+    const user = await User.findById(req.userId);
     console.log("user", user);
-    // user.profilePicture = "/uploads/" + req.file.filename;
-    user.profilePicture = `/uploads/${req.file.filename}`;
-    await user.save();
+    console.log("FILE",req.file)
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.profilePicture = "/uploads/" + req.file.filename;
+
+
+    try {
+      await user.save();
+    } catch (saveError) {
+      console.error("Error saving user:", saveError); 
+      return res.status(500).json({ message: "Error saving user" });
+    }
+
     res.status(200).json({
       message: "Profile picture updated",
       profilePicture: user.profilePicture,
     });
   } catch (error) {
+    console.error("Error uploading profile picture:", error); // Debugging general error
     res.status(500).json({ message: "Error uploading profile picture" });
   }
 };
+
 
 const getAllUsers = async (req, res) => {
   const users = await User.find();

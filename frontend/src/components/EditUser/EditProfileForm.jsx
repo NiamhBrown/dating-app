@@ -4,6 +4,7 @@ import Select from "react-select";
 import PictureUpload from "../pictureUpload";
 import ProfilePicture from "../ProfilePicture";
 import "./editProfileForm.css";
+import Scroller from "../Scroller";
 
 
 const EditProfileForm = ({ user, onSave, onClose }) => {
@@ -130,6 +131,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   <div className="scrollable-container">
     <PictureUpload /> 
     <form onSubmit={handleSubmit} className="edit-profile-form">
+      <Scroller>
       <label>
         Email:
         <input
@@ -366,6 +368,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           Cancel
         </Button>
       </div>
+      </Scroller>
     </form>
 
     </div>  

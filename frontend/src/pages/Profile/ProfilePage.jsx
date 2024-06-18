@@ -76,6 +76,21 @@ const ProfilePage = () => {
           size="400px"
         />
         <PictureUpload />
+
+        <div>
+          <button onClick={() => setShowModal(true)}>Edit profile</button>
+          <Modal show={showModal} onClose={() => setShowModal(false)}>
+            <h2>Edit Profile</h2>
+
+            <EditProfileForm
+              user={User}
+              onSave={handleSave}
+              onClose={() => setShowModal(false)}
+            />
+          </Modal>
+        </div>
+
+
         <p>
           <strong>Username:</strong> {User.username}
         </p>
@@ -102,10 +117,6 @@ const ProfilePage = () => {
         </p>
 
         <p>
-          <strong>Projects:</strong> {User.projects.join(", ")}
-        </p>
-
-        <p>
           <strong>Tech Stack:</strong> {User.techStack.join(", ")}
         </p>
         <p>
@@ -123,7 +134,7 @@ const ProfilePage = () => {
           {User.lookingFor.projectType}, {User.lookingFor.techStack}
         </p>
 
-        <div>
+        {/* <div>
           <button onClick={() => setShowModal(true)}>Edit profile</button>
           <Modal show={showModal} onClose={() => setShowModal(false)}>
             <h2>Edit Profile</h2>
@@ -134,7 +145,7 @@ const ProfilePage = () => {
               onClose={() => setShowModal(false)}
             />
           </Modal>
-        </div>
+        </div> */}
       </div>
     </>
   );

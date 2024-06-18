@@ -14,7 +14,6 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     gender: user.gender || "Prefer not to say",
     location: user.location || "",
     experience: user.experience || "",
-    projects: user.projects || [],
     languages: user.languages || [],
     technologies: user.technologies || [],
     techStack: user.techStack || [],
@@ -26,56 +25,112 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       techStack: [],
       projectType: [],
     },
+    projects: user.projects || [],
+    // projects: user.projects || {
+    //   title: "",
+    //   description: "",
+    //   // techStack:[],
+    //   url: "",
+    // },
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // };
+
+
+  const addProject = () => {
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      projects: [...prev.projects, { title: "", description: "", techStack: [], url: "" }],
     }));
   };
 
+  const removeProject = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      projects: prev.projects.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name.includes(".")) {
+      const keys = name.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [keys[0]]: {
+          ...prev[keys[0]],
+          [keys[1]]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleProjectChange = (index, e) => {
+    const { name, value } = e.target;
+    const newProjects = [...formData.projects];
+    newProjects[index][name] = value;
+    setFormData({ ...formData, projects: newProjects });
+  };
+
+
+  // const handleSelectChange = (selectedOptions, { name }) => {
+  //   setFormData((prev) => {
+  //     if (name.startsWith("lookingFor.")) {
+  //       // Extract the specific key for 'lookingFor' nested structure
+  //       const key = name.split(".")[1];
+  //       return {
+  //         ...prev,
+  //         lookingFor: {
+  //           ...prev.lookingFor,
+  //           [key]: selectedOptions
+  //             ? selectedOptions.map((option) => option.value)
+  //             : [],
+  //         },
+  //       };
+  //     }
+  //     return {
+  //       ...prev,
+  //       [name]: selectedOptions
+  //         ? selectedOptions.map((option) => option.value)
+  //         : [],
+  //     };
+  //   });
+  // };
+
   const handleSelectChange = (selectedOptions, { name }) => {
     setFormData((prev) => {
-      if (name.startsWith("lookingFor.")) {
-        // Extract the specific key for 'lookingFor' nested structure
-        const key = name.split(".")[1];
+      if (name.includes(".")) {
+        const keys = name.split(".");
         return {
           ...prev,
-          lookingFor: {
-            ...prev.lookingFor,
-            [key]: selectedOptions
+          [keys[0]]: {
+            ...prev[keys[0]],
+            [keys[1]]: selectedOptions
               ? selectedOptions.map((option) => option.value)
               : [],
           },
         };
+      } else {
+        return {
+          ...prev,
+          [name]: selectedOptions
+            ? selectedOptions.map((option) => option.value)
+            : [],
+        };
       }
-      return {
-        ...prev,
-        [name]: selectedOptions
-          ? selectedOptions.map((option) => option.value)
-          : [],
-      };
     });
   };
-
-  // const handleSelectChange = (selectedOptions, { name }) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: selectedOptions
-  //       ? selectedOptions.map((option) => option.value)
-  //       : [],
-  //   }));
-  // };
-
-  // const handleArrayChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: value.split(",").map((item) => item.trim()),
-  //   }));
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -212,8 +267,8 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           onChange={handleChange}
         />
       </label>
-      <br />
-      <label>
+      {/* <br /> */}
+      {/* <label>
         Projects:
         <Select
           name="projects"
@@ -227,9 +282,9 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           className="react-select-container"
           classNamePrefix="react-select"
         />
-      </label>
+      </label> */}
 
-      <br />
+      {/* <br /> */}
       <label>
         Tech Stack:
         <Select
@@ -294,6 +349,87 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           classNamePrefix="react-select"
         />
       </label>
+      <br />
+      {/* <hr /> */}
+      {/* <h4>My projects:</h4>
+      <label>
+        Title:
+        <input
+          type="text"
+          name="projects.title"
+          value={formData.projects.title}
+          onChange={handleChange}
+        />
+      </label>
+      <br />
+      <label>
+        Description:
+        <textarea name="projects.description" value={formData.projects.description} onChange={handleChange} />
+      </label>
+      <br />
+      <label>
+        URL:
+        <input
+          type="text"
+          name="projects.url"
+          value={formData.projects.url}
+          onChange={handleChange}
+          placeholder="Link to your project/project repo"
+        />
+        <br />
+      </label> */}
+      {/* <label>
+        Built with:
+        <Select
+          name="projects.techStack"
+          isMulti
+          value={formData.projects.techStack.map((stack) => ({
+            value: stack,
+            label: stack,
+          }))}
+          options={techStackOptions}
+          onChange={handleSelectChange}
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
+      </label> */}
+
+<h4>My projects:</h4>
+{formData.projects.map((project, index) => (
+  <div key={index}>
+    <label>
+      Title:
+      <input
+        type="text"
+        name="title"
+        value={project.title}
+        onChange={(e) => handleProjectChange(index, e)}
+      />
+    </label>
+    <br />
+    <label>
+      Description:
+      <textarea
+        name="description"
+        value={project.description}
+        onChange={(e) => handleProjectChange(index, e)}
+      />
+    </label>
+    <br />
+    <label>
+      URL:
+      <input
+        type="text"
+        name="url"
+        value={project.url}
+        onChange={(e) => handleProjectChange(index, e)}
+      />
+    </label>
+          <button type="button" onClick={() => removeProject(index)}>Remove Project</button>
+          {/* <hr /> */}
+  </div>
+))}
+      <button type="button" onClick={addProject}>Add Project</button>
       <br />
       <div className="form-buttons">
         <Button type="submit">Save</Button>

@@ -1,6 +1,25 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
+const projectSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    default: "",
+  },
+  description: {
+    type: String,
+    default: "",
+  },
+  techStack: {
+    type: [String],
+    default: [],
+  },
+  url: {
+    type: String,
+    default: "",
+  },
+});
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -61,10 +80,25 @@ const userSchema = new mongoose.Schema({
       default: [],
     },
   },
-  projects: {
-    type: [String],
-    default: [],
-  },
+  projects: [projectSchema],
+  // projects: {
+  //   title: {
+  //     type: String,
+  //     default: "",
+  //   },
+  //   description: {
+  //     type: String,
+  //     default: "",
+  //   },
+  //   techStack: {
+  //     type: [String],
+  //     default: [],
+  //   },
+  //   url: {
+  //     type: String,
+  //     default: "",
+  //   },
+  // },
   techStack: {
     type: [String],
     default: [],

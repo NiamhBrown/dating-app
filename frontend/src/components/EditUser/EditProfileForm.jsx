@@ -1,6 +1,7 @@
 import Button from "./Button"; // Import the Button component
 import { useState } from "react";
 import Select from "react-select";
+import "./editProfileForm.css";
 
 
 const EditProfileForm = ({ user, onSave, onClose }) => {
@@ -14,7 +15,6 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     gender: user.gender || "Prefer not to say",
     location: user.location || "",
     experience: user.experience || "",
-    projects: user.projects || [],
     languages: user.languages || [],
     technologies: user.technologies || [],
     techStack: user.techStack || [],
@@ -26,60 +26,77 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       techStack: [],
       projectType: [],
     },
+    projects: user.projects || [],
   });
 
+
+  //handles both nested and single input feilds 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name.includes(".")) {
+      const keys = name.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [keys[0]]: {
+          ...prev[keys[0]],
+          [keys[1]]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleProjectChange = (index, e) => {
+    const { name, value } = e.target;
+    const newProjects = [...formData.projects];
+    newProjects[index][name] = value;
+    setFormData({ ...formData, projects: newProjects });
+  };
+
+  const addProject = () => {
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      projects: [...prev.projects, { title: "", description: "", techStack: [], url: "" }],
+    }));
+  };
+
+  const removeProject = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      projects: prev.projects.filter((_, i) => i !== index),
     }));
   };
 
   const handleSelectChange = (selectedOptions, { name }) => {
     setFormData((prev) => {
-      if (name.startsWith("lookingFor.")) {
-        // Extract the specific key for 'lookingFor' nested structure
-        const key = name.split(".")[1];
+      if (name.includes(".")) {
+        const keys = name.split(".");
         return {
           ...prev,
-          lookingFor: {
-            ...prev.lookingFor,
-            [key]: selectedOptions
+          [keys[0]]: {
+            ...prev[keys[0]],
+            [keys[1]]: selectedOptions
               ? selectedOptions.map((option) => option.value)
               : [],
           },
         };
+      } else {
+        return {
+          ...prev,
+          [name]: selectedOptions
+            ? selectedOptions.map((option) => option.value)
+            : [],
+        };
       }
-      return {
-        ...prev,
-        [name]: selectedOptions
-          ? selectedOptions.map((option) => option.value)
-          : [],
-      };
     });
   };
 
-  // const handleSelectChange = (selectedOptions, { name }) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: selectedOptions
-  //       ? selectedOptions.map((option) => option.value)
-  //       : [],
-  //   }));
-  // };
-
-  // const handleArrayChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: value.split(",").map((item) => item.trim()),
-  //   }));
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
     onSave(formData);
   };
 
@@ -105,6 +122,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   ];
 
   return (
+  <div className="scrollable-container">
     <form onSubmit={handleSubmit} className="edit-profile-form">
       <label>
         Email:
@@ -138,7 +156,6 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           required
         />
       </label>
-
       <br />
       <label>
         Proficiency Level:
@@ -186,7 +203,6 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           onChange={handleChange}
         />
       </label>
-
       <br />
       <label>
         Job:
@@ -214,23 +230,6 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       </label>
       <br />
       <label>
-        Projects:
-        <Select
-          name="projects"
-          isMulti
-          value={formData.projects.map((proj) => ({
-            value: proj,
-            label: proj,
-          }))}
-          options={projectOptions}
-          onChange={handleSelectChange}
-          className="react-select-container"
-          classNamePrefix="react-select"
-        />
-      </label>
-
-      <br />
-      <label>
         Tech Stack:
         <Select
           name="techStack"
@@ -245,6 +244,64 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           classNamePrefix="react-select"
         />
       </label>
+      <hr />
+      <h4>My projects:</h4>
+{formData.projects.map((project, index) => (
+  <div key={index}>
+    <label>
+      Title:
+      <input
+        type="text"
+        name="title"
+        value={project.title}
+        onChange={(e) => handleProjectChange(index, e)}
+      />
+    </label>
+    <br />
+    <label>
+      Description:
+      <textarea
+        name="description"
+        value={project.description}
+        onChange={(e) => handleProjectChange(index, e)}
+      />
+    </label>
+    <br />
+    <label>
+      URL:
+      <input
+        type="text"
+        name="url"
+        value={project.url}
+        onChange={(e) => handleProjectChange(index, e)}
+      />
+    </label>
+    <label>
+            Built with:
+            <Select
+              name="techStack"
+              isMulti
+              value={project.techStack.map((stack) => ({
+                value: stack,
+                label: stack,
+              }))}
+              options={techStackOptions}
+              onChange={(selectedOptions) => {
+                const newProjects = [...formData.projects];
+                newProjects[index].techStack = selectedOptions
+                  ? selectedOptions.map((option) => option.value)
+                  : [];
+                setFormData({ ...formData, projects: newProjects });
+              }}
+              className="react-select-container"
+              classNamePrefix="react-select"
+            />
+          </label>
+          <button type="button" onClick={() => removeProject(index)}>Remove Project</button>
+  </div>
+))}
+<br/>
+      <button type="button" onClick={addProject}>Add Project</button>
       <hr />
       <h4>Looking For:</h4>
       <label>
@@ -295,6 +352,8 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
         />
       </label>
       <br />
+
+      <br />
       <div className="form-buttons">
         <Button type="submit">Save</Button>
         <Button type="button" onClick={onClose}>
@@ -302,6 +361,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
         </Button>
       </div>
     </form>
+    </div>  
   );
 };
 

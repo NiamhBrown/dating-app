@@ -127,11 +127,8 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
 
   return (
     
-    <PictureUpload />
-
   <div className="scrollable-container">
-    <PictureUpload /> // may have to move
-
+    <PictureUpload /> 
     <form onSubmit={handleSubmit} className="edit-profile-form">
       <label>
         Email:

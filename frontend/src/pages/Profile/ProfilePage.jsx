@@ -87,15 +87,27 @@ const ProfilePage = ({setMyProfile}) => {
               </IconButton>
       
       <div className="profilecontainer">
+
         {!User.profilePicture && <img src={defaultProfilePic} width="250px"/>}
         {User.profilePicture && <img className="userProfilepicture" 
         src={`http://localhost:3000${User.profilePicture}?${new Date().getTime()}`} 
         width="300px" />}
 
+        <div>
+          <button onClick={() => setShowModal(true)}>Edit profile</button>
+          <Modal show={showModal} onClose={() => setShowModal(false)}>
+            <h2>Edit Profile</h2>
 
-        
+            <EditProfileForm
+              user={User}
+              onSave={handleSave}
+              onClose={() => setShowModal(false)}
+            />
+          </Modal>
+        </div>
 
-  
+
+
         <p>
           <strong>Username:</strong> {User.username}
         </p>
@@ -122,10 +134,6 @@ const ProfilePage = ({setMyProfile}) => {
         </p>
 
         <p>
-          <strong>Projects:</strong> {User.projects.join(", ")}
-        </p>
-
-        <p>
           <strong>Tech Stack:</strong> {User.techStack.join(", ")}
         </p>
         <p>
@@ -143,7 +151,7 @@ const ProfilePage = ({setMyProfile}) => {
           {User.lookingFor.projectType}, {User.lookingFor.techStack}
         </p>
 
-        <div>
+        {/* <div>
           <button onClick={() => setShowModal(true)}>Edit profile</button>
           <Modal show={showModal} onClose={() => setShowModal(false)}>
             <h2>Edit Profile</h2>
@@ -154,7 +162,7 @@ const ProfilePage = ({setMyProfile}) => {
               onClose={() => setShowModal(false)}
             />
           </Modal>
-        </div>
+        </div> */}
       </div>
     </>
   );

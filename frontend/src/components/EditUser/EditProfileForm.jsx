@@ -1,4 +1,4 @@
-import Button from "./Button"; // Import the Button component
+import Button from "./Button"; 
 import { useState } from "react";
 import Select from "react-select";
 import PictureUpload from "../pictureUpload";
@@ -11,7 +11,6 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     email: user.email || "",
     forename: user.forename || "",
     lastName: user.lastName || "",
-    profilePicture: user.profilePicture || "",
     proficiencyLevel: user.proficiencyLevel || "Unspecified",
     age: user.age || "",
     gender: user.gender || "Prefer not to say",
@@ -37,6 +36,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       ...prev,
       [name]: value,
     }));
+    console.log("formdata",formData)
   };
 
   const handleSelectChange = (selectedOptions, { name }) => {
@@ -63,22 +63,6 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     });
   };
 
-  // const handleSelectChange = (selectedOptions, { name }) => {
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: selectedOptions
-  //       ? selectedOptions.map((option) => option.value)
-  //       : [],
-  //   }));
-  // };
-
-  // const handleArrayChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: value.split(",").map((item) => item.trim()),
-  //   }));
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -109,6 +93,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
 
   return (
     <>
+    
     <PictureUpload />
     <form onSubmit={handleSubmit} className="edit-profile-form">
       <label>

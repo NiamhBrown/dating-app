@@ -10,6 +10,7 @@ import { updateUserProfile } from "../../services/user";
 import EditProfileForm from "../../components/EditUser/EditProfileForm";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import IconButton from "@mui/material/IconButton";
+import defaultProfilePic from "./../../assets/defaultProfilePic.png"
 
 const ProfilePage = ({setMyProfile}) => {
   const userId = localStorage.getItem("userId");
@@ -47,6 +48,7 @@ const ProfilePage = ({setMyProfile}) => {
       try {
         const data = await getOneUser(token, userId);
         setUser(data.user);
+        console.log(data.user.profilePicture)
         localStorage.setItem("token", data.token);
       } catch (err) {
         console.error(err);
@@ -78,24 +80,22 @@ const ProfilePage = ({setMyProfile}) => {
 
   return (
     <>
-      {/* <div className="burgercontainer">
-        <Burger />
-      </div> */}
+
             <IconButton onClick={handleBack}>
                 {" "}
                 <ArrowBackIosOutlinedIcon />{" "}
               </IconButton>
       
       <div className="profilecontainer">
-      <img className="userProfilepicture" src={`http://localhost:3000${User.profilePicture}?${new Date().getTime()}`} width="300px"/>
+        {!User.profilePicture && <img src={defaultProfilePic} width="250px"/>}
+        {User.profilePicture && <img className="userProfilepicture" 
+        src={`http://localhost:3000${User.profilePicture}?${new Date().getTime()}`} 
+        width="300px" />}
 
-        {/* <ProfilePicture
-          // time={${new Date().getTime()}}
-          url={userId}
-          className="profilePicture"
-          size="400px"
-        /> */}
-        {/* <PictureUpload  /> */}
+
+        
+
+  
         <p>
           <strong>Username:</strong> {User.username}
         </p>

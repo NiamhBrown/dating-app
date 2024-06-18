@@ -49,24 +49,22 @@ const addProfilePicture = async (req, res) => {
   try {
     console.log("userId", req.userId); 
     console.log("file", req.file); 
-
     if (!req.userId) {
       return res.status(400).json({ message: "User ID is missing" });
     }
-
     if (!req.file || !req.file.filename) {
       return res.status(400).json({ message: "File is missing" });
     }
-
     const user = await User.findById(req.userId);
-    console.log("user", user); 
+    console.log("user", user);
+    console.log("FILE",req.file)
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     user.profilePicture = "/uploads/" + req.file.filename;
-    // user.profilePicture = `/uploads/${req.file.filename}`;
+
 
     try {
       await user.save();

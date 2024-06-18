@@ -118,7 +118,7 @@ export const UserChat = (props) => {
       <div onClick={handleProfile}>
         {" "}
         <ProfilePicture
-          userId={recipient}
+          userId={recipient} // 
           className="profilePicture"
           size="75px"
         />

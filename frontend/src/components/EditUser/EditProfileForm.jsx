@@ -98,10 +98,10 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     { value: "SQL", label: "SQL" },
   ];
   const proficiencyLevelOptions = [
-    { value: "beginner", label: "beginner" },
-    { value: "junior", label: "junior" },
-    { value: "intermediate", label: "intermediate" },
-    { value: "senior", label: "senior" },
+    { value: "Beginner", label: "Beginner" },
+    { value: "Junior", label: "Junior" },
+    { value: "Intermediate", label: "Intermediate" },
+    { value: "Senior", label: "Senior" },
   ];
 
   return (
@@ -148,11 +148,11 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
           onChange={handleChange}
           required
         >
-          <option value="unspecified">Unspecified</option>
-          <option value="beginner">Beginner</option>
-          <option value="junior">Junior</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="senior">Senior</option>
+          <option value="Unspecified">Unspecified</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Junior">Junior</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Senior">Senior</option>
         </select>
       </label>
       <br />
@@ -170,10 +170,10 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       <label>
         Gender:
         <select name="gender" value={formData.gender} onChange={handleChange}>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="non-binary">Non-binary</option>
-          <option value="prefer not to say">Prefer not to say</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Non-binary">Non-binary</option>
+          <option value="Prefer not to say">Prefer not to say</option>
         </select>
       </label>
       <br />

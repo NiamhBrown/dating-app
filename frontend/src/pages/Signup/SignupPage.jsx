@@ -24,11 +24,11 @@ const MenuProps = {
 };
 
 const names = [
-  'unspecified',
-  'beginner',
-  'junior',
-  'intermediate',
-  'senior',
+  'Unspecified',
+  'Beginner',
+  'Junior',
+  'Intermediate',
+  'Senior',
 ];
 
 function getStyles(name, selectedName, theme) {
@@ -136,6 +136,7 @@ export const SignupPage = () => {
         <p>Already have an account? Sign in <Link to="/login">here!</Link></p>
         <div className="br"/>
         <TextField id="foreName"
+          size="small"
           label="Forename"
           variant="outlined"
           color="primary"
@@ -144,6 +145,7 @@ export const SignupPage = () => {
         />
         <br/>
         <TextField id="lastName"
+          size="small"
           label="Last Name"
           variant="outlined"
           color="primary"
@@ -152,6 +154,7 @@ export const SignupPage = () => {
         />
         <br/>
         <TextField id="Age"
+          size="small"
           label="Age"
           variant="outlined"
           type="number"
@@ -161,6 +164,7 @@ export const SignupPage = () => {
         />
         <br/>
         <TextField id="Username"
+          size="small"
           label="Username"
           variant="outlined"
           color="primary"
@@ -169,6 +173,7 @@ export const SignupPage = () => {
         />
         <br/>
         <TextField id="Email"
+          size="small"
           label="Email"
           variant="outlined"
           color="primary"
@@ -177,6 +182,7 @@ export const SignupPage = () => {
         />
         <br/>
         <TextField id="Password"
+          size="small"
           label="Password"
           variant="outlined"
           color="primary"
@@ -188,6 +194,7 @@ export const SignupPage = () => {
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel id="proficiency-level-label">Proficiency Level</InputLabel>
           <Select
+            size="small"
             labelId="proficiency-level-label"
             id="proficiency-level"
             value={proficiencyLevel}

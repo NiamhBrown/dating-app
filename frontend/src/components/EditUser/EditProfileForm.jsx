@@ -1,7 +1,7 @@
 import Button from "./Button"; // Import the Button component
 import { useState } from "react";
 import Select from "react-select";
-
+import "../../pages/Profile/profile.css";
 
 const EditProfileForm = ({ user, onSave, onClose }) => {
   console.log(user);
@@ -296,8 +296,8 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
       </label>
       <br />
       <div className="form-buttons">
-        <Button type="submit">Save</Button>
-        <Button type="button" onClick={onClose}>
+        <Button className="profilebutton" type="submit">Save</Button>
+        <Button className="profilebutton" type="button" onClick={onClose}>
           Cancel
         </Button>
       </div>

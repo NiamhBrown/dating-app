@@ -4,6 +4,7 @@ import { login } from "../../services/authentication";
 import './Login.css';
 import ConsoleText from "./ConsoleText";
 import "./loginbutton.scss";
+import TextField from '@mui/material/TextField';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -29,11 +30,9 @@ export const LoginPage = () => {
         {/* <h2 role="title" id="logintitle" className="logintitle">Login</h2> */}
         <ConsoleText words={['Console.login', 'touchUsername', 'touchPassword']} colors={['dimgrey']} />
         <form className="formcontainer" onSubmit={handleSubmit}>
-          <label htmlFor="email">Email:</label>
-          <input id="email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <TextField label="Username" id="username" type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
           <br />
-          <label htmlFor="password">Password:</label>
-          <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <TextField label="Password" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <br />
           <button className="loginbtn draw-border" role="submit-button" id="submit" type="submit" value="Submit">Submit</button>
           <br />

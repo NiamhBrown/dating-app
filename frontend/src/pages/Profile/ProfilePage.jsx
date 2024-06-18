@@ -122,9 +122,9 @@ const ProfilePage = () => {
           <strong>Looking For:</strong> {User.lookingFor.proficiencyLevel},
           {User.lookingFor.projectType}, {User.lookingFor.techStack}
         </p>
-
+        <br />
         <div>
-          <button onClick={() => setShowModal(true)}>Edit profile</button>
+          <button className="profilebutton" onClick={() => setShowModal(true)}>Edit Profile</button>
           <Modal show={showModal} onClose={() => setShowModal(false)}>
             <h2>Edit Profile</h2>
 

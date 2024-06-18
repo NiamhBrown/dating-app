@@ -30,8 +30,8 @@ const userSchema = new mongoose.Schema({
   },
   proficiencyLevel: {
     type: String,
-    enum: ["unspecified", "beginner", "junior", "intermediate", "senior"],
-    default: "unspecified",
+    enum: ["Unspecified", "Beginner", "Junior", "Intermediate", "Senior"],
+    default: "Unspecified",
     required: true,
   },
   age: {
@@ -40,8 +40,8 @@ const userSchema = new mongoose.Schema({
   },
   gender: {
     type: String,
-    enum: ["male", "female", "non-binary", "prefer not to say"],
-    default: "prefer not to say",
+    enum: ["Male", "Female", "Non-binary", "Prefer not to say"],
+    default: "Prefer not to say",
   },
   location: {
     type: String,
@@ -98,22 +98,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-
-const capitalize = (str) => {
-  return str.replace(/\b\w/g, char => char.toUpperCase());
-};
-
 userSchema.pre("save", async function (next) {
-
-  // Capitalize names
-  if (this.isModified("forename")) {
-    this.forename = capitalize(this.forename);
-  }
-  if (this.isModified("lastName")) {
-    this.lastName = capitalize(this.lastName);
-  }
-
-  // Hash password if it's modified
   if (!this.isModified("password")) {
     return next();
   }

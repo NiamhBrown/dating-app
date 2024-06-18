@@ -15,10 +15,16 @@ const PictureUpload = () => {
       const data = await uploadProfilePicture(token, profilePicture);
       console.log("Profile picture uploaded:", data);
       setIsFormVisible(false);
+
+      // console.log("before",pictureUpdate)
+      // setPictureUpdate(!pictureUpdate)
+      // console.log("after",pictureUpdate)
     } catch (err) {
       console.error("Error uploading profile picture:", err);
-    }
-    window.location.reload();
+    } 
+    
+
+    //window.location.reload();
   };
 
   return (

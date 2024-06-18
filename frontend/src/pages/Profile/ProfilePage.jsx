@@ -8,11 +8,15 @@ import Burger from "../../components/Burger";
 import Modal from "../../components/EditUser/Modal";
 import { updateUserProfile } from "../../services/user";
 import EditProfileForm from "../../components/EditUser/EditProfileForm";
+import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
+import IconButton from "@mui/material/IconButton";
 
-const ProfilePage = () => {
+const ProfilePage = ({setMyProfile}) => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const serverUrl = `http://localhost:3000/uploads/${userId}`;
+  const [pictureUpdate, setPictureUpdate] = useState(false)
   const [User, setUser] = useState({
     email: "",
     forename: "",
@@ -51,7 +55,7 @@ const ProfilePage = () => {
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, [User.profilePicture]);
 
   const handleSave = async (updatedData) => {
     try {
@@ -63,19 +67,35 @@ const ProfilePage = () => {
       console.error("Error updating user profile:", error);
     }
   };
+  const handleUpload = () =>{
+    setUser()
+  };
+  
+  
+  const handleBack = () => {
+    setMyProfile(false)
+  };
 
   return (
     <>
-      <div className="burgercontainer">
+      {/* <div className="burgercontainer">
         <Burger />
-      </div>
+      </div> */}
+            <IconButton onClick={handleBack}>
+                {" "}
+                <ArrowBackIosOutlinedIcon />{" "}
+              </IconButton>
+      
       <div className="profilecontainer">
-        <ProfilePicture
-          userId={userId}
+      <img className="userProfilepicture" src={`http://localhost:3000${User.profilePicture}?${new Date().getTime()}`} width="300px"/>
+
+        {/* <ProfilePicture
+          // time={${new Date().getTime()}}
+          url={userId}
           className="profilePicture"
           size="400px"
-        />
-        <PictureUpload />
+        /> */}
+        {/* <PictureUpload  /> */}
         <p>
           <strong>Username:</strong> {User.username}
         </p>

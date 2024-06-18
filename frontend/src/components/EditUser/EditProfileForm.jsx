@@ -1,6 +1,8 @@
 import Button from "./Button"; // Import the Button component
 import { useState } from "react";
 import Select from "react-select";
+import PictureUpload from "../pictureUpload";
+import ProfilePicture from "../ProfilePicture";
 
 
 const EditProfileForm = ({ user, onSave, onClose }) => {
@@ -9,6 +11,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
     email: user.email || "",
     forename: user.forename || "",
     lastName: user.lastName || "",
+    profilePicture: user.profilePicture || "",
     proficiencyLevel: user.proficiencyLevel || "Unspecified",
     age: user.age || "",
     gender: user.gender || "Prefer not to say",
@@ -105,6 +108,8 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   ];
 
   return (
+    <>
+    <PictureUpload />
     <form onSubmit={handleSubmit} className="edit-profile-form">
       <label>
         Email:
@@ -302,6 +307,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
         </Button>
       </div>
     </form>
+    </>
   );
 };
 

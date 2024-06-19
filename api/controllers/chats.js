@@ -2,6 +2,7 @@ const Chat = require("../models/chat");
 const crypto = require('crypto');
 
 const create = async (sender, recipient) => {
+  console.log("Sada")
   const encryptionKey = crypto.randomBytes(32).toString('hex');
   const chat = new Chat({
     usersInChat: [sender, recipient],

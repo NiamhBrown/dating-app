@@ -7,6 +7,7 @@ import BlockButton from "../../components/BlockButton";
 import CryptoJS from "crypto-js";
 import ProfilePicture from "../../components/ProfilePicture";
 import { useNavigate } from "react-router-dom";
+import { Message } from "./Message";
 
 const socket = io(import.meta.env.VITE_BACKEND_URL);
 
@@ -82,7 +83,7 @@ export const UserChat = (props) => {
       socket.off("message");
       socket.off("dm room joined");
     };
-  }, [token, sender, recipient, userId, encryptionKey]);
+  }, [token, sender, recipient, encryptionKey]);
 
   const sendMessage = () => {
     if (message.trim() && encryptionKey) {
@@ -125,29 +126,36 @@ export const UserChat = (props) => {
       </div>
       <div onClick={handleProfile}>{recipientData.forename}</div>
       <div>
-        <div
-          style={{
-            border: "1px solid #ccc",
-            padding: "10px",
-            height: "300px",
-            overflowY: "scroll",
-          }}
-        ></div>
-        <div>
           <UnmatchButton user={sender} otherUser={recipient} />
           <BlockButton user={sender} otherUser={recipient} />
         </div>
+      <div>
+        <div
+          style={{
+            padding: "10px",
+            height: "650px",
+            width: "1200px",
+            overflowY: "scroll",
+          }}
+        >
         {messages.map((msg, index) => (
-          <div key={index}>
-            <strong>{msg.author}:</strong> {msg.message}
-            <small> ({msg.timestamp})</small>
-          </div>
+            <Message msg={msg} key={index}/>
         ))}
       </div>
-      <input
+      </div>
+      <textarea
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        style={{
+          marginTop: "5px", 
+          padding: "10px",
+          height: "50px",
+          width: "1200px",
+          borderRadius: "7px",
+          resize: "none",
+          border:"transparent"
+        }}
       />
       <button onClick={sendMessage}>Send</button>
       <button onClick={closeChat}>Close Chat</button>

@@ -34,6 +34,8 @@ export const FeedPage = () => {
                 setUsers(other_users)
             }
             else if (current_user.lookingFor.proficiencyLevel) {
+                
+                setUsers(other_users)
 
             setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user.lookingFor.proficiencyLevel))
 
@@ -64,12 +66,6 @@ console.log("THIS IS POSITION:",position)
         }
     };
 
-    const handleMatchOrBlock = () => {
-        // Logic for matching or blocking a user
-        // After matching or blocking a user, trigger a re-fetch
-        setRefresh(!refresh);
-    };
-
     const token = localStorage.getItem("token");
     if (!token) {
         navigate("/login")
@@ -83,7 +79,7 @@ console.log("users[position]:",users[position])
             <User 
                 user={users[position]} 
                 key={users[position]._id}
-                methods={[incriment, decriment, handleMatchOrBlock]}
+                methods={[incriment, decriment]}
                 requests={requests}
             />}
 

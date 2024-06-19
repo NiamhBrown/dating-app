@@ -37,13 +37,15 @@ const HomePage = () => {
           <div className="feedpagecontainer">
             {!chatting && !myProfile && <FeedPage />}
             {chatting && !checkProfile && !myProfile && (
+              <div className="chatcontainer">
               <UserChat
                 setChatting={setChatting}
                 chatterId={chatterId}
                 setCheckProfile={setCheckProfile}
               />
+              </div>
             )}
-            {checkProfile && (
+            {checkProfile && !myProfile &&(
               <OtherProfilePage
                 setCheckProfile={setCheckProfile}
                 userId={chatterId}

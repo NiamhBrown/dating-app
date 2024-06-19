@@ -31,7 +31,7 @@ const User = (props) => {
         <ProfilePicture
           userId={props.user._id}
           className="profilePicture"
-          size="400px"
+          size="100px"
         />
         <h3 className="name_and_age">
           {props.user.forename} {props.user.lastName}, {props.user.age}
@@ -43,16 +43,18 @@ const User = (props) => {
                 <div className="iconButton_container">
                 <IconButton className="iconButton iconButtonAnimate iconButtonda3e3e" onClick={() => {
             incriment();
-            handleMatchOrBlock();
+            //handleMatchOrBlock();
           }}>
                     < DoDisturbOutlinedIcon style={{ fontSize: 50, color: "#da3e3e" }}/>
                 </IconButton>
-                <IconButton className="iconButton iconButtonAnimate iconButtonDodgerBlue"onClick={decriment}>
+                <IconButton className="iconButton iconButtonAnimate iconButtonDodgerBlue"onClick={() => {
+                  decriment();
+                }}>
                     < TurnLeftOutlinedIcon style={{ fontSize: 64, color: "dodgerblue" }}/>
                 </IconButton>
                 <IconButton className="iconButton iconButtonAnimate iconButtonGold" onClick={() => {
             sendRequest();
-            handleMatchOrBlock();
+            //handleMatchOrBlock();
           }}>
                     <StarOutlineOutlinedIcon style={{ fontSize: 60, color: "gold" }}/>
                 </IconButton>

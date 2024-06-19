@@ -17,10 +17,8 @@ const PictureUpload = () => {
       console.log("data",data.profilePicture)
       setIsFormVisible(false);
 
-      // console.log("before",pictureUpdate)
-      // setPictureUpdate(!pictureUpdate)
-      // console.log("after",pictureUpdate)
     } catch (err) {
+      
       console.error("Error uploading profile picture:", err);
     } 
     

@@ -20,6 +20,7 @@ export const FeedPage = () => {
 
                 const filterConditions = (user) => {
                     //!current_user.blackList.includes(user._id)
+                    console.log(user.blackList);
                     return (user._id != userId && !user.blackList.includes(userId) && !current_user.matches.includes(user._id)
                     && !user.matchRequests.includes(current_user._id))
                 }
@@ -34,6 +35,8 @@ export const FeedPage = () => {
                 setUsers(other_users)
             }
             else if (current_user.lookingFor.proficiencyLevel) {
+                
+                setUsers(other_users)
 
             setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user.lookingFor.proficiencyLevel))
 
@@ -63,12 +66,6 @@ export const FeedPage = () => {
         }
     };
 
-    const handleMatchOrBlock = () => {
-        // Logic for matching or blocking a user
-        // After matching or blocking a user, trigger a re-fetch
-        setRefresh(!refresh);
-    };
-
     const token = localStorage.getItem("token");
     if (!token) {
         navigate("/login")
@@ -82,7 +79,7 @@ export const FeedPage = () => {
             <User 
                 user={users[position]} 
                 key={users[position]._id}
-                methods={[incriment, decriment, handleMatchOrBlock]}
+                methods={[incriment, decriment]}
                 requests={requests}
             />}
 

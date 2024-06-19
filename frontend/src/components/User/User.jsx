@@ -5,6 +5,7 @@ import DoDisturbOutlinedIcon from "@mui/icons-material/DoDisturbOutlined";
 import TurnLeftOutlinedIcon from "@mui/icons-material/TurnLeftOutlined";
 import ProfilePicture from "../ProfilePicture";
 import "./user.css";
+// moham
 import "./buttonanimations.scss";
 
 const User = (props) => {
@@ -27,6 +28,7 @@ const User = (props) => {
 
   return (
     <>
+
       <div className="usercard" key={props.user._id}>
         <div className="pictureOnCard">
           {" "}
@@ -37,11 +39,13 @@ const User = (props) => {
           />
         </div>
 
+
         <h3 className="name_and_age">
           {props.user.forename} {props.user.lastName}, {props.user.age}
         </h3>
         {/* {props.user.username} <br />
                 {props.user.forename + " " + props.user.lastName + ", " + props.user.age}<br /> */}
+
         <h4 className="skill_level">
           Skill Level: {props.user.proficiencyLevel}
         </h4>
@@ -80,3 +84,4 @@ const User = (props) => {
 };
 
 export default User;
+

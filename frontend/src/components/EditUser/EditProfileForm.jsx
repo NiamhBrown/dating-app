@@ -115,6 +115,7 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   ];
 
   const techStackOptions = [
+    { value: "React", label: "React" },
     { value: "JavaScript", label: "JavaScript" },
     { value: "Python", label: "Python" },
     { value: "Ruby", label: "Ruby" },

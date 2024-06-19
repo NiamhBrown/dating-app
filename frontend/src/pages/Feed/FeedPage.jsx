@@ -19,7 +19,7 @@ export const FeedPage = () => {
                 const current_user = data.users.filter((user) => user._id == userId)[0];
 
                 const filterConditions = (user) => {
-                    //!current_user.blackList.includes(user._id)
+
                     return (user._id != userId && !user.blackList.includes(userId) && !current_user.matches.includes(user._id)
                     && !user.matchRequests.includes(current_user._id))
                 }
@@ -34,11 +34,12 @@ export const FeedPage = () => {
                 setUsers(other_users)
             }
             else if (current_user.lookingFor.proficiencyLevel) {
+                
+                setUsers(other_users)
 
             setUsers(other_users.filter((x)=> x.proficiencyLevel == current_user.lookingFor.proficiencyLevel))
 
             }
-            setPosition(0);
             setRequests(current_user.matchRequests);
 
             })
@@ -50,23 +51,19 @@ export const FeedPage = () => {
     }, [refresh, navigate]);
 
     const incriment = () => {
-        if (position < users.length - 1) {
-            setPosition(position + 1);
-        } else {
-            setPosition(0);
-        }
+        setPosition((prevPosition) => {
+            console.log(`prev position: ${prevPosition}`);
+            const newPosition = prevPosition < users.length - 1 ? prevPosition + 1 : 0;
+            console.log(`Incremented position: ${newPosition}`);
+            
+            return newPosition;
+        });
     };
-
+console.log("THIS IS POSITION:",position)
     const decriment = () => {
         if (position > 0) {
             setPosition(position - 1);
         }
-    };
-
-    const handleMatchOrBlock = () => {
-        // Logic for matching or blocking a user
-        // After matching or blocking a user, trigger a re-fetch
-        setRefresh(!refresh);
     };
 
     const token = localStorage.getItem("token");
@@ -74,7 +71,7 @@ export const FeedPage = () => {
         navigate("/login")
         return
     }
-
+console.log("users[position]:",users[position])
     return (
         <>
         <div>
@@ -82,7 +79,7 @@ export const FeedPage = () => {
             <User 
                 user={users[position]} 
                 key={users[position]._id}
-                methods={[incriment, decriment, handleMatchOrBlock]}
+                methods={[incriment, decriment]}
                 requests={requests}
             />}
 

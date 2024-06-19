@@ -47,8 +47,8 @@ const getOneUser = async (req, res) => {
 };
 const addProfilePicture = async (req, res) => {
   try {
-    console.log("userId", req.userId); 
-    console.log("file", req.file); 
+    console.log("userId", req.userId);
+    console.log("file", req.file);
     if (!req.userId) {
       return res.status(400).json({ message: "User ID is missing" });
     }
@@ -57,7 +57,7 @@ const addProfilePicture = async (req, res) => {
     }
     const user = await User.findById(req.userId);
     console.log("user", user);
-    console.log("FILE",req.file)
+    console.log("FILE", req.file);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -65,11 +65,10 @@ const addProfilePicture = async (req, res) => {
 
     user.profilePicture = "/uploads/" + req.file.filename;
 
-
     try {
       await user.save();
     } catch (saveError) {
-      console.error("Error saving user:", saveError); 
+      console.error("Error saving user:", saveError);
       return res.status(500).json({ message: "Error saving user" });
     }
 
@@ -82,7 +81,6 @@ const addProfilePicture = async (req, res) => {
     res.status(500).json({ message: "Error uploading profile picture" });
   }
 };
-
 
 const getAllUsers = async (req, res) => {
   const users = await User.find();
@@ -109,7 +107,7 @@ const addUsertoRequests = async (req, res) => {
 const addUsertoMatches = async (req, res) => {
   const otherUser = req.body.recipient;
   const user = req.body.sender;
-  await User.findByIdAndUpdate(otherUser, { $push: { matches: user} });
+  await User.findByIdAndUpdate(otherUser, { $push: { matches: user } });
   await User.findByIdAndUpdate(user, {
     $push: { matches: otherUser },
     $pull: { matchRequests: otherUser },
@@ -129,14 +127,13 @@ const unmatchUser = async (req, res) => {
 };
 
 const blockUser = async (req, res) => {
-  console.log("IN BLOCK USER !!")
+  console.log("IN BLOCK USER !!");
   const otherUser = req.body.otherUser;
   const user = req.body.user;
   await User.findByIdAndUpdate(otherUser, { $pull: { matches: user } });
   await User.findByIdAndUpdate(user, {
     $pull: { matches: otherUser },
     $push: { blackList: otherUser },
-
   });
   res.status(201).json({ message: "OK" });
 };
@@ -172,7 +169,7 @@ const UsersController = {
   unmatchUser: unmatchUser,
   getMatches: getMatches,
   updateUserProfile: updateUserProfile,
-  blockUser: blockUser
+  blockUser: blockUser,
 };
 
 module.exports = UsersController;

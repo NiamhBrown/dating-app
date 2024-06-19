@@ -1,14 +1,38 @@
-.usercard{
-    background-color: #fff;
-    border-radius: 30px;
-    padding: 20px;
-    height: 500px;
-    width: 400px;
-    overflow: hidden;
+.usercard {
+  display: flex;
+  flex-direction: column; /* Arrange children in a column */
+  align-items: center; /* Center horizontally */
+  justify-content: space-between; /* Space out content */
+  margin: 0 auto; /* Center card horizontally */
+  text-align: center;
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 20px;
+  height: 500px;
+  width: 400px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Shadow for depth */
 }
 
-.iconButton{
-    height: 130px;
-    width: 130px;
-    font-size: xx-large;
+/* .iconButton {
+  height: 130px;
+  width: 130px;
+  font-size: xx-large;
+} */
+
+/* Picture Container */
+.pictureOnCard {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  width: 100%; /* Full width of parent */
+  flex-grow: 1; /* Allow it to grow and take available space */
+}
+
+/* Profile Picture */
+.profilePic {
+  max-width: 100%; /* Responsive width */
+  max-height: 100%; /* Maintain aspect ratio */
+  object-fit: cover; /* Cover the container */
+  border-radius: 15px; /* Optional: Rounded corners */
 }

@@ -1,5 +1,5 @@
 import defaultProfilePic from "../assets/defaultProfilePic.png";
-const ProfilePicture = ({ userId, size }) => {
+const ProfilePicture = ({ userId, size, className }) => {
   const serverUrl = "http://localhost:3000";
   const profileImageUrl = `${serverUrl}/uploads/${userId}`;
 
@@ -12,7 +12,8 @@ const ProfilePicture = ({ userId, size }) => {
         src={profileImageUrl}
         alt="User's profile pic"
         onError={handleError}
-        width={size}
+        height={size}
+        className={className}
       ></img>
     </>
   );

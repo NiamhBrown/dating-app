@@ -5,6 +5,7 @@ import DoDisturbOutlinedIcon from "@mui/icons-material/DoDisturbOutlined";
 import TurnLeftOutlinedIcon from "@mui/icons-material/TurnLeftOutlined";
 import ProfilePicture from "../ProfilePicture";
 import "./user.css";
+// moham
 import "./buttonanimations.scss";
 
 const User = (props) => {
@@ -27,41 +28,60 @@ const User = (props) => {
 
   return (
     <>
-      <article className="usercard" key={props.user._id}>
-        <ProfilePicture
-          userId={props.user._id}
-          className="profilePicture"
-          size="100px"
-        />
+
+      <div className="usercard" key={props.user._id}>
+        <div className="pictureOnCard">
+          {" "}
+          <ProfilePicture
+            userId={props.user._id}
+            className="picturePic"
+            size="200px"
+          />
+        </div>
+
+
         <h3 className="name_and_age">
           {props.user.forename} {props.user.lastName}, {props.user.age}
         </h3>
         {/* {props.user.username} <br />
                 {props.user.forename + " " + props.user.lastName + ", " + props.user.age}<br /> */}
-                <h4 className="skill_level">Skill Level: {props.user.proficiencyLevel}</h4>
-                {/* {"Skill level: " + props.user.proficiencyLevel} <br /> */}
-                <div className="iconButton_container">
-                <IconButton className="iconButton iconButtonAnimate iconButtonda3e3e" onClick={() => {
-            incriment();
-            //handleMatchOrBlock();
-          }}>
-                    < DoDisturbOutlinedIcon style={{ fontSize: 50, color: "#da3e3e" }}/>
-                </IconButton>
-                <IconButton className="iconButton iconButtonAnimate iconButtonDodgerBlue"onClick={() => {
-                  decriment();
-                }}>
-                    < TurnLeftOutlinedIcon style={{ fontSize: 64, color: "dodgerblue" }}/>
-                </IconButton>
-                <IconButton className="iconButton iconButtonAnimate iconButtonGold" onClick={() => {
-            sendRequest();
-            //handleMatchOrBlock();
-          }}>
-                    <StarOutlineOutlinedIcon style={{ fontSize: 60, color: "gold" }}/>
-                </IconButton>
-                </div>
-            </article>
-        </>
-    );
-  };
-  
-  export default User;
+
+        <h4 className="skill_level">
+          Skill Level: {props.user.proficiencyLevel}
+        </h4>
+        {/* {"Skill level: " + props.user.proficiencyLevel} <br /> */}
+        <div className="iconButton_container">
+          <IconButton
+            className="iconButton iconButtonAnimate iconButtonda3e3e"
+            onClick={() => {
+              incriment();
+              handleMatchOrBlock();
+            }}
+          >
+            <DoDisturbOutlinedIcon style={{ fontSize: 50, color: "#da3e3e" }} />
+          </IconButton>
+          <IconButton
+            className="iconButton iconButtonAnimate iconButtonDodgerBlue"
+            onClick={decriment}
+          >
+            <TurnLeftOutlinedIcon
+              style={{ fontSize: 64, color: "dodgerblue" }}
+            />
+          </IconButton>
+          <IconButton
+            className="iconButton iconButtonAnimate iconButtonGold"
+            onClick={() => {
+              sendRequest();
+              handleMatchOrBlock();
+            }}
+          >
+            <StarOutlineOutlinedIcon style={{ fontSize: 60, color: "gold" }} />
+          </IconButton>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default User;
+

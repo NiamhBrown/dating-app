@@ -19,24 +19,47 @@ export const UserChat = (props) => {
   const [name, setName] = useState('');
   const [CID, setCID] = useState();
   const userId = localStorage.getItem("userId");
-  let chatRoomId = null
-  const token = localStorage.getItem('token');
-  const sender = localStorage.getItem('userId');
-  const recipient = props.chatterId;
+  const [encryptionKey, setEncryptionKey] = useState("");
+  const token = localStorage.getItem("token");
+  const sender = localStorage.getItem("userId");
+  const [recipientData, setRecipientData] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getHistory(token, sender, recipient)
-      .then((data) => {
-        console.log(data.chatId);
-        setMessages(data.history);
-        chatRoomId = data.chatId
-        socket.emit('join room', chatRoomId);
-      })
+    const fetchData = async () => {
+      try {
+        const encryptedChat = props.currentChat.messagesArray
+        if (data.encryptionKey) {
+          setEncryptionKey(data.encryptionKey);
+          const decryptedHistory = data.messagesArray.map((msg) => {
+            const bytes = CryptoJS.AES.decrypt(msg.message, data.encryptionKey);
+            const originalMessage = bytes.toString(CryptoJS.enc.Utf8);
+            return { ...msg, message: originalMessage };
+          });
+          console.log(data._id);
+          setMessages(decryptedHistory);
+          setCID(data._id);
+          socket.emit("join room", data._id);
+        } else {
+          console.error("encryption key not found in response");
+        }
+      } catch (error) {
+        console.error("error fetching chat history", error);
+      }
+    };
 
-    getOneUser(token, userId)
-      .then((data) => {
-        setName(data.user.forename)
-      })
+    fetchData();
+
+    getOneUser(token, recipient).then((data) => {
+      console.log("recipient data!!", data);
+      console.log("forname!!", data.user.forename);
+      setRecipientData(data.user);
+      // console.log("recipietName !!", recipientName);
+    });
+
+    getOneUser(token, userId).then((data) => {
+      setName(data.user.forename);
+    });
 
     socket.on('message', (msg) => {
       console.log("Message posted");

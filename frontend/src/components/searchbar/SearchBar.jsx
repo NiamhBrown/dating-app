@@ -2,6 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getMatches } from "../../services/user";
 import "./SearchBar.css";
+import { getChats } from "../../services/chat";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const SearchBar = ({ setResults }) => {
@@ -13,9 +14,9 @@ export const SearchBar = ({ setResults }) => {
         let token = localStorage.getItem("token");
 
         try {
-            const results = await getMatches(token, userId);
-            setAllMatches(results.users);
-            setResults(results.users);
+            const results = await getChats(token, userId);
+            setAllMatches(results.chats);
+            setResults(results.chats);
         } catch (err) {
             console.error(err);
         }

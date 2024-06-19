@@ -8,36 +8,59 @@ import LogOutButton from './LogOutButton';
 import myProfileButton from './myProfileButton';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
+import './Navbar.css'; 
+import { MakeGC } from './MakeGC';
 
 const Navbar = (props) => {
   const [results, setResults] = useState([]);
-  const token = localStorage.getItem("token")
-    return (
-      <div>
-        {/* This was inside div above: style={{display: 'flex', height: '100vh', flexDirection: 'row'}} */}
-        <Sidebar style={{display: 'flex', height: '100vh', flexDirection: 'column', justifyContent: 'flex-start', width: '300px'}}>
-            <Menu 
-            menuItemStyles={{
-                button: {
-                  // the active class will be added automatically by react router
-                  // so we can use it to style the active menu item
-                  [`&.active`]: {
-                    backgroundColor: '#13395e',
-                    color: '#b6c8d9',
-                  },
-                },
-              }}
-            >
-                <SubMenu label={<ChatBubbleOutlineIcon style={{color: '#b6c8d9', fontSize: '40px', margin: '10px'}}/>}>
-                    <div>
-                    <SearchBar setResults={setResults} />
-                    {results && results.length > 0 && <SearchResultsList setChatting={props.setChatting} setChatterId={props.setChatterId} results={results} token={token}/>}
-                    </div>
-                </SubMenu>
-                    {/* <MenuItem> Documentation </MenuItem>
-                    <MenuItem> Calendar </MenuItem> */}
-            </Menu>
-        </Sidebar>
+  const [collapsed, setCollapsed] = useState(false);
+  const token = localStorage.getItem("token");
+
+  const handleToggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
+
+
+  return (
+    <div style={{ display: 'flex', height: '100vh', flexDirection: 'row' }}>
+      <Sidebar 
+        collapsed={collapsed} 
+        className="custom-sidebar"  
+        style={{ display: 'flex', height: '100vh', flexDirection: 'column', justifyContent: 'flex-start', width: collapsed ? '80px' : '300px' }}
+      >
+        <Menu 
+          menuItemStyles={{
+            button: {
+              [`&.active`]: {
+                backgroundColor: '#13395e',
+                color: '#b6c8d9',
+              },
+            },
+          }}
+        >
+          <SubMenu label={<ChatBubbleOutlineIcon style={{ color: '#b6c8d9', fontSize: '30px', margin: '10px' }} />}>
+            <div>
+              <SearchBar setResults={setResults} />
+              {results && results.length > 0 && <SearchResultsList setChatting={props.setChatting} setChatterId={props.setChatterId} results={results} token={token}/>}
+            </div>
+            {/* <div>
+              <MakeGC />
+            </div> */}
+          </SubMenu>
+
+        </Menu>
+      </Sidebar>
+      <div 
+        style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          padding: '10px', 
+          cursor: 'pointer' 
+        }}
+        onClick={handleToggleSidebar}
+      >
+        {collapsed ? <ArrowForwardIosOutlinedIcon /> : <ArrowBackIosOutlinedIcon />}
       </div>
         )};
 

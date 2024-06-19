@@ -4,7 +4,9 @@ const ChatsController = require("../controllers/chats")
 
 const router = express.Router();
 
-router.post("/history", ChatsController.returnHistory);
-router.post("/send", ChatsController.sendMessage);
+router.get("/:userId", ChatsController.getUserChats);
+router.post("/:chat", ChatsController.returnHistory);
+router.post("/", ChatsController.sendMessage);
+router.get("/", ChatsController.sendMessage);
 
 module.exports = router;

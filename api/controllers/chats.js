@@ -1,12 +1,19 @@
 const Chat = require("../models/chat");
 
-const create = async (sender, recipient) => {
+const create = async (array) => {
+  const encryptionKey = crypto.randomBytes(32).toString('hex');
   const chat = new Chat({
-    usersInChat: [sender, recipient],
-    messagesArray: []
+    usersInChat: array,
+    messagesArray: [],
+    encryptionKey
   });
   await chat.save();
 };
+
+const getUserChats = async (req, res) => {
+  const chats = await Chat.find({ usersInChat: { $in: [req.params.userId] }})
+  res.status(200).json({ chats: chats });
+}
 
 const returnHistory = async (req, res) => {
   console.log("chat hist")
@@ -15,7 +22,7 @@ const returnHistory = async (req, res) => {
 };
 
 const sendMessage = async (req, res) => {
-  console.log(req.body);
+  console.log("Here");
   await Chat.findByIdAndUpdate(
     req.body.chatId,
     { $push: { messagesArray: req.body.message } }
@@ -26,7 +33,8 @@ const sendMessage = async (req, res) => {
 const ChatsController = {
   create,
   sendMessage,
-  returnHistory
+  returnHistory,
+  getUserChats
 };
 
 module.exports = ChatsController;

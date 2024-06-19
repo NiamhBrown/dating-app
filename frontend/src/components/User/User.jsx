@@ -40,30 +40,30 @@ const User = (props) => {
         <h3 className="name_and_age">
           {props.user.forename} {props.user.lastName}, {props.user.age}
         </h3>
-        {/* {props.user.username} <br />
-                {props.user.forename + " " + props.user.lastName + ", " + props.user.age}<br /> */}
         <h4 className="skill_level">
           Skill Level: {props.user.proficiencyLevel}
         </h4>
-        {/* {"Skill level: " + props.user.proficiencyLevel} <br /> */}
+
         <div className="iconButton_container">
           <IconButton
             className="iconButton iconButtonAnimate iconButtonda3e3e"
             onClick={() => {
+              console.log("THIS IS PROPS.USER:",props.user)
+              console.log("THIS IS incriment():",incriment)
               incriment();
               handleMatchOrBlock();
             }}
           >
             <DoDisturbOutlinedIcon style={{ fontSize: 50, color: "#da3e3e" }} />
           </IconButton>
-          <IconButton
+          {/* <IconButton
             className="iconButton iconButtonAnimate iconButtonDodgerBlue"
-            onClick={decriment}
+            onClick={decriment()}
           >
             <TurnLeftOutlinedIcon
               style={{ fontSize: 64, color: "dodgerblue" }}
             />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             className="iconButton iconButtonAnimate iconButtonGold"
             onClick={() => {

@@ -114,10 +114,14 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   ];
 
   const techStackOptions = [
+    { value: "React", label: "React" },
     { value: "JavaScript", label: "JavaScript" },
-    { value: "Python", label: "Python" },
-    { value: "Ruby", label: "Ruby" },
-    { value: "SQL", label: "SQL" },
+    { value: "Node.js", label: "Node.js" },
+    { value: "Angular", label: "Angular" },
+    { value: "Vue.js", label: "Vue.js" },
+    { value: "Django", label: "Django" },
+    { value: "Flask", label: "Flask" },
+    { value: "Spring", label: "Spring" },
   ];
   const proficiencyLevelOptions = [
     { value: "Beginner", label: "Beginner" },

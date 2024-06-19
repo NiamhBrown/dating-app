@@ -59,11 +59,17 @@ export const FeedPage = () => {
             return newPosition;
         });
     };
-console.log("THIS IS POSITION:",position)
+
     const decriment = () => {
         if (position > 0) {
             setPosition(position - 1);
         }
+    };
+
+    const handleMatchOrBlock = () => {
+        // Logic for matching or blocking a user
+        // After matching or blocking a user, trigger a re-fetch
+        setRefresh(!refresh);
     };
 
     const token = localStorage.getItem("token");
@@ -79,7 +85,7 @@ console.log("users[position]:",users[position])
             <User 
                 user={users[position]} 
                 key={users[position]._id}
-                methods={[incriment, decriment]}
+                methods={[incriment, decriment, handleMatchOrBlock]}
                 requests={requests}
             />}
 

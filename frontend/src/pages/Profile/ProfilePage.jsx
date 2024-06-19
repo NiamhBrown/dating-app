@@ -11,6 +11,7 @@ import EditProfileForm from "../../components/EditUser/EditProfileForm";
 import ArrowBackIosOutlinedIcon from "@mui/icons-material/ArrowBackIosOutlined";
 import IconButton from "@mui/material/IconButton";
 import defaultProfilePic from "./../../assets/defaultProfilePic.png"
+import "./buttons.css";
 
 const ProfilePage = ({setMyProfile}) => {
   const userId = localStorage.getItem("userId");
@@ -80,21 +81,51 @@ const ProfilePage = ({setMyProfile}) => {
 
   return (
     <>
-
-            <IconButton onClick={handleBack}>
-                {" "}
-                <ArrowBackIosOutlinedIcon />{" "}
-              </IconButton>
-      
+        <IconButton onClick={handleBack}>
+            {" "}
+            <ArrowBackIosOutlinedIcon />{" "}
+          </IconButton>
       <div className="profilecontainer">
+        <div className="profilepicturecontainer">
+          {!User.profilePicture && <img src={defaultProfilePic} width="250px"/>}
+          {User.profilePicture && <img className="userProfilepicture" 
+          src={`http://localhost:3000${User.profilePicture}?${new Date().getTime()}`} 
+          width="300px" />}
+        </div>
+        <div className="profilebasicscontainer">
+          <p>
+              {User.forename} {User.lastName}, {User.age}  {User.location}
+          </p>
+          </div>
 
-        {!User.profilePicture && <img src={defaultProfilePic} width="250px"/>}
-        {User.profilePicture && <img className="userProfilepicture" 
-        src={`http://localhost:3000${User.profilePicture}?${new Date().getTime()}`} 
-        width="300px" />}
-
-        <div>
-          <button onClick={() => setShowModal(true)}>Edit profile</button>
+        <div className="profileBioAndProficiencyLevel">
+          <p>
+            <h6>About Me:</h6> {User.bio}
+          </p>
+          <p>
+            <h6>Proficiency Level:</h6> {User.proficiencyLevel}
+          </p>
+        </div>
+        
+        <div className="profileLookingForAndPortfolio">
+        <p>
+          <h6>What I'm looking for:</h6> 
+          {User.lookingFor.projectType}
+          <br/>
+          {User.lookingFor.proficiencyLevel}
+          <br/>
+          {User.lookingFor.techStack}
+        </p>
+        <br/>
+       <h6>My Portfolio:</h6>
+        <p>
+          <strong>Tech Stack:</strong> {User.techStack.join(", ")}
+          <br/>
+          <strong>URL:</strong> <a href="{User.url}">{User.url}</a>
+        </p>
+        </div>
+        <div className="editprofilecontainer">
+          <button className="comic-button" onClick={() => setShowModal(true)}>Edit profile</button>
           <Modal show={showModal} onClose={() => setShowModal(false)}>
             <h2>Edit Profile</h2>
 
@@ -105,51 +136,6 @@ const ProfilePage = ({setMyProfile}) => {
             />
           </Modal>
         </div>
-
-
-
-        <p>
-          <strong>Username:</strong> {User.username}
-        </p>
-        <p>
-          <strong>Email:</strong> {User.email}
-        </p>
-        <p>
-          <strong>Forename:</strong> {User.forename}
-        </p>
-        <p>
-          <strong>Last Name:</strong> {User.lastName}
-        </p>
-        <p>
-          <strong>Proficiency Level:</strong> {User.proficiencyLevel}
-        </p>
-        <p>
-          <strong>Age:</strong> {User.age}
-        </p>
-        <p>
-          <strong>Gender:</strong> {User.gender}
-        </p>
-        <p>
-          <strong>Location:</strong> {User.location}
-        </p>
-
-        <p>
-          <strong>Tech Stack:</strong> {User.techStack.join(", ")}
-        </p>
-        <p>
-          <strong>Job:</strong> {User.job}
-        </p>
-        <p>
-          <strong>Bio:</strong> {User.bio}
-        </p>
-        <p>
-          <strong>URL:</strong> {User.url}
-        </p>
-
-        <p>
-          <strong>Looking For:</strong> {User.lookingFor.proficiencyLevel},
-          {User.lookingFor.projectType}, {User.lookingFor.techStack}
-        </p>
 
         {/* <div>
           <button onClick={() => setShowModal(true)}>Edit profile</button>

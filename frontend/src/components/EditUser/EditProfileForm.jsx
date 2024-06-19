@@ -5,6 +5,7 @@ import PictureUpload from "../pictureUpload";
 import ProfilePicture from "../ProfilePicture";
 import "./editProfileForm.css";
 import Scroller from "../Scroller";
+import "./EditProfileButton.css";
 
 
 const EditProfileForm = ({ user, onSave, onClose }) => {
@@ -116,6 +117,10 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
   const techStackOptions = [
     { value: "React", label: "React" },
     { value: "JavaScript", label: "JavaScript" },
+    { value: "Python", label: "Python" },
+    { value: "Ruby", label: "Ruby" },
+    { value: "SQL", label: "SQL" },
+    { value: "React", label: "React" },
     { value: "Node.js", label: "Node.js" },
     { value: "Angular", label: "Angular" },
     { value: "Vue.js", label: "Vue.js" },
@@ -309,11 +314,11 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
               classNamePrefix="react-select"
             />
           </label>
-          <button type="button" onClick={() => removeProject(index)}>Remove Project</button>
+          <button className="editprofilformbutton" type="button" onClick={() => removeProject(index)}>Remove Project</button>
   </div>
 ))}
 <br/>
-      <button type="button" onClick={addProject}>Add Project</button>
+      <button className="editprofilformbutton" type="button" onClick={addProject}>Add Project</button>
       <hr />
       <h4>Looking For:</h4>
       <label>
@@ -367,8 +372,8 @@ const EditProfileForm = ({ user, onSave, onClose }) => {
 
       <br />
       <div className="form-buttons">
-        <Button type="submit">Save</Button>
-        <Button type="button" onClick={onClose}>
+        <Button className="editprofilformbutton" type="submit">Save</Button>
+        <Button className="editprofilformbutton" type="button" onClick={onClose}>
           Cancel
         </Button>
       </div>

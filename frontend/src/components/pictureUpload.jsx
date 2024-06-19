@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { uploadProfilePicture } from "../services/user";
+import "../components/EditUser/EditProfileButton.css";
 
 const PictureUpload = () => {
   const token = localStorage.getItem("token");
@@ -29,11 +30,12 @@ const PictureUpload = () => {
   return (
     <div>
       <button
-        className="primary-button"
+        className="editprofilformbutton"
         onClick={() => setIsFormVisible(!isFormVisible)}
       >
         {isFormVisible ? "Cancel" : "Upload Picture"}
       </button>
+      <br />
       {isFormVisible && (
         <div>
           <input type="file" onChange={handleFileChange} />

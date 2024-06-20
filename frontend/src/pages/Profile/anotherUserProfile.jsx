@@ -107,13 +107,20 @@ const OtherProfilePage = ({ userId, setCheckProfile }) => {
                 {User.lookingFor.projectType}, {User.lookingFor.techStack}
             </p>
           </div>
-          <div className="otherUserProjects">
-            <p>
-              <strong>Projects:</strong>
-              <br/>
-              {User.projects}
-            </p>
-          </div>
+
+<div className="projects">
+  <h6>My projects:</h6> 
+  {User.projects.map((project, index) => (
+    <div key={index} className="project">
+      <p><strong>Title:</strong> {project.title}</p>
+      <p><strong>Description:</strong> {project.description}</p>
+      <p><strong>URL:</strong> <a href={project.url} target="_blank" rel="noopener noreferrer">{project.url}</a></p>
+      <p><strong>Tech Stack:</strong> {project.techStack}</p>
+    </div>
+  ))}
+</div>
+
+
       </div>
     </>
   )

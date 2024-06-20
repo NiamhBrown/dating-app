@@ -52,10 +52,12 @@ const HomePage = () => {
               />
             )}
             {myProfile && (
+              <div className="profile-container">
               <ProfilePage
                 setMyProfile={setMyProfile}
                 // userId={chatterId}
-              />)}
+              />
+              </div>)}
           </div>
         </div>
       </div>

@@ -81,11 +81,15 @@ const ProfilePage = ({setMyProfile}) => {
 
   return (
     <>
-        <IconButton onClick={handleBack}>
+
+
+      <div className="profilecontainer">
+
+      <IconButton onClick={handleBack}>
             {" "}
             <ArrowBackIosOutlinedIcon />{" "}
           </IconButton>
-      <div className="profilecontainer">
+          
         <div className="profilepicturecontainer">
           {!User.profilePicture && <img src={defaultProfilePic} width="250px"/>}
           {User.profilePicture && <img className="userProfilepicture" 
@@ -106,7 +110,21 @@ const ProfilePage = ({setMyProfile}) => {
             <h6>Proficiency Level:</h6> {User.proficiencyLevel}
           </p>
         </div>
-        
+
+
+
+
+        <div className="projects">
+  <h6>My projects:</h6> 
+  {User.projects.map((project, index) => (
+    <div key={index} className="project">
+      <p><strong>Title:</strong> {project.title}</p>
+      <p><strong>Description:</strong> {project.description}</p>
+      <p><strong>URL:</strong> <a href={project.url} target="_blank" rel="noopener noreferrer">{project.url}</a></p>
+      <p><strong>Tech Stack:</strong> {project.techStack}</p>
+    </div>
+  ))}
+</div>
         <div className="profileLookingForAndPortfolio">
         <p>
           <h6>What I'm looking for:</h6> 

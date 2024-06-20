@@ -6,14 +6,18 @@
   width: 300px;
 }
 .feedpage-wrapper {
-display: flex;
-justify-content: flex-start;
-align-items: center;
-flex-grow: 1;
-flex-wrap: nowrap;
-/* margin-top: 350px; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+  flex-wrap: nowrap;
+  /* margin-top: 350px; */
 }
 
 .profile-container {
   margin-top: 300px;
+}
+
+.chatcontainer {
+  margin-top: 230px;
 }
